@@ -1,0 +1,29 @@
+# Checks Ingress Controllers
+command[check_kube_{{ k8s_cluster_name }}_ingress]={{ nagios_plugins_dir }}/check_kube_ingress -w 1 -c 2 -o {{ k8s_cluster_name }}
+
+# Checks Kubernetes Master Services
+command[check_kube_{{ k8s_cluster_name }}_masters]={{ nagios_plugins_dir }}/check_kube_master {{ k8s_cluster_name }}
+
+# Checks Kubernetes Nodes Services
+command[check_kube_{{ k8s_cluster_name }}_node_services]={{ nagios_plugins_dir }}/check_kube_node -o {{ k8s_cluster_name }}
+
+# Checks Kubernetes Nodes Status & Resources Usage
+command[check_kube_{{ k8s_cluster_name }}_limits]={{ nagios_plugins_dir }}/check_kube_limits -w 15 -c 5 -o {{ k8s_cluster_name }}
+command[check_kube_{{ k8s_cluster_name }}_nodes]={{ nagios_plugins_dir }}/check_kube_nodes -w 1 -c 2 -o {{ k8s_cluster_name }}
+command[check_kube_{{ k8s_cluster_name }}_quotas]={{ nagios_plugins_dir }}/check_kube_quotas -w 2 -c 3 -o {{ k8s_cluster_name }}
+command[check_kube_{{ k8s_cluster_name }}_requests]={{ nagios_plugins_dir }}/check_kube_requests -w 15 -c 5 -o {{ k8s_cluster_name }}
+command[check_kube_{{ k8s_cluster_name }}_resources]={{ nagios_plugins_dir }}/check_kube_resources -w 10 -c 3 -o {{ k8s_cluster_name }}
+
+# Checks Jenkins Quotas and Slaves Status
+command[check_kube_{{ k8s_cluster_name }}_jenkins_quotas]={{ nagios_plugins_dir }}/check_kube_jenkins_quotas -w 2 -c 5 -o {{ k8s_cluster_name }}
+command[check_kube_{{ k8s_cluster_name }}_jenkins_slaves]={{ nagios_plugins_dir }}/check_kube_jenkins_slaves -w 2 -c 5 -m "([1-9][0-9][ms]|[1-2]h)" -o {{ k8s_cluster_name }}
+
+# Checks Pods Status
+command[check_kube_{{ k8s_cluster_name }}_pods_crashloop]={{ nagios_plugins_dir }}/check_kube_pods -m CrashLoopBackOff -w 2 -c 5 -o {{ k8s_cluster_name }}
+command[check_kube_{{ k8s_cluster_name }}_pods_evicted]={{ nagios_plugins_dir }}/check_kube_pods -m Evicted -w 2 -c 5 -o {{ k8s_cluster_name }}
+command[check_kube_{{ k8s_cluster_name }}_pods_errored]={{ nagios_plugins_dir }}/check_kube_pods -m Error -w 2 -c 5 -o {{ k8s_cluster_name }}
+command[check_kube_{{ k8s_cluster_name }}_pods_oomd]={{ nagios_plugins_dir }}/check_kube_pods -m OOMKilled -w 2 -c 5 -o {{ k8s_cluster_name }}
+command[check_kube_{{ k8s_cluster_name }}_pods_pending]={{ nagios_plugins_dir }}/check_kube_pods -m Pending -w 2 -c 5 -o {{ k8s_cluster_name }}
+
+# Checks PVs Status
+command[check_kube_{{ k8s_cluster_name }}_pvs]={{ nagios_plugins_dir }}/check_kube_pv_status -w 1 -c 2 -o {{ k8s_cluster_name }}

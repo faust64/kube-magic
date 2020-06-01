@@ -1,0 +1,19 @@
+- include_tasks: api-auth.yaml
+  when:
+  - groups['kube-master'] is defined
+  - (groups['kube-master'] | length) > 0
+- name: Install Kubernetes-Nagios Sudoers Configuration
+  template:
+    dest: /etc/sudoers.d/nagios-k8s
+    group: root
+    mode: 0400
+    owner: root
+    src: k8s.sudoers.j2
+- name: Install Nagios Kubernetes Configuration
+  notify: Reload nrpe
+  template:
+    dest: "{{ nagios_probes_config }}/k8s.cfg"
+    group: root
+    mode: 0644
+    owner: root
+    src: k8s.nrpe.j2

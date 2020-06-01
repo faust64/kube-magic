@@ -1,0 +1,79 @@
+{% if kube_client == "kubectl" %}
+---
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: fluentd
+spec:
+  allowedHostPaths:
+  - pathPrefix: /var/log
+    readOnly: false
+  - pathPrefix: /run/log
+    readOnly: false
+  - pathPrefix: /etc/localtime
+    readOnly: true
+  allowPrivilegeEscalation: true
+  fsGroup:
+    rule: RunAsAny
+  privileged: true
+  requiredDropCapabilities:
+  - ALL
+  runAsUser:
+    rule: RunAsAny
+  seLinux:
+    rule: RunAsAny
+  supplementalGroups:
+    rule: RunAsAny
+  volumes:
+  - configMap
+  - downwardAPI
+  - emptyDir
+  - hostPath
+  - persistentVolumeClaim
+  - projected
+  - secret
+{% endif %}
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: fluentd
+rules:
+{% if kube_client == "kubectl" %}
+- apiGroups:
+  - policy
+  resourceNames:
+  - fluentd
+  resources:
+  - podsecuritypolicies
+  verbs:
+  - use
+{% endif %}
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - namespaces
+  verbs:
+  - get
+  - list
+  - watch
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: fluentd
+  namespace: {{ logging_ns }}
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: fluentd
+roleRef:
+  kind: ClusterRole
+  name: fluentd
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: fluentd
+  namespace: {{ logging_ns }}

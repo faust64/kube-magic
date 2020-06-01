@@ -1,0 +1,32 @@
+- name: Ensure NRPE Running
+  service:
+    enabled: yes
+    name: "{{ nagios_service }}"
+    state: started
+
+- name: Checks for Firewalld
+  changed_when: False
+  failed_when: False
+  register: has_firewalld
+  shell: firewall-cmd --state | grep running
+- block:
+  - name: Checks for prior NRPE port opening
+    args:
+      chdir: /etc/firewalld/zones
+    changed_when: False
+    failed_when: False
+    register: has_rule
+    shell: |
+      grep "port=\"{{ nrpe_listen_port | default('5666') }}\" protocol=\"tcp\"" public.xml
+  - block:
+    - name: Opens firewalld NRPE port
+      shell: "firewall-cmd --permanent --zone=public --add-port={{ nrpe_listen_port | default('5666') }}/tcp"
+    - name: Reloads Firewalld configuration
+      shell: firewall-cmd --reload
+    when:
+    - has_rule is defined
+    - (has_rule.rc | default(0)) != 0
+  when:
+  - has_firewalld is defined
+  - (has_firewalld.rc | default(1)) == 0
+# TODO: sysconfig/iptables?

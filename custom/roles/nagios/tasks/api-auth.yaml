@@ -1,0 +1,89 @@
+- include_role:
+    name: commons
+    tasks_from: helpers/namespace.yaml
+  vars:
+    k8s_api_node: "{{ master_host }}"
+    ns_name: "{{ monitoring_ns }}"
+
+- name: Checks for Existing monit-reader ClusterRole
+  changed_when: False
+  delegate_to: "{{ master_host }}"
+  failed_when: False
+  register: has_clusterrole
+  run_once: True
+  shell: "{{ kube_client }} --kubeconfig {{ admin_kubeconfig }} get clusterrole monit-reader"
+- block:
+  - name: Generates monit-reader ClusterRole
+    delegate_to: "{{ master_host }}"
+    run_once: True
+    template:
+      dest: /tmp/monit-reader.yaml
+      group: root
+      mode: 0640
+      owner: root
+      src: monit-clusterrole.j2
+  - name: Installs monit-reader ClusterRole
+    args:
+      chdir: /tmp
+    delegate_to: "{{ master_host }}"
+    run_once: True
+    shell: "{{ kube_client }} --kubeconfig {{ admin_kubeconfig }} apply -f monit-reader.yaml"
+  - name: Cleanups monit-reader temporary assets
+    delegate_to: "{{ master_host }}"
+    file:
+      dest: /tmp/monit-reader.yaml
+      state: absent
+    run_once: True
+  when:
+  - has_clusterrole is defined
+  - (has_clusterrole.rc | default(0)) != 0
+
+- name: Checks for Existing Nagios ServiceAccount
+  changed_when: False
+  delegate_to: "{{ master_host }}"
+  failed_when: False
+  register: has_sa
+  run_once: True
+  shell: "{{ kube_client }} --kubeconfig {{ admin_kubeconfig }} -n {{ monitoring_ns }} describe sa nagios-monitoring"
+- name: Creates Missing Nagios ServiceAccount
+  delegate_to: "{{ master_host }}"
+  run_once: True
+  shell: "{{ kube_client }} --kubeconfig {{ admin_kubeconfig }} -n {{ monitoring_ns }} create sa nagios-monitoring"
+  when:
+  - has_sa is defined
+  - (has_sa.rc | default(0)) != 0
+
+- block:
+  - name: Checks for Nagios ServiceAccount Privileges - OpenShift
+    changed_when: False
+    delegate_to: "{{ master_host }}"
+    failed_when: False
+    register: sa_has_rb
+    run_once: True
+    shell: "oc --config {{ admin_kubeconfig }} get clusterrolebinding | grep '/monit-reader.*{{ monitoring_ns }}/nagios-monitoring'"
+  - name: Grants Nagios ServiceAccount with monit-reader Privileges - OpenShift
+    delegate_to: "{{ master_host }}"
+    run_once: True
+    shell: "oc --config {{ admin_kubeconfig }} adm policy add-cluster-role-to-user monit-reader system:serviceaccount:{{ monitoring_ns }}:nagios-monitoring"
+    when:
+    - sa_has_rb is defined
+    - (sa_has_rb.rc | default(0)) != 0
+  when:
+  - kube_client == "oc"
+- block:
+  - name: Checks for Nagios ServiceAccount Privileges - Generic
+    changed_when: False
+    delegate_to: "{{ master_host }}"
+    failed_when: False
+    register: sa_has_rb
+    run_once: True
+    shell: "kubectl --kubeconfig {{ admin_kubeconfig }} describe clusterrolebinding monit-reader-{{ monitoring_ns }} | grep -E 'nagios-monitoring[ \t]*prometheus-monitoring'"
+  - name: Grants Nagios ServiceAccount with monit-reader Privileges - Generic
+    delegate_to: "{{ master_host }}"
+    run_once: True
+    shell: "kubectl --kubeconfig {{ admin_kubeconfig }} create clusterrolebinding monit-reader-{{ monitoring_ns }} --clusterrole=monit-reader --serviceaccount={{ monitoring_ns }}:nagios-monitoring"
+    when:
+    - sa_has_rb is defined
+    - (sa_has_rb.rc | default(0)) != 0
+  when:
+  - kube_client != "oc"

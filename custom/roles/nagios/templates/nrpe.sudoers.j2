@@ -1,0 +1,4 @@
+{% if (smart_check_devices | length) > 0 %}
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_smart_attributes
+{% endif %}
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_rprocs

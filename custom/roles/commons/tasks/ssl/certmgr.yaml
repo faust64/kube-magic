@@ -1,0 +1,24 @@
+- name: "Checks for Existing {{ sc_name }} Secret"
+  changed_when: False
+  failed_when: False
+  register: has_sc
+  shell: "{{ kube_client }} --kubeconfig {{ admin_kubeconfig }} -n {{ sc_namespace }} describe secret {{ sc_name }}"
+- block:
+  - name: "Generates {{ sc_name }} Certificate Request configuration"
+    template:
+      dest: "/tmp/{{ sc_name }}.yaml"
+      group: root
+      mode: 0600
+      owner: root
+      src: certmgr-self-signed.j2
+  - name: "Installs {{ sc_name }} Certificate Request"
+    args:
+      chdir: /tmp
+    shell: "{{ kube_client }} --kubeconfig {{ admin_kubeconfig }} apply -f {{ sc_name }}.yaml"
+  - name: "Cleanups {{ sc_name }} Self-Signed Secret temporary assets"
+    file:
+      dest: /tmp/{{ sc_name }}.yaml"
+      state: absent
+  when:
+  - has_sc is defined
+  - (has_sc.rc | default(0)) != 0

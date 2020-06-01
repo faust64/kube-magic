@@ -1,0 +1,104 @@
+{% if logging_pvc_size | default(False) %}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: elasticsearch
+  namespace: {{ logging_ns }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ logging_pvc_size }}
+  storageClassName: rwo-storage
+{% endif %}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: elasticsearch
+    version: v1
+  name: elasticsearch
+  namespace: {{ logging_ns }}
+spec:
+  selector:
+    matchLabels:
+      name: elasticsearch
+      version: v1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        name: elasticsearch
+        version: v1
+    spec:
+      containers:
+      - env:
+        - name: discovery.type
+          value: single-node
+        - name: ES_JAVA_OPTS
+          value: "-Xms2048m -Xmx2048m"
+        image: docker.elastic.co/elasticsearch/elasticsearch:{{ elasticsearch_tag }}
+        name: elasticsearch
+        livenessProbe:
+          failureThreshold: 10
+          initialDelaySeconds: 30
+          tcpSocket:
+            port: 9200
+          periodSeconds: 10
+          timeoutSeconds: 5
+        ports:
+        - containerPort: 9200
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 2
+          initialDelaySeconds: 30
+          httpGet:
+            path: "/_cluster/health?wait_for_status=yellow&timeout=10s"
+            port: 9200
+          periodSeconds: 20
+          timeoutSeconds: 15
+        resources:
+          limits:
+            cpu: 900m
+            memory: 4300Mi
+          requests:
+            cpu: 500m
+            memory: 3800Mi
+        securityContext:
+          runAsUser: 1000
+        volumeMounts:
+        - mountPath: /usr/share/elasticsearch/data
+          name: data
+      nodeSelector:
+        node-role.kubernetes.io/infra: "true"
+      volumes:
+{% if logging_pvc_size | default(False) %}
+      - name: data
+        persistentVolumeClaim:
+          claimName: elasticsearch
+{% else %}
+      - emptyDir: {}
+        name: data
+{% endif %}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: elasticsearch
+    version: v1
+  name: elasticsearch
+  namespace: {{ logging_ns }}
+spec:
+  ports:
+  - port: 9200
+    targetPort: 9200
+  selector:
+    name: elasticsearch
+    version: v1
+  type: ClusterIP

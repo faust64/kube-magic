@@ -1,0 +1,63 @@
+- name: Install Custom Plugins
+  copy:
+    dest: "{{ nagios_plugins_dir }}/"
+    group: root
+    mode: 0755
+    owner: root
+    src: plugins/
+  register: installed_plugins
+
+- name: Sets Nagios load thresholds
+  set_fact:
+    nagios_cpu_crit:
+    - "{{ ansible_processor_count }}.2"
+    - "{{ ansible_processor_count }}.2"
+    - "{{ ansible_processor_count }}.2"
+    nagios_cpu_warn:
+    - "{{ (ansible_processor_count | int) - 1 }}.8"
+    - "{{ (ansible_processor_count | int) - 1 }}.7"
+    - "{{ (ansible_processor_count | int) - 1 }}.6"
+    running_processes_crit: "{{ (ansible_processor_count | int) * 4 }}"
+    running_processes_warn: "{{ (ansible_processor_count | int) * 2 }}"
+- block:
+  - name: Fixes SElinux
+    args:
+      chdir: "{{ nagios_plugins_dir }}"
+    shell: chcon system_u:object_r:nagios_unconfined_plugin_exec_t:s0 check_*
+    when:
+    - installed_plugins is defined
+    - installed_plugins is changed
+  - name: Sets SElinux Boolean nagios_run_sudo
+    seboolean:
+      name: nagios_run_sudo
+      persistent: yes
+      state: yes
+  when:
+  - ansible_selinux is defined
+  - (ansible_selinux.status | default('wat')) == 'enabled'
+
+- name: Prepare Nagios for Further Configuration
+  file:
+    dest: "{{ nagios_probes_config }}"
+    group: root
+    mode: 0755
+    owner: root
+    state: directory
+  notify: Reload nrpe
+  when:
+  - ansible_distribution in deb_dist_match
+- name: Install Nagios Main Sudoers Configuration
+  template:
+    dest: /etc/sudoers.d/nagios-main
+    group: root
+    mode: 0400
+    owner: root
+    src: nrpe.sudoers.j2
+- name: Install Nagios Main Configuration
+  notify: Reload nrpe
+  template:
+    dest: /etc/nagios/nrpe.cfg
+    group: root
+    mode: 0644
+    owner: root
+    src: nrpe.j2

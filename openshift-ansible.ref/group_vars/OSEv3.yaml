@@ -1,0 +1,627 @@
+# Custom / Root Domain
+mydomain: unetresgrossebite.com
+intradomain: "intra.{{ mydomain }}"
+ingressdomain: "router.{{ intradomain }}"
+
+openshift_clock_enabled: True
+
+openshift_deployment_type: origin
+overs: 3.11
+gvers: latest
+#openshift_deployment_type: openshift-enterprise
+#overs: 3.11.141
+#gvers: 3.11.3
+
+#openshift_disable_check: disk_availability,docker_storage,memory_availability
+openshift_disable_check: disk_availability,docker_storage,memory_availability,package_version
+
+# HTTP Proxies:
+#http_proxy: "http://netserv.vms.intra.unetresgrossebite.com:3128/"
+#https_proxy: "{{ http_proxy }}"
+#openshift_http_proxy: "{{ http_proxy }}"
+#openshift_https_proxy: {{ https_proxy }}"
+#openshift_no_proxy_domains:
+#- docker-registry.default.svc
+#- 172.30.0.1
+#- .example.com
+#- 10.42.253.0/24
+#openshift_no_proxy: "{{ openshift_no_proxy_domains | join(',') }}"
+
+# Node Problem Detector (TP!)
+openshift_node_problem_detector_install: True
+
+# only relevant with OKD:
+openshift_node_problem_detector_image: docker.io/sapcc/node-problem-detector:v0.7.1
+# Warning: once deployed, edit daemonset, change command, from `node-problem-detector` to `/node-problem-detector`
+# openshift image wasn't published to dockerhub? see https://github.com/openshift/node-problem-detector/tree/v0.4
+# see https://docs.openshift.com/container-platform/3.10/admin_guide/node_problem_detector.html
+# //only relevant with OKD:
+
+# GlusterFS
+openshift_storage_glusterfs_block_deploy: False
+openshift_storage_glusterfs_block_image: "docker.io/gluster/glusterblock-provisioner:{{ gvers }}"
+#openshift_storage_glusterfs_block_image: "registry.redhat.io/rhgs3/rhgs-gluster-block-prov-rhel7:v{{ gvers }}"
+openshift_storage_glusterfs_block_host_vol_size: "100"
+openshift_storage_glusterfs_block_storageclass: True
+openshift_storage_glusterfs_block_storageclass_default: False
+openshift_storage_glusterfs_heketi_image: "docker.io/heketi/heketi:{{ gvers }}"
+#openshift_storage_glusterfs_heketi_image: "registry.redhat.io/rhgs3/rhgs-volmanager-rhel7:v{{ gvers }}"
+openshift_storage_glusterfs_image: "docker.io/gluster/gluster-centos:gluster3u12_centos7"
+#openshift_storage_glusterfs_image: "registry.redhat.io/rhgs3/rhgs-server-rhel7:v{{ gvers }}"
+openshift_storage_glusterfs_namespace: openshift-glusterfs
+openshift_storage_glusterfs_nodeselector: "node-role.kubernetes.io/storage=true"
+openshift_storage_glusterfs_s3_image: "docker.io/gluster/gluster-object:latest"
+#openshift_storage_glusterfs_s3_image: "registry.redhat.io/rhgs3/rhgs-s3-server-rhel7:v{{ gvers }}"
+openshift_storage_glusterfs_storageclass: True
+openshift_storage_glusterfs_storageclass_allow_volume_expansion: True
+openshift_storage_glusterfs_storageclass_default: False
+openshift_storage_glusterfs_storageclass_volume_options: "user.heketi.arbiter true"
+
+# Client Accesses:
+#openshift_master_api_port: '8443'
+openshift_master_api_port: '443'
+openshift_master_cluster_method: native
+openshift_master_cluster_hostname: "openshift.{{ intradomain }}"
+openshift_master_cluster_public_hostname: "openshift.{{ intradomain }}"
+openshift_master_console_port: "{{ openshift_master_api_port }}"
+openshift_master_default_subdomain: "{{ ingressdomain }}"
+openshift_master_session_name: madeon
+openshift_console_hostname: "console.{{ openshift_master_default_subdomain }}"
+
+# SDN:
+openshift_cluster_network_cidr: 10.128.0.0/14
+openshift_host_subnet_length: '9'
+#openshift_master_ingress_ip_network_cidr: 172.19.0.0/24
+openshift_portal_net: 172.30.0.0/16
+openshift_sdn_vxlan_port: '4789'
+#os_firewall_use_firewalld: True
+#os_sdn_network_plugin_name: redhat/openshift-ovs-multitenant
+os_sdn_network_plugin_name: redhat/openshift-ovs-networkpolicy
+#openshift_node_port_range: 30000-32767
+
+# Brokers & Catalog & SB:
+ansible_service_broker_install: False
+openshift_enable_service_catalog: False
+openshift_service_catalog_remove: True
+template_service_broker_install: False
+
+# Cri-O:
+openshift_crio_docker_gc_node_selector:
+  runtime: 'cri-o'
+openshift_crio_edits:
+- key: kubeletArguments.container-runtime
+  value: [ remote ]
+- key: kubeletArguments.container-runtime-endpoint
+  value: [ "{{ openshift_crio_var_sock }}" ]
+- key: kubeletArguments.image-service-endpoint
+  value: [ "{{ openshift_crio_var_sock }}" ]
+- key: kubeletArguments.runtime-request-timeout
+  value: [ 10m ]
+openshift_crio_enable_docker_gc: False
+openshift_crio_var_sock: /var/run/crio/crio.sock
+openshift_use_crio: True
+openshift_use_crio_only: False
+
+# Custom Registry hosting Custom images:
+#openshift_docker_additional_registries: nexus.example.com:5000
+#openshift_docker_insecure_registries: nexus.example.com
+
+# Custom Registry hosting all images/block external Registries:
+#openshift_docker_blocked_registries: registry.access.redhat.com
+#openshift_docker_blocked_registries: all
+#openshift_cockpit_deployer_prefix: nexus.example.com:5000/openshift3/
+#openshift_hosted_logging_deployer_prefix: nexus.example.com:5000/openshift3/
+#openshift_hosted_metrics_deployer_prefix: nexus.example.com:5000/openshift3/
+#openshift_prometheus_image_prefix: nexus.example.com:5000/monitoring/
+
+# Custom Insecure Registries:
+#openshift_docker_insecure_registries: []
+
+# Registry Auth
+#oreg_url: "nexus.example.com:5000/openshift3/ose-${component}:${version}"
+#oreg_auth_user: username
+#oreg_auth_password: token
+
+# Rewrite OpenShift Templates Registry Address:
+#openshift_examples_modify_imagestreams: True
+
+# Disables OpenShift Integrated Registry:
+#openshift_hosted_manage_registry: False
+
+# Node Groups:
+osm_default_node_selector: node-role.kubernetes.io/compute=true
+# Legacy Edits:
+# - key: kubeletArguments.pods-per-core
+#   value: [ '10' ]
+# - key: kubeletArguments.max-pods
+#   value: [ '160' ]
+# - key: kubeletArguments.minimum-container-ttl-duration
+#   value: [ 10s ]
+# - key: kubeletArguments.minimum-image-ttl-duration
+#   value: [ 60s ]
+# - key: kubeletArguments.maximum-dead-containers
+#   value: [ '20' ]
+# - key: kubeletArguments.maximum-dead-containers-per-container
+#   value: [ '2' ]
+# - key: kubeletArguments.image-gc-high-threshold
+#   value: [ '90' ]
+# - key: kubeletArguments.image-gc-low-threshold
+#   value: [ '50' ]
+# - key: kubeletArguments.system-reserved
+#   value:
+#   - cpu=500m
+#   - memory=2G
+# - key: kubeletArguments.eviction-hard
+#   value:
+#   - memory.available<1Gi
+#   - nodefs.available<3%
+#   - nodefs.inodesFree<1
+#   - imagefs.available<3%
+#   - imagefs.inodesFree<10
+# - key: kubeletArguments.eviction-soft
+#   value:
+#   - memory.available<3Gi
+#   - nodefs.available<10%
+#   - nodefs.inodesFree<100
+#   - imagefs.available<10%
+#   - imagefs.inodesFree<300
+# - key: kubeletArguments.eviction-soft-grace-period
+#   value:
+#   - memory.available=60s
+#   - nodefs.available=2m
+#   - imagefs.available=3m
+#   - nodefs.inodesFree=3m
+#   - imagefs.inodesFree=3m
+# - key: kubeletArguments.eviction-max-pod-grace-period
+#   value: [ '10' ]
+#####
+# - key: kubletArguments.kube-reserved
+#   value:
+#   - "cpu={{ ansible_processor_vcpus * 50 }}m"
+#   - "memory={{ ansible_processor_vcpus * 50 }}M"
+# - key: kubeletArguments.system-reserved
+#   value:
+#   - "cpu={{ ansible_processor_vcpus * 50 }}m"
+#   - "memory={{ ansible_processor_vcpus * 100 }}M"
+# - key: kubeletArguments.pods-per-core
+#   value: [ '10' ]
+# - key: kubeletArguments.max-pods
+#   value: [ '250' ]
+# - key: kubeletArguments.maximum-dead-containers
+#   value: [ '5' ]
+# - key: kubeletArguments.maximum-dead-containers-per-container
+#   value: [ '1' ]
+# - key: kubeletArguments.image-gc-high-threshold
+#   value: [ '80' ]
+# - key: kubeletArguments.image-gc-low-threshold
+#   value: [ '60' ]
+#####
+openshift_node_groups:
+- name: node-config-master1-crio
+  labels:
+  - 'node-role.kubernetes.io/master=true'
+  - 'region=dc1'
+  - "{{ openshift_crio_docker_gc_node_selector | lib_utils_oo_dict_to_keqv_list | join(',') }}"
+  edits: "{{ openshift_crio_edits }}"
+# dealing with multiple IPs per nodes:
+#  edits:
+#  - key: kubeletArguments.node-ip
+#    value: [ 10.42.253.10 ]
+#  - key: kubeletArguments.container-runtime
+#    value: [ remote ]
+#  - key: kubeletArguments.container-runtime-endpoint
+#    value: [ "{{ openshift_crio_var_sock }}" ]
+#  - key: kubeletArguments.image-service-endpoint
+#    value: [ "{{ openshift_crio_var_sock }}" ]
+#  - key: kubeletArguments.runtime-request-timeout
+#    value: [ 10m ]
+- name: node-config-master2-crio
+  labels:
+  - 'node-role.kubernetes.io/master=true'
+  - 'region=dc2'
+  - "{{ openshift_crio_docker_gc_node_selector | lib_utils_oo_dict_to_keqv_list | join(',') }}"
+  edits: "{{ openshift_crio_edits }}"
+- name: node-config-master3-crio
+  labels:
+  - 'node-role.kubernetes.io/master=true'
+  - 'region=dc3'
+  - "{{ openshift_crio_docker_gc_node_selector | lib_utils_oo_dict_to_keqv_list | join(',') }}"
+  edits: "{{ openshift_crio_edits }}"
+- name: node-config-infra1-crio
+  labels:
+  - 'node-role.kubernetes.io/infra=true'
+  - 'region=dc1'
+  - "{{ openshift_crio_docker_gc_node_selector | lib_utils_oo_dict_to_keqv_list | join(',') }}"
+  edits: "{{ openshift_crio_edits }}"
+- name: node-config-infra2-crio
+  labels:
+  - 'node-role.kubernetes.io/infra=true'
+  - 'region=dc2'
+  - "{{ openshift_crio_docker_gc_node_selector | lib_utils_oo_dict_to_keqv_list | join(',') }}"
+  edits: "{{ openshift_crio_edits }}"
+- name: node-config-infra3-crio
+  labels:
+  - 'node-role.kubernetes.io/infra=true'
+  - 'region=dc3'
+  - "{{ openshift_crio_docker_gc_node_selector | lib_utils_oo_dict_to_keqv_list | join(',') }}"
+  edits: "{{ openshift_crio_edits }}"
+- name: node-config-compute1-crio
+  labels:
+  - 'node-role.kubernetes.io/compute=true'
+  - 'region=dc1'
+  - 'devenv=prod'
+  - "{{ openshift_crio_docker_gc_node_selector | lib_utils_oo_dict_to_keqv_list | join(',') }}"
+  edits: "{{ openshift_crio_edits }}"
+- name: node-config-compute2-crio
+  labels:
+  - 'node-role.kubernetes.io/compute=true'
+  - 'region=dc2'
+  - 'devenv=prod'
+  - "{{ openshift_crio_docker_gc_node_selector | lib_utils_oo_dict_to_keqv_list | join(',') }}"
+  edits: "{{ openshift_crio_edits }}"
+- name: node-config-compute3-crio
+  labels:
+  - 'node-role.kubernetes.io/compute=true'
+  - 'region=dc3'
+  - 'devenv=prod'
+  - "{{ openshift_crio_docker_gc_node_selector | lib_utils_oo_dict_to_keqv_list | join(',') }}"
+  edits: "{{ openshift_crio_edits }}"
+- name: node-config-compute4-crio
+  labels:
+  - 'node-role.kubernetes.io/compute=true'
+  - 'region=dc1'
+  - 'devenv=staging'
+  - "{{ openshift_crio_docker_gc_node_selector | lib_utils_oo_dict_to_keqv_list | join(',') }}"
+  edits: "{{ openshift_crio_edits }}"
+- name: node-config-compute5-crio
+  labels:
+  - 'node-role.kubernetes.io/compute=true'
+  - 'region=dc2'
+  - 'devenv=staging'
+  - "{{ openshift_crio_docker_gc_node_selector | lib_utils_oo_dict_to_keqv_list | join(',') }}"
+  edits: "{{ openshift_crio_edits }}"
+- name: node-config-gluster1-crio
+  labels:
+  - 'node-role.kubernetes.io/storage=true'
+  - 'region=dc1'
+  - "{{ openshift_crio_docker_gc_node_selector | lib_utils_oo_dict_to_keqv_list | join(',') }}"
+  edits: "{{ openshift_crio_edits }}"
+- name: node-config-gluster2-crio
+  labels:
+  - 'node-role.kubernetes.io/storage=true'
+  - 'region=dc2'
+  - "{{ openshift_crio_docker_gc_node_selector | lib_utils_oo_dict_to_keqv_list | join(',') }}"
+  edits: "{{ openshift_crio_edits }}"
+- name: node-config-gluster3-crio
+  labels:
+  - 'node-role.kubernetes.io/storage=true'
+  - 'region=dc3'
+  - "{{ openshift_crio_docker_gc_node_selector | lib_utils_oo_dict_to_keqv_list | join(',') }}"
+  edits: "{{ openshift_crio_edits }}"
+
+# Hosted Routers:
+#openshift_additional_projects:
+#  routers-staging:
+#    default_node_selector: devenv=staging
+openshift_hosted_routers:
+- certificate: {}
+#- certificate:
+#    certfile: /path/to/main-router.crt
+#    keyfile: /path/to/main-router.key
+#    cafile: /path/to/main-router.ca
+  edits: []
+  images: openshift/origin-${component}:${version}
+#  images: openshift3/ose-${component}:${version}
+  name: router
+  namespace: default
+  ports:
+  - 80:80
+  - 443:443
+  replicas: "{{ groups['infra'] | length }}"
+  selector: node-role.kubernetes.io/infra=true
+  serviceaccount: router
+  stats_port: 1936
+- certificate: {}
+#- certificate:
+#    certfile: /path/to/sub1-router.crt
+#    keyfile: /path/to/sub1-router.key
+#    cafile: /path/to/sub1-router.ca
+  edits:
+  - action: append
+    key: spec.template.spec.containers[0].env
+    value:
+      name: ROUTE_LABELS
+      value: devenv=staging
+  images: openshift/origin-${component}:${version}
+#  images: openshift3/ose-${component}:${version}
+  name: router-staging
+  namespace: default
+#  namespace: routers-staging
+  ports:
+  - 80:80
+  - 443:443
+  replicas: 1
+  selector: region=dc1,devenv=staging
+  serviceaccount: router
+  stats_port: 1936
+
+# Certificates Expiry:
+etcd_ca_default_days: 3650
+openshift_ca_cert_expire_days: 3650
+openshift_hosted_registry_cert_expire_days: 3650
+openshift_master_cert_expire_days: 3650
+#that last one seems to be missing from 3.11 roles: probably deprecated, as of nodes certificates being managed/requested/signed/... via API service
+#openshift_node_cert_expire_days: 3650
+
+# Scheduler Priorities:
+#openshift_master_scheduler_priorities:
+#- name: LeastRequestedPriority
+#  weight: 1
+#- name: ServiceSpreadingPriority
+#  weight: 1
+#- name: BalancedResourceAllocation
+#  weight: 1
+##Seen some place
+#- name: SelectorSpreadPriority
+#  weight: 1
+#- name: InterPodAffinityPriority
+#  weight: 1
+#- name: LeastRequestedPriority
+#  weight: 1
+#- name: BalancedResourceAllocation
+#  weight: 1
+#- name: NodePreferAvoidPodsPriority
+#  weight: 10000
+#- name: NodeAffinityPriority
+#  weight: 1
+#- name: TaintTolerationPriority
+#  weight: 1
+#- name: Zone
+#  argument:
+#    serviceAntiAffinity:
+#      label: zone
+#  weight: 2
+#- name: PrimaryDC
+#  argument:
+#    labelPreference:
+#      label: dc-1
+#      presence: true
+#  weight: 2
+#- name: SecondaryDC
+#  argument:
+#    labelPreference:
+#      label: dc-2
+#      presence: true
+#  weight: 1
+
+# Upgrading, we would set the following:
+#openshift_image_tag: "v{{ overs }}"
+#openshift_pkg_version: "-{{ overs if openshift_deployment_type == 'openshift-enterprise' else overs + '.0' }}"
+#openshift_release: "v{{ overs }}"
+#openshift_upgrade_min: "{{ overs }}"
+#openshift_version: "{{ overs }}"
+
+# Notifications:
+slack_notify_address: 'https://hooks.slack.com/services/XXXXXXXXX/YYYYYYYYY/ZZZZZZZZZZZZZZZZZZZZZZZZ'
+mail_notify_from: prometheus@example.com
+mail_notify_to: samuel@example.com
+
+# Auditing:
+openshift_master_audit_config:
+  auditFilePath: /var/lib/origin/logs/origin-audit.log
+  enabled: true
+  logFormat: json
+  maximumFileRetentionDays: 7
+  maximumFileSizeMegabytes: 64
+  maximumRetainedFiles: 6
+  policyFile: /etc/origin/master/audit-config.yaml
+openshift_master_audit_policyfile: ./roles/prep-host/files/audit.yaml
+
+# Journald Tuning:
+journald_vars_to_replace:
+- { var: Storage, val: persistent }
+- { var: Compress, val: yes }
+- { var: SyncIntervalSec, val: 1s }
+- { var: RateLimitInterval, val: 1s }
+- { var: RateLimitBurst, val: 10000 }
+- { var: SystemMaxUse, val: 512M }
+- { var: SystemKeepFree, val: 20% }
+- { var: SystemMaxFileSize, val: 10M }
+- { var: MaxRetentionSec, val: 1month }
+- { var: MaxFileSec, val: 1day }
+- { var: ForwardToSyslog, val: no }
+- { var: ForwardToWall, val: no }
+
+# Hawkular:
+openshift_metrics_cassandra_limit_cpu: 3000m
+openshift_metrics_cassandra_limit_memory: 3Gi
+openshift_metrics_cassandra_nodeselector:
+# node-role.kubernetes.io/compute: "true"
+  node-role.kubernetes.io/infra: "true"
+openshift_metrics_cassandra_pvc_prefix: hawkular-metrics
+openshift_metrics_cassandra_pvc_size: 40Gi
+#openshift_metrics_cassandra_replicas: 3
+openshift_metrics_cassandra_request_cpu: 2000m
+openshift_metrics_cassandra_request_memory: 2Gi
+openshift_metrics_cassandra_storage_type: pv
+openshift_metrics_cassandra_pvc_storage_class_name: ceph-storage
+#DEPL#openshift_metrics_install_metrics: True
+openshift_metrics_install_metrics: False
+openshift_metrics_duration: 8
+openshift_metrics_hawkular_hostname: "hawkular.{{ openshift_master_default_subdomain }}"
+openshift_metrics_hawkular_limits_cpu: 3000m
+openshift_metrics_hawkular_limits_memory: 3Gi
+openshift_metrics_hawkular_nodeselector:
+# node-role.kubernetes.io/compute: "true"
+  node-role.kubernetes.io/infra: "true"
+openshift_metrics_hawkular_requests_cpu: 2000m
+openshift_metrics_hawkular_requests_memory: 2Gi
+openshift_metrics_heapster_limits_cpu: 3000m
+openshift_metrics_heapster_limits_memory: 3Gi
+openshift_metrics_heapster_nodeselector:
+# node-role.kubernetes.io/compute: "true"
+  node-role.kubernetes.io/infra: "true"
+openshift_metrics_heapster_requests_cpu: 2000m
+openshift_metrics_heapster_requests_memory: 2Gi
+
+# Metrics-Server:
+openshift_metrics_server_install: True
+openshift_metrics_server_project: openshift-metrics-server
+openshift_metrics_server_resolution: 30s
+
+# Legacy Prometheus:
+#openshift_prometheus_alertbuffer_pvc_size: 20Gi
+#openshift_prometheus_alertbuffer_storage_class: ceph-storage
+#openshift_prometheus_alertbuffer_storage_type: pvc
+#openshift_prometheus_alertmanager_pvc_size: 20Gi
+#openshift_prometheus_alertmanager_storage_class: ceph-storage
+#openshift_prometheus_alertmanager_storage_type: pvc
+#openshift_prometheus_namespace: openshift-metrics
+#openshift_prometheus_node_selector:
+#  node-role.kubernetes.io/infra: "true"
+#openshift_prometheus_pvc_size: 20Gi
+##DEPL#openshift_prometheus_state: present
+#openshift_prometheus_state: absent
+#openshift_prometheus_storage_class: ceph-storage
+#openshift_prometheus_storage_type: pvc
+
+# Prometheus Operator:
+#DEPL#openshift_cluster_monitoring_operator_install: True
+openshift_cluster_monitoring_operator_install: False
+openshift_cluster_monitoring_operator_node_selector:
+  node-role.kubernetes.io/infra: "true"
+openshift_cluster_monitoring_operator_alertmanager_config: |+
+  global:
+    resolve_timeout: 5m
+    smtp_smarthost: smtp.vms.intra.unetresgrossebite.com:25
+    smtp_from: "{{ mail_notify_from }}"
+#    smtp_require_tls: False
+  route:
+    group_wait: 30s
+    group_interval: 5m
+    repeat_interval: 12h
+    receiver: default
+    routes:
+    - match:
+        alertname: DeadMansSwitch
+      repeat_interval: 5m
+      receiver: deadmansswitch
+    - match:
+        severity: warning
+      repeat_interval: 6h
+      receiver: slack_monitoring
+    - match:
+        severity: critical
+      repeat_interval: 12h
+      receiver: all
+  receivers:
+  - name: default
+  - name: deadmansswitch
+  - name: spam
+    email_configs:
+    - from: "{{ mail_notify_from }}"
+      to: "{{ mail_notify_to }}"
+  - name: slack_monitoring
+    slack_configs:
+    - api_url: "{{ slack_notify_address }}"
+      channel: '#monitoring'
+  - name: all
+    email_configs:
+    - from: "{{ mail_notify_from }}"
+      to: "{{ mail_notify_to }}"
+    slack_configs:
+    - api_url: "{{ slack_notify_address }}"
+      channel: '#monitoring'
+openshift_cluster_monitoring_operator_alertmanager_storage_capacity: 2Gi
+openshift_cluster_monitoring_operator_alertmanager_storage_class_name: ceph-storage
+openshift_cluster_monitoring_operator_alertmanager_storage_enabled: True
+openshift_cluster_monitoring_operator_prometheus_storage_capacity: 100Gi
+openshift_cluster_monitoring_operator_prometheus_storage_class_name: ceph-storage
+openshift_cluster_monitoring_operator_prometheus_storage_enabled: True
+
+# EFK:
+openshift_logging_curator_cpu_request: 100m
+openshift_logging_curator_default_days: '7'
+openshift_logging_curator_memory_limit: 256Mi
+openshift_logging_curator_nodeselector:
+# node-role.kubernetes.io/compute: "true"
+  node-role.kubernetes.io/infra: "true"
+openshift_logging_elasticsearch_storage_type: pvc
+openshift_logging_es_cluster_size: '1'
+#scaling up:
+#openshift_logging_es_cluster_size: '3'
+openshift_logging_es_cpu_request: 600m
+#openshift_logging_es_cpu_request: '1'
+#WARNING: inconsistent vars used in openshift_logging_elasticsearch role
+openshift_logging_elasticsearch_cpu_request: 600m
+openshift_logging_es_memory_limit: 8Gi
+openshift_logging_es_pvc_storage_class_name: ceph-storage
+openshift_logging_es_pvc_dynamic: True
+openshift_logging_es_pvc_size: 42Gi
+openshift_logging_es_recover_after_time: 10m
+openshift_logging_es_nodeselector:
+# node-role.kubernetes.io/compute: "true"
+  node-role.kubernetes.io/infra: "true"
+openshift_logging_es_number_of_shards: '3'
+#openshift_logging_es_number_of_shards: '1'
+openshift_logging_es_number_of_replicas: '1'
+#openshift_logging_es_number_of_replicas: '0'
+openshift_logging_fluentd_buffer_queue_limit: 1024
+openshift_logging_fluentd_buffer_size_limit: 1m
+openshift_logging_fluentd_cpu_request: 100m
+openshift_logging_fluentd_file_buffer_limit: 256Mi
+openshift_logging_fluentd_memory_limit: 512Mi
+openshift_logging_fluentd_nodeselector:
+  everyoneknows: itsbutters
+openshift_logging_fluentd_replica_count: 2
+#DEPL#openshift_logging_install_logging: True
+openshift_logging_install_logging: False
+#openshift_logging_install_eventrouter: False
+openshift_logging_kibana_cpu_request: 600m
+openshift_logging_kibana_hostname: "kibana.{{ openshift_master_default_subdomain }}"
+openshift_logging_kibana_memory_limit: 736Mi
+openshift_logging_kibana_proxy_cpu_request: 200m
+openshift_logging_kibana_proxy_memory_limit: 256Mi
+openshift_logging_kibana_replica_count: 2
+openshift_logging_kibana_nodeselector:
+# node-role.kubernetes.io/compute: "true"
+  node-role.kubernetes.io/infra: "true"
+
+#has anyone ever used this on openshift!?
+#openshift_cfme_install_app: True
+
+# Custom / LDAP Groups Sync
+openshift_roles:
+- username: faust
+  role: cluster-admin
+ldap_groupsync_base: <ldap-base-here>
+ldap_groupsync_groupbase: "ou=groups,{{ ldap_groupsync_base }}"
+ldap_groupsync_project: utgb-infra
+ldap_groupsync_url: ldaps://<ldap-fqdn-there>
+ldap_groupsync_userbase: "ou=users,{{ ldap_groupsync_base }}"
+ldap_groupsync_mappings:
+- name: Administrators
+  ldapgroup: "cn=admins,{{ ldap_groupsync_groupbase }}"
+- name: LDAPUsers
+  ldapgroup: "cn=all,{{ ldap_groupsync_groupbase }}"
+
+# LDAP Auth:
+openshift_master_identity_providers:
+- name: CorporateLDAP
+  challenge: 'true'
+  login: 'true'
+  kind: LDAPPasswordIdentityProvider
+  attributes:
+    id: ['dn']
+    email: ['mail']
+    name: ['sn']
+    preferredUsername: ['uid']
+#  bindDN: "cn=openshift,ou=services,{{ ldap_groupsync_base }}"
+  bindDN: <ldap-bind-dn-here>
+  bindPassword: <ldap-bind-password-there>
+  ca: ldap-chain.crt
+  insecure: 'false'
+  url: '{{ ldap_groupsync_url }}/{{ ldap_groupsync_base }}?uid?sub?(&(objectClass=inetOrgPerson)(!(pwdAccountLockedTime=*)))'
+openshift_master_ldap_ca_path: "{{ playbook_dir }}"
+openshift_master_ldap_ca_file: "{{ openshift_master_ldap_ca_path }}/ldap-chain.crt"
+#^^ file should exist on Ansible node, containing your chain of CA signing your LDAP certificate

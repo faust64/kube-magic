@@ -1,0 +1,5 @@
+/*.log
+/ceph-ansible
+/custom/group_vars/private.yaml
+/kubespray
+/openshift-ansible

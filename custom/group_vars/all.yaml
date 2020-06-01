@@ -1,0 +1,25 @@
+## Ansible >=2.8
+ansible_python_interpreter: auto_silent
+
+## Custom / EFK
+elasticsearch_tag: 7.7.0
+fluentd_tag: v1.10-debian-elasticsearch7-1
+
+## Custom / Katello
+epel_default_reponame: "EPEL{{ ansible_distribution_major_version }} x86_64"
+
+## Custom / Keepalived
+keepalive_contacts:
+- samuel@unetresgrossebite.com
+smtp_relay: "smtp.vms.{{ intradomain }}"
+
+## Custom / Logging
+kibana_fqdn: "kibana.{{ ingressdomain }}"
+
+## Custom / Nagios
+nagios_remotes:
+- 10.42.242.202
+register_api_checks_to_nagios_remotes: True
+
+## Custom / Tekton
+tekton_version: 0.12.1

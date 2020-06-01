@@ -1,0 +1,61 @@
+---
+etcd_data_dir: /var/lib/etcd
+bin_dir: /usr/local/bin
+kubelet_load_modules: true
+upstream_dns_servers:
+- 10.255.255.255
+searchdomains:
+- intra.unetresgrossebite.com
+- unetresgrossebite.com
+#additional_no_proxy: "*.intra.unetresgrossebite.com,10.42.0.0/15"
+#http_proxy: "http://netserv.vms.intra.unetresgrossebite.com:3128/"
+#https_proxy: "http://netserv.vms.intra.unetresgrossebite.com:3128/"
+download_validate_certs: False
+cert_management: script
+#ignore_assert_errors: false
+download_container: true
+deploy_container_engine: true
+
+# Custom / Root Domain
+mydomain: unetresgrossebite.com
+intradomain: "intra.{{ mydomain }}"
+ingressdomain: "apps.{{ intradomain }}"
+
+## Kubespray / External LB
+## see https://github.com/kubernetes-sigs/kubespray/blob/master/docs/ha-mode.md
+apiserver_loadbalancer_domain_name: "api-k8s.{{ intradomain }}"
+loadbalancer_apiserver:
+  address: 10.42.253.152
+  port: 6443
+loadbalancer_apiserver_localhost: false
+loadbalancer_apiserver_port: 6443
+
+## Custom / Katello
+epel_default_reponame: "EPEL{{ ansible_distribution_major_version }} x86_64"
+
+## Custom / Keepalived
+keepalive_contacts:
+- samuel@unetresgrossebite.com
+smtp_relay: "smtp.vms.{{ intradomain }}"
+
+## Custom / Logging
+kibana_fqdn: "kibana.{{ ingressdomain }}"
+
+## Custom / Nagios
+nagios_remotes:
+- 10.42.242.200
+- 10.42.242.202
+- 10.42.242.203
+
+## Kubespray / Raspbian (?)
+## armv8l missing from kubespray
+## Yet Raspberry-Pi 4 ships with thoses
+##   having deployed a k8s cluster perviously (github.com/faust64/pi8s), I'm
+##   confident all components can run on both (though this is not the case for
+##   armv6l, from Raspberry-Pi 2 -- best use case for those would be to host
+##   thecluster external LB)
+_host_architecture_groups:
+  x86_64: amd64
+  aarch64: arm64
+  armv7l: arm
+  armv8l: arm

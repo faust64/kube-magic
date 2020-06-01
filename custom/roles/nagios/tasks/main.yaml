@@ -1,0 +1,10 @@
+- include_tasks: facts.yaml
+- include_tasks: install.yaml
+- include_tasks: config.yaml
+- include_tasks: custom.yaml
+- include_tasks: post.yaml
+- include_tasks: nagios-api.yaml
+  when:
+  - register_api_checks_to_nagios_remotes | default(False)
+  - nagios_remotes is defined
+  - (nagios_remotes | length) > 0

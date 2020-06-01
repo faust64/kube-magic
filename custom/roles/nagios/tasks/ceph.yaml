@@ -1,0 +1,15 @@
+- name: Install Ceph-Nagios Sudoers Configuration
+  template:
+    dest: /etc/sudoers.d/nagios-ceph
+    group: root
+    mode: 0400
+    owner: root
+    src: ceph.sudoers.j2
+- name: Install Nagios Ceph Configuration
+  notify: Reload nrpe
+  template:
+    dest: "{{ nagios_probes_config }}/ceph.cfg"
+    group: root
+    mode: 0644
+    owner: root
+    src: ceph.nrpe.j2

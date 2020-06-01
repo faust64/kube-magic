@@ -1,0 +1,65 @@
+- include_role:
+    name: commons
+    tasks_from: helpers/namespace.yaml
+  vars:
+    k8s_api_node: "{{ inventory_hostname }}"
+    admin_kubeconfig: "{{ custom_admin_kubeconfig | default('/etc/origin/master/admin.kubeconfig' }}"
+    kube_client: oc
+    ns_name: "{{ ldap_groupsync_project }}"
+
+- name: Checks Sync Job Exists
+  changed_when: False
+  failed_when: False
+  register: job_exists
+  shell: "oc describe job -n {{ ldap_groupsync_project }} {{ ldap_groupsync_jobname }}"
+- block:
+  - block:
+    - name: Gets LDAP CA
+      args:
+        chdir: /root
+      delegate_to: localhost
+      changed_when: False
+      failed_when: False
+      register: ldapca
+      shell: "cat {{ openshift_master_identity_providers[0]['ca'] }}"
+    - name: Gets LDAP CA Path
+      args:
+        chdir: /etc/origin/master
+      changed_when: False
+      failed_when: False
+      register: capath
+      shell: grep -A33 ^oauthConfig master-config.yaml | awk '/^      ca:/{print $2;exit;}'
+    when:
+    - (openshift_master_identity_providers[0]['ca'] | default(False)) != False
+  - name: Installs LDAPSyncConfig
+    template:
+      dest: /root/ldap-sync-group.yml
+      group: root
+      mode: 0600
+      owner: root
+      src: ldap-sync-check.j2
+  - name: Checks LDAPSyncConfig properly works
+    args:
+      chidr: /root
+    shell: oc adm groups sync --sync-config=ldap-sync-group.yml --confirm
+  - name: Installs Sync Job Templates
+    template:
+      dest: /root/ldap-sync-job.yml
+      group: root
+      mode: 0600
+      owner: root
+      src: ldap-sync-job.j2
+  - name: Creates Sync Job
+     args:
+       chdir: /root
+    shell: |
+        oc process -f ldap-sync-job.yml -p "JOB_NAME={{ ldap_groupsync_jobname }}" \
+           -p "NAMESPACE={{ ldap_groupsync_project }}" \
+           | oc apply -n "{{ ldap_groupsync_project }}" -f-
+  - name: Cleanup LDAPSync Temporary Assets
+    file:
+      dest: "/root/ldap-sync-{{ item }}.yml"
+      state: absent
+    with_items: [ 'job', 'group' ]
+  when:
+  - (job_exists.rc | default(0)) != 0

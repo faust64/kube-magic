@@ -1,0 +1,14 @@
+- include_tasks: ./pool.yaml
+- include_tasks: ./keyring.yaml
+  vars:
+    kperms:
+    - "mon 'allow r'"
+    - "osd 'allow class-read object_prefix rbd_children, allow rwx pool={{ pool }}'"
+    kuser: "{{ userid }}"
+- name: Fetches ceph-rbd monitors list
+  args:
+    chdir: /etc/ceph
+  changed_when: False
+  register: rbd_monlist
+  shell: |
+    awk '/^mon host/{print $4}' /etc/ceph/{{ cluster }}.conf | sed 's|.*v1:\([^]]*\).*v1:\([^]]*\).*v1:\([^]]*\).*|\1,\2,\3|'

@@ -1,0 +1,15 @@
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_certificates
+{% if (openshift_use_crio_only | default(False)) == False %}
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_docker
+{% endif %}
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_fluentd
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_ioerrors
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_oom
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_persistent_volumes_usage
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_rogue_containers
+{% if groups['glusterfs'] is defined and (groups['glusterfs'] | length) > 0 %}
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_gluterfs_volumes_status
+{% if ansible_fqdn in groups['glusterfs'] or ansible_hostname in groups['glusterfs'] %}
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_vg_usage
+{% endif %}
+{% endif %}

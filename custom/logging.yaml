@@ -1,0 +1,14 @@
+- hosts: kube-master[0]
+  vars:
+    admin_kubeconfig: "{{ custom_admin_kubeconfig | default('/etc/kubernetes/admin.conf') }}"
+    kube_client: kubectl
+    logging_ns: logging
+  roles:
+  - logging
+- hosts: OSEv3[0]
+  vars:
+    admin_kubeconfig: "{{ custom_admin_kubeconfig | default('/etc/origin/master/admin.kubeconfig') }}"
+    kube_client: oc
+    logging_ns: logging
+  roles:
+  - logging

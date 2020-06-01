@@ -1,0 +1,41 @@
+- name: Checks for Existing Kibana Ingress
+  changed_when: False
+  failed_when: False
+  register: has_ig
+  shell: "{{ kube_client }} --kubeconfig {{ admin_kubeconfig }} -n {{ logging_ns }} describe ingress kibana"
+- block:
+  - block:
+    - name: Set TLS Provier Facts
+      set_fact:
+        sc_name: kibana-tls
+        sc_namespace: "{{ logging_ns }}"
+        sc_cn: "{{ kibana_fqdn }}"
+        sc_org: UTGB
+## FIXME / cert-manager ##
+        tls_provider: "{{ 'certmgr' if ((cert_manager_enable | default(False))
+                                        and 0 == 1)
+                                    else 'self-signed' }}"
+## FIXME / cert-manager ##
+    - include_role:
+        name: commons
+        tasks_from: "ssl/{{ tls_provider }}.yaml"
+    when:
+    - kibana_do_tls | default(True)
+  - name: Generates Kibana Ingress Configuration
+    template:
+      dest: /tmp/kibana-ig.yaml
+      group: root
+      mode: 0640
+      owner: root
+      src: ingress.j2
+  - name: Installs Kibana Ingress
+    args:
+      chdir: /tmp
+    shell: "{{ kube_client }} --kubeconfig {{ admin_kubeconfig }} apply -f kibana-ig.yaml"
+  - name: Cleanups Kibana Ingress Temporary Assets
+    file:
+      dest: /tmp/kibana-ig.yaml
+      state: absent
+  when:
+  - has_ig is defined
+  - (has_ig.rc | default(0)) != 0

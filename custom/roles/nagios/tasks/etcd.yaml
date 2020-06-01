@@ -1,0 +1,15 @@
+- name: Install Etcd-Nagios Sudoers Configuration
+  template:
+    dest: /etc/sudoers.d/nagios-etcd
+    group: root
+    mode: 0400
+    owner: root
+    src: etcd.sudoers.j2
+- name: Install Nagios Etcd Configuration
+  notify: Reload nrpe
+  template:
+    dest: "{{ nagios_probes_config }}/etcd.cfg"
+    group: root
+    mode: 0644
+    owner: root
+    src: etcd.nrpe.j2

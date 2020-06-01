@@ -1,0 +1,16 @@
+- name: Fetches cephfs admin keyring
+  args:
+    chdir: /etc/ceph
+  changed_when: False
+  register: cephfs_admin_keyring
+  shell: "ceph -c {{ cluster }}.conf auth get client.admin | awk '/key =/{print $3}'"
+- name: Fetches cephfs monitors list
+  args:
+    chdir: /etc/ceph
+  changed_when: False
+  register: cephfs_monlist
+  shell: |
+    awk '/^mon host/{print $4}' /etc/ceph/{{ cluster }}.conf | sed 's|.*v1:\([^]]*\).*v1:\([^]]*\).*v1:\([^]]*\).*|\1,\2,\3|'
+## WARNING: I'm pretty sure that sed won't work on older releases of ceph
+## octopus includes v1/v2 urls, used to only have v1s, ... sticking to awk with no sed should work
+## I "think" it came up with Octopus. not certain/to check: should be handled right here

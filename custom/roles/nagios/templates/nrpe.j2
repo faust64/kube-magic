@@ -1,0 +1,30 @@
+allowed_hosts={{ nagios_remotes | join(',') }}
+server_address={{ nrpe_listen_addr | default(ansible_default_ipv4['address']) }}
+server_port={{ nrpe_listen_port | default('5666') }}
+
+command_timeout=60
+connection_timeout=300
+debug=0
+dont_blame_nrpe=0
+log_facility=daemon
+nrpe_group={{ nagios_user }}
+nrpe_user={{ nagios_user }}
+pid_file={{ nagios_pid_file }}
+
+command[check_disk_root]={{ nagios_plugins_dir }}/check_disk -w 18% -c 12% -p /
+command[check_fsck]={{ nagios_plugins_dir }}/check_fsck
+{% if (ansible_virtualization_role | default('guest')) == 'host' %}
+command[check_hwstatus]={{ nagios_plugins_dir }}/check_hwstatus
+{% endif %}
+command[check_load]={{ nagios_plugins_dir }}/check_load -w "{{ nagios_cpu_warn | join(',') }}" -c "{{ nagios_cpu_crit | join(',') }}"
+command[check_nrpe_available]=/bin/echo "NRPE OK"
+{% for mdev in mdadm_devices %}
+command[check_raid_{{ mdev }}]={{ nagios_plugins_dir }}/check_raid {{ mdev }}
+{% endfor %}
+command[check_rprocs]=/usr/bin/sudo {{ nagios_plugins_dir }}/check_rprocs -w {{ running_processes_warn }} -c {{ running_processes_crit }}
+{% for drive in smart_check_devices %}
+command[check_smart_{{ drive }}]=/usr/bin/sudo {{ nagios_plugins_dir }}/check_smart_attributes -d /dev/{{ drive }} -dbj {{ nagios_plugins_dir }}/check_smartdb.json
+{% endfor %}
+command[check_ssh]={{ nagios_plugins_dir }}/check_ssh -p {{ ansible_ssh_port | default(22) }} 127.0.0.1
+
+include_dir={{ nagios_probes_config }}/

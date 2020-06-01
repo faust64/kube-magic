@@ -1,0 +1,18 @@
+- name: Checks for Existing Namespace
+  args:
+    chdir: "{{ ansible_env['HOME'] }}"
+  changed_when: False
+  delegate_to: "{{ k8s_api_node | default('localhost') }}"
+  failed_when: False
+  register: has_ns
+  run_once: yes
+  shell: "{{ kube_client | default('kubectl') }} --kubeconfig {{ admin_kubeconfig | default('./kube/config') }} describe ns {{ ns_name | default('default') }}"
+- name: Creates Missing Namespace
+  args:
+    chdir: "{{ ansible_env['HOME'] }}"
+  delegate_to: "{{ k8s_api_node | default('localhost') }}"
+  run_once: yes
+  shell: "{{ kube_client | default('kubectl') }} --kubeconfig {{ admin_kubeconfig | default('./kube/config') }} create ns {{ ns_name | default('default') }}"
+  when:
+  - has_ns is defined
+  - (has_ns.rc | default(0)) != 0

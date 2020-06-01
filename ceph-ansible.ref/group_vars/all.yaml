@@ -1,0 +1,29 @@
+# cluster names
+cluster: ceph
+cephfs: cephfs
+
+configure_firewall: True
+dashboard_enabled: False
+ntp_daemon_type: chronyd
+ntp_service_enabled: True
+
+################### Katello ###################
+# Don't install epel-release or custom repos ##
+centos_package_dependencies:
+- "{{ 'python3-libselinux' if ansible_distribution_major_version | int >= 8 else 'libselinux-python' }}"
+ceph_origin: distro
+################## otherwise ##################
+#ceph_origin: repository
+#ceph_repository: community
+#ceph_stable_release: octopus
+###############################################
+
+monitor_interface: ens3
+ip_version: ipv4
+public_network: 10.42.253.0/24
+cluster_network: "{{ public_network }}"
+
+osd_mkfs_type: xfs
+osd_mkfs_options_xfs: -f -i size=2048
+osd_mount_options_xfs: noatime,largeio,inode64,swalloc
+osd_objectstore: bluestore

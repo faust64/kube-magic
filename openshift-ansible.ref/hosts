@@ -1,0 +1,52 @@
+[masters]
+master1.friends.intra.unetresgrossebite.com openshift_node_group_name=node-config-master1-crio
+master2.friends.intra.unetresgrossebite.com openshift_node_group_name=node-config-master2-crio
+master3.friends.intra.unetresgrossebite.com openshift_node_group_name=node-config-master3-crio
+
+[infra]
+infra1.friends.intra.unetresgrossebite.com openshift_node_group_name=node-config-infra1-crio
+infra2.friends.intra.unetresgrossebite.com openshift_node_group_name=node-config-infra2-crio
+infra3.friends.intra.unetresgrossebite.com openshift_node_group_name=node-config-infra3-crio
+
+[lb]
+haproxy01.friends.intra.unetresgrossebite.com
+haproxy02.friends.intra.unetresgrossebite.com
+
+[glusterfs]
+gluster1.friends.intra.unetresgrossebite.com openshift_node_group_name=node-config-gluster1-crio glusterfs_ip=10.42.253.100 glusterfs_devices='[ "/dev/vdb", "/dev/vdc", "/dev/vdd" ]' glusterfs_nodetags='{ "arbiter": "disabled" }' glusterfs_zone=1
+gluster2.friends.intra.unetresgrossebite.com openshift_node_group_name=node-config-gluster2-crio glusterfs_ip=10.42.253.101 glusterfs_devices='[ "/dev/vdb", "/dev/vdc", "/dev/vdd" ]' glusterfs_nodetags='{ "arbiter": "disabled" }' glusterfs_zone=2
+gluster3.friends.intra.unetresgrossebite.com openshift_node_group_name=node-config-gluster3-crio glusterfs_ip=10.42.253.102 glusterfs_devices='[ "/dev/vdb", "/dev/vdc", "/dev/vdd" ]' glusterfs_nodetags='{ "arbiter": "required" }' glusterfs_zone=3
+
+[compute-east]
+compute1.friends.intra.unetresgrossebite.com openshift_node_group_name=node-config-compute1-crio
+compute4.friends.intra.unetresgrossebite.com openshift_node_group_name=node-config-compute4-crio
+[compute-north:children]
+glusterfs
+[compute-south]
+compute2.friends.intra.unetresgrossebite.com openshift_node_group_name=node-config-compute2-crio
+compute5.friends.intra.unetresgrossebite.com openshift_node_group_name=node-config-compute5-crio
+[compute-west]
+compute3.friends.intra.unetresgrossebite.com openshift_node_group_name=node-config-compute3-crio
+compute6.friends.intra.unetresgrossebite.com openshift_node_group_name=node-config-compute6-crio
+[compute:children]
+compute-east
+compute-north
+compute-south
+compute-west
+
+[etcd:children]
+masters
+[gpg:children]
+masters
+
+[nodes:children]
+compute
+infra
+masters
+
+[OSEv3:children]
+lb
+nodes
+new_nodes
+
+[new_nodes]

@@ -1,0 +1,34 @@
+deb_dist_match:
+- Debian
+- Devuan
+- Raspbian
+- Ubuntu
+el_dist_match:
+- CentOS
+- RedHat
+
+epel_default_reponame: "Extra Packages for Enterprise Linux {{ ansible_distribution_major_version }} - x86_64"
+nagios_common_packages:
+  el:
+  - nrpe
+  - nrpe-selinux
+  - nagios-plugins-disk
+  - nagios-plugins-dns
+  - nagios-plugins-http
+  - nagios-plugins-sensors
+  - nagios-plugins-ssh
+  - nagios-plugins-procs
+  - nagios-plugins-users
+  - "{{ 'python3-libsemanage' if ansible_distribution_major_version | int >= 8 else 'libsemanage-python' }}"
+  deb:
+  - nagios-nrpe-server
+  - monitoring-plugins
+
+nagios_remotes:
+- 127.0.0.1
+smart_check_devices: []
+#- vda
+#- sdc
+mdadm_devices: []
+#- md42
+#- md128

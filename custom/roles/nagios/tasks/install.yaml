@@ -1,0 +1,41 @@
+- block:
+  - name: Install NRPE (EL)
+    register: installed_nrpe
+    yum:
+      enablerepo: "{{ epel_reponame | default(epel_default_reponame) }}"
+      name: "{{ nagios_common_packages['el'] }}"
+      state: latest
+  - name: Ensure NRPE stopped prior configuration
+    service:
+      name: "{{ nagios_service }}"
+      state: stopped
+    when:
+    - installed_nrpe is defined
+    - installed_nrpe is changed
+  when:
+  - ansible_distribution in el_dist_match
+- block:
+  - name: Install NRPE (deb)
+    register: installed_nrpe
+    apt:
+      name: "{{ nagios_common_packages['deb'] }}"
+      state: latest
+  - name: Ensure NRPE stopped prior configuration
+    service:
+      name: "{{ nagios_service }}"
+      state: stopped
+    when:
+    - installed_nrpe is defined
+    - installed_nrpe is changed
+  when:
+  - ansible_distribution in deb_dist_match
+- name: Fail for unsupported distros
+  fail:
+    msg: |
+      Unsupported distribution: {{ ansible_distribution }}
+      Feel free to patch {{ playbook_dir }}/roles/nagios accordingly
+  when:
+  - >
+      (nagios_pid_file | default(False)) == False
+      or (nagios_plugins_dir | default(False)) == False
+      or (nagios_user | default(False)) == False

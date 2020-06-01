@@ -1,0 +1,93 @@
+- hosts: lbs:k8s-cluster
+  vars:
+    deb_dist_match:
+    - Debian
+    - Devuan
+    - Raspbian
+    - Ubuntu
+  tasks:
+  - block:
+    - name: Installs python-apt
+      args:
+        warn: False
+      shell: apt-get install -yf python-apt
+    - name: Installs Main Dependencies
+      apt:
+        name:
+        - ca-certificates
+        - net-tools
+        - openssl
+        - strace
+        - sudo
+        - tcpdump
+        - unattended-upgrades
+        - wget
+        state: present
+    - block:
+      - name: Links python3 as python
+        file:
+          dest: /usr/bin/python
+          src: /usr/bin/python3
+          state: link
+      - name: Fix delegate-to
+        file:
+          dest: /usr/libexec/platform-python
+          src: /usr/bin/python
+          state: link
+      when:
+      - ansible_distribution_release in [ 'beowulf', 'bionic', 'buster', 'focal' ]
+    when:
+    - ansible_distribution in deb_dist_match
+
+- hosts: lbs:kube-master
+  gather_facts: yes
+  tasks:
+  - include_role:
+      name: lb
+    when:
+    - groups['lbs'] is defined
+    - ansible_fqdn in groups['lbs'] or ansible_hostname in groups['lbs']
+
+- hosts: k8s-cluster
+  tasks:
+  - block:
+    - name: Installs Ceph Apt Key
+      args:
+        creates: /etc/apt/sources.list.d/ceph.list
+        warn: False
+      shell: wget -q -O- https://download.ceph.com/keys/release.asc | apt-key add -
+    - name: Installs Ceph Repo
+      args:
+        chdir: /etc/apt/sources.list.d
+        creates: /etc/apt/sources.list.d/ceph.list
+      register: ceph_repo
+      shell: "echo deb https://download.ceph.com/debian-{{ ceph_stable_release | default('octopus') }} buster main >ceph.list"
+    - name: Updates Apt Cache
+      apt:
+        update_cache: yes
+      when:
+      - ceph_repo is defined
+      - ceph_repo is changed
+    - name: Ensures Ceph Client is Installed
+      apt:
+        name: ceph-common
+        state: present
+    when:
+    - ansible_distribution in deb_dist_match
+
+  - name: Sets sysctl hosting ElasticSearch
+    sysctl:
+      name: vm.max_map_count
+      reload: yes
+      state: present
+      sysctl_file: /etc/sysctl.d/98-k8s-es.conf
+      value: "262144"
+
+- hosts: kube-master[0]:mons[0]
+  gather_facts: yes
+  tasks:
+  - include_role:
+      name: post-deploy-ceph
+    when:
+    - groups['mons'] is defined
+    - ansible_fqdn in groups['mons'] or ansible_hostname in groups['mons']

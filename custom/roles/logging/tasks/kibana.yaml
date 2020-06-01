@@ -1,0 +1,31 @@
+- name: Checks for Existing Kibana Deployment
+  changed_when: False
+  failed_when: False
+  register: has_kb
+  shell: "{{ kube_client }} --kubeconfig {{ admin_kubeconfig }} -n {{ logging_ns }} describe deploy kibana"
+- block:
+  - name: Generates Kibana Deployment Configuration
+    template:
+      dest: /tmp/kibana.yaml
+      group: root
+      mode: 0640
+      owner: root
+      src: kibana.j2
+  - name: Installs Kibana
+    args:
+      chdir: /tmp
+    shell: "{{ kube_client }} --kubeconfig {{ admin_kubeconfig }} apply -f kibana.yaml"
+  - name: Cleanups Kibana Temporary Assets
+    file:
+      dest: /tmp/kibana.yaml
+      state: absent
+  when:
+  - has_kb is defined
+  - (has_kb.rc | default(0)) != 0
+- name: Waits for Kibana
+  changed_when: False
+  delay: 5
+  register: kb_there
+  retries: 30
+  shell: "{{ kube_client }} --kubeconfig {{ admin_kubeconfig }} get pods -n {{ logging_ns }} --selector=name=kibana | grep 1/1"
+  until: (kb_there.stdout_lines | default([])) | length > 0

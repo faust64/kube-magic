@@ -1,0 +1,75 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: kibana
+    version: v1
+  name: kibana
+  namespace: {{ logging_ns }}
+spec:
+  replicas: {{ kibana_replicas }}
+  selector:
+    matchLabels:
+      name: kibana
+      version: v1
+  template:
+    metadata:
+      labels:
+        name: kibana
+        version: v1
+    spec:
+      containers:
+      - env:
+        - name: ELASTICSEARCH_URL
+          value: http://elasticsearch.{{ logging_ns }}.svc.{{ cluster_name }}:9200
+        - name: XPACK_SECURITY_ENABLED
+          value: "true"
+        image: docker.elastic.co/kibana/kibana:{{ elasticsearch_tag }}
+        livenessProbe:
+          failureThreshold: 10
+          initialDelaySeconds: 30
+          tcpSocket:
+            port: 5601
+          periodSeconds: 10
+          timeoutSeconds: 5
+        name: kibana
+        ports:
+        - containerPort: 5601
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 10
+          initialDelaySeconds: 30
+          tcpSocket:
+            port: 5601
+          periodSeconds: 10
+          timeoutSeconds: 5
+        resources:
+          limits:
+            cpu: 1300m
+            memory: 1Gi
+          requests:
+            cpu: 500m
+            memory: 512Mi
+        securityContext:
+          runAsUser: 1000
+      nodeSelector:
+        node-role.kubernetes.io/infra: "true"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: kibana
+    version: v1
+  name: kibana
+  namespace: {{ logging_ns }}
+spec:
+  ports:
+  - port: 5601
+    targetPort: 5601
+  selector:
+    name: kibana
+    version: v1
+  type: ClusterIP

@@ -1,0 +1,9 @@
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_certificates
+{% if (container_manager | default('docker')) == 'docker' %}
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_docker
+{% endif %}
+#{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_fluentd
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_ioerrors
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_oom
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_persistent_volumes_usage
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_rogue_containers

@@ -1,0 +1,3 @@
+[lbs]
+haproxy01 keepalive_priority=10 keepalive_vhid=101 keepalive_vip=10.42.253.152
+haproxy02 keepalive_priority=20 keepalive_vhid=101 keepalive_vip=10.42.253.152

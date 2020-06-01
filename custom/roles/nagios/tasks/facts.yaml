@@ -1,0 +1,49 @@
+- block:
+  - name: Set distro facts
+    set_fact:
+      nagios_pid_file: /var/run/nrpe/nrpe.pid
+      nagios_plugins_dir: /usr/lib64/nagios/plugins
+      nagios_probes_config: /etc/nrpe.d
+      nagios_service: nrpe
+      nagios_user: nrpe
+  when:
+  - ansible_distribution in el_dist_match
+- block:
+  - name: Set distro facts
+    set_fact:
+      nagios_pid_file: /var/run/nagios/nrpe.pid
+      nagios_plugins_dir: /usr/lib/nagios/plugins
+      nagios_probes_config: /etc/nagios/nrpe.d
+      nagios_service: nagios-nrpe-server
+      nagios_user: nagios
+  when:
+  - ansible_distribution in deb_dist_match
+
+- block:
+  - name: Sets OpenShift Facts
+    set_fact:
+      admin_kubeconfig: "{{ custom_admin_kubeconfig | default('/etc/origin/master/admin.kubeconfig') }}"
+      endpoint_url: "https://{{ hostvars[groups['masters'][0]]['openshift_master_cluster_public_hostname'] | default(hostvars[groups['masters'][0]]['openshift_master_cluster_hostname'] | default('openshift.demo.local')) }}:{{ hostvars[groups['masters'][0]]['openshift_master_api_port'] | default('8443') }}"
+      k8s_cluster_name: OpenShift
+      kube_client: oc
+      master_host: "{{ groups['masters'][0] }}"
+      monitoring_ns: openshift-monitoring
+      probe_pfx: ocp
+  when:
+  - groups['OSEv3'] is defined
+  - groups['OSEv3'] | length > 0
+  - groups['masters'] is defined
+  - groups['masters'] | length > 0
+- block:
+  - name: Sets Kubernetes Facts
+    set_fact:
+      admin_kubeconfig: "{{ custom_admin_kubeconfig | default('/etc/kubernetes/admin.conf') }}"
+      endpoint_url: "https://{{ apiserver_loadbalancer_domain_name | default(loadbalancer_apiserver.address | default('kubernetes.demo.local')) }}:{{ loadbalancer_apiserver.port | default('6443') }}"
+      k8s_cluster_name: Kubernetes
+      kube_client: kubectl
+      master_host: "{{ groups['kube-master'][0] }}"
+      monitoring_ns: prometheus-monitoring
+      probe_pfx: k8s
+  when:
+  - groups['kube-master'] is defined
+  - groups['kube-master'] | length > 0

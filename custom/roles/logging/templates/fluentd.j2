@@ -1,0 +1,372 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    name: fluentd
+    version: v1
+  name: fluentd
+  namespace: {{ logging_ns }}
+data:
+  entrypoint.sh: |
+    #!/usr/bin/env sh
+    #extracted from original image
+    #patch sending fluentd logs output to some file
+    #fluentd can't parse its own logs somehow
+    set -e
+    SIMPLE_SNIFFER=$( gem contents fluent-plugin-elasticsearch | grep elasticsearch_simple_sniffer.rb )
+    if [ -n "$SIMPLE_SNIFFER" -a -f "$SIMPLE_SNIFFER" ] ; then
+        FLUENTD_OPT="$FLUENTD_OPT -r $SIMPLE_SNIFFER"
+    fi
+    exec fluentd -c /fluentd/etc/${FLUENTD_CONF} -p /fluentd/plugins --gemfile /fluentd/Gemfile ${FLUENTD_OPT} >/var/log/fluentd.log 2>&1
+  kubernetes.conf: |
+    #extracted from original image
+    #patch introducing cri-o/containerd logs parsing
+    #see https://github.com/fluent/fluentd-kubernetes-daemonset/issues/412
+    <label @FLUENT_LOG>
+      <match fluent.**>
+        @type null
+      </match>
+    </label>
+    <source>
+      @type tail
+      @id in_tail_container_logs
+      path /var/log/containers/*.log
+      pos_file /var/log/fluentd-containers.log.pos
+      tag "#{ENV['FLUENT_CONTAINER_TAIL_TAG'] || 'kubernetes.*'}"
+      exclude_path "#{ENV['FLUENT_CONTAINER_TAIL_EXCLUDE_PATH'] || use_default}"
+      # excludes fluentd containers, in logging namespace, fluentd pods
+      read_from_head true
+      <parse>
+{% if (container_manager | default('docker')) in [ 'crio', 'containerd' ] %}
+         @type regexp
+         expression /^(?<logtime>.+) (?<stream>stdout|stderr) (?<logtag>[FP]) (?<log>.+)$/i
+         time_key logtime
+         time_format %Y-%m-%dT%H:%M:%S.%N%Z
+{% else %}
+         @type "#{ENV['FLUENT_CONTAINER_TAIL_PARSER_TYPE'] || 'json'}"
+         time_format %Y-%m-%dT%H:%M:%S.%NZ
+{% endif %}
+      </parse>
+    </source>
+{% if (container_manager | default('docker')) in [ 'crio', 'containerd' ] %}
+    <filter kubernetes.**>
+      @type concat
+      key log
+      partial_key logtag
+      partial_value P
+      separator ""
+    </filter>
+{% endif %}
+    <source>
+      @type tail
+      @id in_tail_minion
+      path /var/log/salt/minion
+      pos_file /var/log/fluentd-salt.pos
+      tag salt
+      <parse>
+        @type regexp
+        expression /^(?<time>[^ ]* [^ ,]*)[^\[]*\[[^\]]*\]\[(?<severity>[^ \]]*) *\] (?<message>.*)$/
+        time_format %Y-%m-%d %H:%M:%S
+      </parse>
+    </source>
+    <source>
+      @type tail
+      @id in_tail_startupscript
+      path /var/log/startupscript.log
+      pos_file /var/log/fluentd-startupscript.log.pos
+      tag startupscript
+      <parse>
+        @type syslog
+      </parse>
+    </source>
+    <source>
+      @type tail
+      @id in_tail_docker
+      path /var/log/docker.log
+      pos_file /var/log/fluentd-docker.log.pos
+      tag docker
+      <parse>
+        @type regexp
+        expression /^time="(?<time>[^)]*)" level=(?<severity>[^ ]*) msg="(?<message>[^"]*)"( err="(?<error>[^"]*)")?( statusCode=($<status_code>\d+))?/
+      </parse>
+    </source>
+    <source>
+      @type tail
+      @id in_tail_etcd
+      path /var/log/etcd.log
+      pos_file /var/log/fluentd-etcd.log.pos
+      tag etcd
+      <parse>
+        @type none
+      </parse>
+    </source>
+    <source>
+      @type tail
+      @id in_tail_kubelet
+      multiline_flush_interval 5s
+      path /var/log/kubelet.log
+      pos_file /var/log/fluentd-kubelet.log.pos
+      tag kubelet
+      <parse>
+        @type kubernetes
+      </parse>
+    </source>
+    <source>
+      @type tail
+      @id in_tail_kube_proxy
+      multiline_flush_interval 5s
+      path /var/log/kube-proxy.log
+      pos_file /var/log/fluentd-kube-proxy.log.pos
+      tag kube-proxy
+      <parse>
+        @type kubernetes
+      </parse>
+    </source>
+    <source>
+      @type tail
+      @id in_tail_kube_apiserver
+      multiline_flush_interval 5s
+      path /var/log/kube-apiserver.log
+      pos_file /var/log/fluentd-kube-apiserver.log.pos
+      tag kube-apiserver
+      <parse>
+        @type kubernetes
+      </parse>
+    </source>
+    <source>
+      @type tail
+      @id in_tail_kube_controller_manager
+      multiline_flush_interval 5s
+      path /var/log/kube-controller-manager.log
+      pos_file /var/log/fluentd-kube-controller-manager.log.pos
+      tag kube-controller-manager
+      <parse>
+        @type kubernetes
+      </parse>
+    </source>
+    <source>
+      @type tail
+      @id in_tail_kube_scheduler
+      multiline_flush_interval 5s
+      path /var/log/kube-scheduler.log
+      pos_file /var/log/fluentd-kube-scheduler.log.pos
+      tag kube-scheduler
+      <parse>
+        @type kubernetes
+      </parse>
+    </source>
+    <source>
+      @type tail
+      @id in_tail_rescheduler
+      multiline_flush_interval 5s
+      path /var/log/rescheduler.log
+      pos_file /var/log/fluentd-rescheduler.log.pos
+      tag rescheduler
+      <parse>
+        @type kubernetes
+      </parse>
+    </source>
+    <source>
+      @type tail
+      @id in_tail_glbc
+      multiline_flush_interval 5s
+      path /var/log/glbc.log
+      pos_file /var/log/fluentd-glbc.log.pos
+      tag glbc
+      <parse>
+        @type kubernetes
+      </parse>
+    </source>
+    <source>
+      @type tail
+      @id in_tail_cluster_autoscaler
+      multiline_flush_interval 5s
+      path /var/log/cluster-autoscaler.log
+      pos_file /var/log/fluentd-cluster-autoscaler.log.pos
+      tag cluster-autoscaler
+      <parse>
+        @type kubernetes
+      </parse>
+    </source>
+    <source>
+      @type tail
+      @id in_tail_kube_apiserver_audit
+      multiline_flush_interval 5s
+      path /var/log/kubernetes/kube-apiserver-audit.log
+      pos_file /var/log/kube-apiserver-audit.log.pos
+      tag kube-apiserver-audit
+      <parse>
+        @type multiline
+        format_firstline /^\S+\s+AUDIT:/
+        format1 /^(?<time>\S+) AUDIT:(?: (?:id="(?<id>(?:[^"\\]|\\.)*)"|ip="(?<ip>(?:[^"\\]|\\.)*)"|method="(?<method>(?:[^"\\]|\\.)*)"|user="(?<user>(?:[^"\\]|\\.)*)"|groups="(?<groups>(?:[^"\\]|\\.)*)"|as="(?<as>(?:[^"\\]|\\.)*)"|asgroups="(?<asgroups>(?:[^"\\]|\\.)*)"|namespace="(?<namespace>(?:[^"\\]|\\.)*)"|uri="(?<uri>(?:[^"\\]|\\.)*)"|response="(?<response>(?:[^"\\]|\\.)*)"|\w+="(?:[^"\\]|\\.)*"))*/
+        time_format %Y-%m-%dT%T.%L%Z
+      </parse>
+    </source>
+    <filter kubernetes.**>
+      @type kubernetes_metadata
+      @id filter_kube_metadata
+      kubernetes_url "#{ENV['FLUENT_FILTER_KUBERNETES_URL'] || 'https://' + ENV.fetch('KUBERNETES_SERVICE_HOST') + ':' + ENV.fetch('KUBERNETES_SERVICE_PORT') + '/api'}"
+      verify_ssl "#{ENV['KUBERNETES_VERIFY_SSL'] || true}"
+      ca_file "#{ENV['KUBERNETES_CA_FILE']}"
+      skip_labels "#{ENV['FLUENT_KUBERNETES_METADATA_SKIP_LABELS'] || 'false'}"
+      skip_container_metadata "#{ENV['FLUENT_KUBERNETES_METADATA_SKIP_CONTAINER_METADATA'] || 'false'}"
+      skip_master_url "#{ENV['FLUENT_KUBERNETES_METADATA_SKIP_MASTER_URL'] || 'false'}"
+      skip_namespace_metadata "#{ENV['FLUENT_KUBERNETES_METADATA_SKIP_NAMESPACE_METADATA'] || 'false'}"
+    </filter>
+  systemd.conf: |
+    #extracted from original image
+    #patch reading from /run/log/journal
+    <source>
+      @type systemd
+      @id in_systemd_kubelet
+      matches [{ "_SYSTEMD_UNIT": "kubelet.service" }]
+      path /run/log/journal
+      <storage>
+        @type local
+        persistent true
+        path /var/log/fluentd-journald-kubelet-cursor.json
+      </storage>
+      <entry>
+        fields_strip_underscores true
+      </entry>
+      read_from_head true
+      tag kubelet
+    </source>
+    <source>
+      @type systemd
+      @id in_systemd_docker
+      path /run/log/journal
+      matches [{ "_SYSTEMD_UNIT": "docker.service" }]
+      <storage>
+        @type local
+        persistent true
+        path /var/log/fluentd-journald-docker-cursor.json
+      </storage>
+      <entry>
+        fields_strip_underscores true
+      </entry>
+      read_from_head true
+      tag docker.systemd
+    </source>
+    <source>
+      @type systemd
+      @id in_systemd_bootkube
+      path /run/log/journal
+      matches [{ "_SYSTEMD_UNIT": "bootkube.service" }]
+      <storage>
+        @type local
+        persistent true
+        path /var/log/fluentd-journald-bootkube-cursor.json
+      </storage>
+      <entry>
+        fields_strip_underscores true
+      </entry>
+      read_from_head true
+      tag bootkube
+    </source>
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    name: fluentd
+    version: v1
+  name: fluentd
+  namespace: {{ logging_ns }}
+spec:
+  selector:
+    matchLabels:
+      name: fluentd
+      version: v1
+  template:
+    metadata:
+      labels:
+        name: fluentd
+        version: v1
+    spec:
+      containers:
+      - env:
+        - name:  FLUENT_ELASTICSEARCH_HOST
+          value: elasticsearch.{{ logging_ns }}.svc.{{ cluster_name }}
+        - name:  FLUENT_ELASTICSEARCH_PORT
+          value: "9200"
+        - name: FLUENT_ELASTICSEARCH_SCHEME
+          value: http
+        - name: FLUENT_UID
+          value: "0"
+        name: fluentd
+        image: fluent/fluentd-kubernetes-daemonset:{{ fluentd_tag }}
+        securityContext:
+          privileged: true
+        resources:
+          limits:
+            cpu: 200m
+            memory: 384Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        volumeMounts:
+        - mountPath: /fluentd/etc/kubernetes.conf
+          name: config
+          subPath: kubernetes.conf
+        - mountPath: /fluentd/etc/systemd.conf
+          name: config
+          subPath: systemd.conf
+        - mountPath: /fluentd/entrypoint.sh
+          name: config
+          subPath: entrypoint.sh
+        - mountPath: /etc/localtime
+          name: localtime
+          readOnly: true
+        - mountPath: /run/log/journal
+          name: runlogjournal
+          readOnly: true
+        - mountPath: /var/log
+          name: varlog
+      nodeSelector:
+        kubernetes.io/os: linux
+      restartPolicy: Always
+      serviceAccount: fluentd
+      serviceAccountName: fluentd
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/master
+      volumes:
+      - projected:
+          defaultMode: 0644
+          sources:
+          - configMap:
+              name: fluentd
+              items:
+              - key: kubernetes.conf
+                path: kubernetes.conf
+          - configMap:
+              name: fluentd
+              items:
+              - key: systemd.conf
+                path: systemd.conf
+          - configMap:
+              name: fluentd
+              items:
+              - key: entrypoint.sh
+                mode: 0755
+                path: entrypoint.sh
+        name: config
+      - hostPath:
+          path: /var/log
+          type: ""
+        name: varlog
+      - hostPath:
+          path: /run/log/journal
+          type: ""
+        name: runlogjournal
+      - hostPath:
+          path: /etc/localtime
+          type: ""
+        name: localtime
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 3
+    type: RollingUpdate

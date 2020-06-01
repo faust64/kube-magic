@@ -1,0 +1,8 @@
+keepalive_advertise: 101
+keepalive_auth_pass: secret
+keepalive_contacts:
+- admin@example.com
+keepalive_priority: 1
+keepalive_vhid: 42
+keepalive_vip: 169.254.0.1
+smtp_relay: localhost

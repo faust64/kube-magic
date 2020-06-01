@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    name: kibana
+    version: v1
+  name: kibana
+  namespace: {{ logging_ns }}
+spec:
+{% if kibana_do_tls | default(True) %}
+  tls:
+  - hosts:
+    - {{ kibana_fqdn }}
+    secretName: kibana-tls
+{% endif %}
+  rules:
+  - host: {{ kibana_fqdn }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: kibana
+          servicePort: 5601

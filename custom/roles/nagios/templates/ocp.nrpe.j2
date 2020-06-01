@@ -1,0 +1,41 @@
+{% if ansible_fqdn in groups['masters'] or ansible_hostname in groups['masters'] %}
+# OpenShift Masters
+{% if (openshift_pkg_version | default('-3.11')) is match('-3\.1[0-1]') and (openshift_image_tag | default('v3.11')) is match('v3\.1[0-1]') %}
+command[check_oc_{{ k8s_cluster_name }}_master]={{ nagios_plugins_dir }}/check_oc_master_selfcheck {{ k8s_cluster_name }}
+{% else %}
+# pre 3-10 master checks / consider upgrading
+command[check_oc_{{ k8s_cluster_name }}_master]={{ nagios_plugins_dir }}/check_oc_master_legacy
+{% endif %}
+
+{% endif %}
+# OpenShift Nodes
+command[check_certificates]=/bin/sudo {{ nagios_plugins_dir }}/check_certificates
+{% if (openshift_use_crio | default(False)) %}
+command[check_crio]={{ nagios_plugins_dir }}/check_crio
+{% endif %}
+{% if (openshift_use_crio_only | default(False)) == False %}
+command[check_docker]=/bin/sudo {{ nagios_plugins_dir }}/check_docker
+{% endif %}
+{% if openshift_logging_install_logging | default(False) %}
+command[check_fluentd]=/bin/sudo {{ nagios_plugins_dir }}/check_fluentd
+{% endif %}
+{% if http_proxy is defined %}
+command[check_httpproxy]={{ nagios_plugins_dir }}/check_http -I {{ http_proxy | urlsplit('hostname') }} -p{{ http_proxy | urlsplit('port') }} -u {{ nagios_http_proxy_check_url | default('http://www.perdu.com') }} -w 2 -c 5
+{% endif %}
+command[check_ioerrors]=/bin/sudo {{ nagios_plugins_dir }}/check_ioerrors
+command[check_oom]=/bin/sudo {{ nagios_plugins_dir }}/check_oom
+{% if (openshift_pkg_version | default('-3.11')) is match('-3\.1[0-1]') and (openshift_image_tag | default('v3.11')) is match('v3\.1[0-1]') %}
+command[check_origin_node]={{ nagios_plugins_dir }}/check_origin_node
+{% else %}
+command[check_origin_node]={{ nagios_plugins_dir }}/check_origin_node_legacy
+{% endif %}
+command[check_pvs_usage]=/bin/sudo {{ nagios_plugins_dir }}/check_persistent_volumes_usage
+command[check_rogue_containers]=/bin/sudo {{ nagios_plugins_dir }}/check_rogue_containers
+{% if groups['glusterfs'] is defined and (groups['glusterfs'] | length) > 0 %}
+command[check_gfs_volumes_status]=/bin/sudo {{ nagios_plugins_dir }}/check_glusterfs_volumes_status
+{% if ansible_fqdn in groups['glusterfs'] or ansible_hostname in groups['glusterfs'] %}
+
+# OpenShift CNS
+command[check_vg_usage]=/bin/sudo {{ nagios_plugins_dir }}/check_vg_usage -x "(system|data|root)"
+{% endif %}
+{% endif %}

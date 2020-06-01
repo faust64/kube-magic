@@ -1,0 +1,25 @@
+- include_tasks: kube-rbd.yaml
+  vars:
+    cluster: "{{ hostvars[groups['kube-master'][0]]['rbd_provisioner_cluster'] | default('ceph') }}"
+    userid: "{{ hostvars[groups['kube-master'][0]]['rbd_provisioner_user_id'] | default('kube') }}"
+    pool: "{{ hostvars[groups['kube-master'][0]]['rbd_provisioner_pool'] | default('kube') }}"
+  when:
+  - hostvars[groups['kube-master'][0]]['rbd_provisioner_enabled'] | default(False)
+- include_tasks: kube-cephfs.yaml
+  vars:
+    cluster: "{{ hostvars[groups['kube-master'][0]]['cephfs_provisioner_cluster'] | default('ceph') }}"
+  when:
+  - hostvars[groups['kube-master'][0]]['cephfs_provisioner_enabled'] | default(False)
+
+- name: Updates Custom Inventory Variables
+  delegate_to: "localhost"
+  lineinfile:
+    dest: "{{ playbook_dir }}/group_vars/private.yaml"
+    line: "{{ item.key }}: '{{ item.value }}'"
+    regexp: "^{{ item.key }}:"
+  with_items:
+  - { key: 'rbd_provisioner_monitors', value: "{{ rbd_monlist.stdout_lines[0] | default('none') }}" }
+  - { key: 'rbd_provisioner_secret', value: "{{ rbd_admin_keyring.stdout_lines[0] | default('none') }}" }
+  - { key: 'rbd_provisioner_user_secret', value: "{{ rbd_keyring.stdout_lines[0] | default('none') }}" }
+  - { key: 'cephfs_provisioner_monitors', value: "{{ cephfs_monlist.stdout_lines[0] | default('none') }}" }
+  - { key: 'cephfs_provisioner_secret', value: "{{ cephfs_admin_keyring.stdout_lines[0] | default('none') }}" }

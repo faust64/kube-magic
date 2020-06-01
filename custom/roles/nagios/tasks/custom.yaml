@@ -1,0 +1,29 @@
+#### Ceph probes ####
+- include_tasks: ceph.yaml
+  when:
+  - groups['mons'] is defined
+  - ansible_fqdn in groups['mons'] or ansible_hostname in groups['mons']
+
+#### Kubernetes & OpenShift Etcd probes ####
+- include_tasks: etcd.yaml
+  when:
+  - groups['etcd'] is defined
+  - ansible_fqdn in groups['etcd'] or ansible_hostname in groups['etcd']
+
+#### OpenShift API & Nodes probes ####
+- include_tasks: ocp3.yaml
+  when:
+  - groups['OSEv3'] is defined
+  - ansible_fqdn in groups['OSEv3'] or ansible_hostname in groups['OSEv3']
+
+#### Kubernetes API & Nodes probes ####
+- include_tasks: k8s.yaml
+  when:
+  - groups['k8s-cluster'] is defined
+  - ansible_fqdn in groups['k8s-cluster'] or ansible_hostname in groups['k8s-cluster']
+
+#### OpenShift & Kubernetes External Load Balancer probes ####
+- include_tasks: lb.yaml
+  when:
+  - groups['lbs'] is defined
+  - ansible_fqdn in groups['lbs'] or ansible_hostname in groups['lbs']

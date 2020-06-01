@@ -1,0 +1,27 @@
+global_defs {
+{% if (keepalive_contacts | default([])) | length > 0 %}
+   notification_email {
+{% for ct in keepalive_contacts %}
+	{{ ct }}
+{% endfor %}
+   }
+   notification_email_from keepalive@{{ ansible_fqdn }}
+{% endif %}
+   smtp_server {{ smtp_relay }}
+   smtp_connect_timeout 30
+}
+
+vrrp_instance VI_1 {
+    state MASTER
+    interface {{ keepalive_listen_iface | default(ansible_default_ipv4['interface']) }}
+    virtual_router_id {{ keepalive_vhid }}
+    priority {{ keepalive_priority }}
+    advert_int {{ keepalive_advertise }}
+    authentication {
+	auth_type PASS
+	auth_pass {{ keepalive_auth_pass }}
+    }
+    virtual_ipaddress {
+	{{ loadbalancer_apiserver.address | default(keepalive_vip) }}
+    }
+}

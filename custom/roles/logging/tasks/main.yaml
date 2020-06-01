@@ -1,0 +1,15 @@
+## TODO: components upgrade / use the version label / similar to tekton
+## NiceToHave: NetworkPolicies
+## NiceToHave: TLS-everywhere
+
+- include_role:
+    name: commons
+    tasks_from: helpers/namespace.yaml
+  vars:
+    k8s_api_node: "{{ inventory_hostname }}"
+    ns_name: "{{ logging_ns }}"
+- include_tasks: rbac.yaml
+- include_tasks: elasticsearch.yaml
+- include_tasks: fluentd.yaml
+- include_tasks: kibana.yaml
+- include_tasks: ingress.yaml

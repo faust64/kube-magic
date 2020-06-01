@@ -1,0 +1,18 @@
+{% if (mon_group_name | default('mons')) in group_names %}
+command[check_ceph_df]={{ nagios_plugins_dir }}/check_ceph_df -C 90 -W 80
+command[check_ceph_health]={{ nagios_plugins_dir }}/check_ceph_health
+command[check_ceph_mon]=/usr/bin/sudo {{ nagios_plugins_dir }}/check_ceph_mon -I {{ ansible_hostname }} -H {{ ansible_fqdn }}
+{% endif %}
+{% if (mgr_group_name | default('mgrs')) in group_names %}
+command[check_ceph_mgr]={{ nagios_plugins_dir }}/check_ceph_mgr
+{% endif %}
+{% if (mds_group_name | default('mdss')) in group_names %}
+command[check_ceph_mds]=/usr/bin/sudo {{ nagios_plugins_dir }}/check_ceph_mds -n {{ ansible_hostname }} -f {{ cephfs | default('cephfs') }}
+{% endif %}
+{% if (osd_group_name | default('osds')) in group_names %}
+command[check_ceph_osd]=/usr/bin/sudo {{ nagios_plugins_dir }}/check_ceph_osd -H {{ ansible_default_ipv4['address'] }}
+{% endif %}
+{% if (rgw_group_name | default('rgws')) in group_names %}
+##TODO
+#command[check_ceph_rgw]=/usr/bin/sudo {{ nagios_plugins_dir }}/check_ceph_rgw XXX
+{% endif %}

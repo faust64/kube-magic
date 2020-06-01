@@ -1,0 +1,44 @@
+- name: "Checks for Existing {{ sc_name }} Secret"
+  changed_when: False
+  failed_when: False
+  register: has_sc
+  shell: "{{ kube_client }} --kubeconfig {{ admin_kubeconfig }} -n {{ sc_namespace }} describe secret {{ sc_name }}"
+- block:
+  - name: "Generates {{ sc_name }} Self-Signed Key Pair"
+    args:
+      chdir: /tmp
+    shell: |
+      rm -f {{ sc_name }}.key {{ sc_name }}.crt; \
+      openssl req -x509 -nodes -days {{ sc_validity | default('365') }} \
+              -newkey rsa:{{ sc_keylen | default('2048') }} -keyout ./{{ sc_name }}.key \
+              -out ./{{ sc_name }}.crt -subj \
+              "/CN={{ sc_cn | default(sc_name) }}/O={{ sc_org | default(sc_name) }}"
+  - name: "Loads {{ sc_name }} Certificate"
+    args:
+      chdir: /tmp
+    register: sc_crt_data
+    shell: "cat {{ sc_name }}.crt"
+  - name: "Loads {{ sc_name }} Key"
+    args:
+      chdir: /tmp
+    register: sc_key_data
+    shell: "cat {{ sc_name }}.key"
+  - name: "Generates {{ sc_name }} Self-Signed Secret configuration"
+    template:
+      dest: "/tmp/{{ sc_name }}.yaml"
+      group: root
+      mode: 0600
+      owner: root
+      src: self-signed.j2
+  - name: "Installs {{ sc_name }} Self-Signed Secret"
+    args:
+      chdir: /tmp
+    shell: "{{ kube_client }} --kubeconfig {{ admin_kubeconfig }} apply -f {{ sc_name }}.yaml"
+  - name: "Cleanups {{ sc_name }} Self-Signed Secret temporary assets"
+    file:
+      dest: "/tmp/{{ sc_name }}.{{ item }}"
+      state: absent
+    with_items: [ 'crt', 'key', 'yaml' ]
+  when:
+  - has_sc is defined
+  - (has_sc.rc | default(0)) != 0

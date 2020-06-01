@@ -1,0 +1,17 @@
+- name: "Creates {{ kuser }} keyring"
+  args:
+    chdir: /etc/ceph
+    creates: "/etc/ceph/{{ cluster }}.client.{{ kuser }}.keyring"
+  shell: "ceph -c {{ cluster }}.conf auth get-or-create client.{{ kuser }} {{ kperms | join(' ') }} -o {{ cluster }}.client.{{ kuser }}.keyring"
+- name: Fetches {{ kuser }} keyring
+  args:
+    chdir: /etc/ceph
+  changed_when: False
+  register: rbd_keyring
+  shell: "ceph -c {{ cluster }}.conf auth get client.{{ kuser }} | awk '/key =/{print $3}'"
+- name: Fetches admin keyring
+  args:
+    chdir: /etc/ceph
+  changed_when: False
+  register: rbd_admin_keyring
+  shell: "ceph -c {{ cluster }}.conf auth get client.admin | awk '/key =/{print $3}'"

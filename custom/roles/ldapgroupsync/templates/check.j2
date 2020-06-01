@@ -1,0 +1,32 @@
+kind: LDAPSyncConfig
+apiVersion: v1
+url: {{ ldap_groupsync_url | default('ldap://localhost') }}
+bindDN: {{ openshift_master_identity_providers[0]['bindDN'] | default('cn=admin,dc=demo,dc=local') }}
+bindPassword: {{ openshift_master_identity_providers[0]['bindPassword'] | default('secret') }}
+{% if (openshift_master_identity_providers[0]['ca'] | default(False)) != False %}
+ca: {{ capath.stdout_lines[0] }}
+insecure: false
+{% else %}
+insecure: {{ openshift_master_identity_providers[0]['insecure'] | default('true') }}
+{% endif %}
+{% if (ldap_groupsync_mappings | default(False)) != False %}
+groupUIDNameMapping:
+{% for mapping in ldap_groupsync_mappings if mapping['ldapgroup'] is defined and mapping['name'] is defined %}
+  "{{ mapping['ldapgroup'] }}": {{ mapping['name'] }}
+{% endfor %}
+{% endif %}
+rfc2307:
+  groupsQuery:
+    baseDN: "{{ ldap_groupsync_groupbase | default('ou=groups,dc=demo,dc=local') }}"
+    scope: sub
+    derefAliases: never
+    filter: (|(objectclass=groupOfNames)(objectclass=groupOfURLs))
+  groupUIDAttribute: dn
+  groupNameAttributes: [ cn ]
+  groupMembershipAttributes: [ member ]
+  usersQuery:
+    baseDN: "{{ ldap_groupsync_userbase | default('ou=users,dc=demo,dc=local') }}"
+    scope: sub
+    derefAliases: never
+  userUIDAttribute: dn
+  userNameAttributes: [ uid ]

@@ -1,0 +1,53 @@
+- name: Gets nagios-monitoring Secret Name
+  changed_when: False
+  delegate_to: "{{ groups['kube-master'][0] }}"
+  register: sa_has_secret
+  run_once: yes
+  shell: "{{ kube_client }} --kubeconfig {{ admin_kubeconfig }} get secrets -n {{ monitoring_ns }} | grep nagios-monitoring-token | awk '{print $1;exit;}'"
+- name: Retrieves nagios-monitoring Bearer Token from Secret
+  changed_when: False
+  delegate_to: "{{ groups['kube-master'][0] }}"
+  register: sa_has_token
+  run_once: yes
+  shell: "{{ kube_client }} --kubeconfig {{ admin_kubeconfig }} describe secret -n {{ monitoring_ns }} {{ sa_has_secret.stdout_lines[0] }} | awk '/^token:/{print $2}'"
+
+- name: Install Cluster Auth Configuration
+  blockinfile:
+    block: |
+      [{{ k8s_cluster_name }}]
+      endpoint = {{ endpoint_url }}
+      token    = {{ sa_has_token.stdout_lines[0] }}
+    create: yes
+    dest: /etc/nagios/k8s.cfg
+  delegate_to: "{{ item }}"
+  run_once: yes
+  when:
+  - item != "127.0.0.1"
+  with_items: "{{ nagios_remotes }}"
+- name: Install API Probes
+  delegate_to: "{{ item }}"
+  register: nrpeconfig
+  run_once: yes
+  template:
+    dest: "{{ '/etc/nagios/nrpe.d' if (ansible_distribution in deb_dist_match)
+                                   else '/etc/nrpe.d'
+              }}/{{ probe_pfx }}-{{ k8s_cluster_name }}.cfg"
+    group: root
+    mode: 0644
+    owner: root
+    src: "{{ probe_pfx }}-api.nrpe.j2"
+  when:
+  - item != "127.0.0.1"
+  with_items: "{{ nagios_remotes }}"
+- name: Reloads NRPE on Nagios Servers
+  delegate_to: "{{ item }}"
+  run_once: yes
+  service:
+    name: "{{ 'nagios-nrpe-server' if (ansible_distribution in deb_dist_match)
+                                   else 'nrpe' }}"
+    state: restarted
+  when:
+  - nrpeconfig is defined
+  - nrpeconfig is changed
+  - item != "127.0.0.1"
+  with_items: "{{ nagios_remotes }}"

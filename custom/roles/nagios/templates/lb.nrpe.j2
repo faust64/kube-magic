@@ -1,0 +1,7 @@
+command[check_api_lb_local]={{ nagios_plugins_dir }}/check_http -S -H {{ ansible_default_ipv4['address'] | default('127.0.0.1') }} -p {{ loadbalancer_apiserver.port | default('6443') }} -u /healthz
+{% if groups['lbs'] | length > 1 %}
+{% if apiserver_loadbalancer_domain_name | default(False) %}
+command[check_api_lb_vip]={{ nagios_plugins_dir }}/check_http -S -H {{ apiserver_loadbalancer_domain_name }} -p {{ loadbalancer_apiserver.port | default('6443') }} -u /healthz
+{% endif %}
+command[check_keepalived]=/usr/bin/sudo {{ nagios_plugins_dir }}/check_keepalived
+{% endif %}

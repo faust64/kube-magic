@@ -1,0 +1,15 @@
+- name: Install Keepalived-Nagios Sudoers Configuration
+  template:
+    dest: /etc/sudoers.d/nagios-lb
+    group: root
+    mode: 0400
+    owner: root
+    src: lb.sudoers.j2
+- name: Install Nagios Load Balancer Configuration
+  notify: Reload nrpe
+  template:
+    dest: "{{ nagios_probes_config }}/lb.cfg"
+    group: root
+    mode: 0644
+    owner: root
+    src: lb.nrpe.j2

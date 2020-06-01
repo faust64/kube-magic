@@ -1,0 +1,20 @@
+- name: "Checks for {{ pool }} pool"
+  args:
+    chdir: /etc/ceph
+  changed_when: False
+  failed_when: False
+  register: has_pool
+  shell: "ceph -c {{ cluster }}.conf osd lspools | grep ' {{ pool }}$'"
+- block:
+  - name: "Create {{ pool }} pool"
+    args:
+      chdir: /etc/ceph
+    shell: "ceph -c {{ cluster }}.conf osd pool create {{ pool }} 32"
+  - name: "Enables {{ pool }} pool applications"
+    args:
+      chdir: /etc/ceph
+    shell: "ceph -c {{ cluster }}.conf osd pool application enable {{ pool }} {{ item }}"
+    with_items: "{{ pool_apps | default(['rbd']) }}"
+  when:
+  - has_pool is defined
+  - (has_pool.rc | default(0)) != 0

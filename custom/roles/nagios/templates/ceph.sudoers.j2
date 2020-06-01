@@ -1,0 +1,6 @@
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_ceph_health
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_ceph_mds
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_ceph_mgr
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_ceph_mon
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_ceph_osd
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_ceph_rgw

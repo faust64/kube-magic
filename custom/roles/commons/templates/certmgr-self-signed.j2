@@ -1,0 +1,53 @@
+{% if 0 == 1 %}
+!! FIXME !!
+
+cert-manager integration does not work yet
+
+It looks like the operator is watching for cert-manager.io/v1alpha2 objects,
+while I can not create those. However I can create certs/issuers/... using
+in certmanager.k8s.io/v1alpha1, though the operator doesn't look at those.
+I did patch their cert-manager ClusterRole, granting their SA with missing
+privileges, coping with both API versions, ... shit outta luck so far ...
+
+Will keep going with manually-self-signed-certs for now, would give this a
+look later
+{% endif %}
+---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Issuer
+metadata:
+  name: selfsigned
+  namespace: {{ sc_namespace | default('default') }}
+spec:
+  selfSigned: {}
+---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  labels:
+    name: {{ sc_name }}
+  name: {{ sc_name }}
+  namespace: {{ sc_namespace | default('default') }}
+spec:
+  commonName: {{ sc_cn | default(sc_name) }}
+  dnsNames:
+  - {{ sc_cn }}
+  duration: {{ ((sc_validity | default('365')) | int) * 24 }}h
+  isCA: false
+  issuerRef:
+    name: selfsigned
+    kind: Issuer
+  ipAddresses:
+  - 127.0.0.1
+  keyAlgorithm: rsa
+  keyEncoding: pkcs1
+  keySize: {{ sc_keylen | default('2048') }}
+  organization:
+  - {{ sc_org | default(sc_name) }}
+  renewBefore: 360h
+  secretName: {{ sc_name }}
+  uriSANs:
+  - spiffe://cluster.local/ns/sandbox/sa/example
+  usages:
+  - server auth
+  - client auth

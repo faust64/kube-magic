@@ -1,0 +1,208 @@
+apiVersion: v1
+kind: Template
+labels:
+  template: cronjob-ldap-group-sync
+metadata:
+  annotations:
+    description: Scheduled Task to Perform LDAP Group Synchronization
+    iconClass: icon-jenkins
+    tags: management,cronjob,ldap,group,sync
+  name: cronjob-ldap-group-sync
+objects:
+- apiVersion: v1
+{% if ldapca is defined and (ldapca.stdout_lines[0] | default('')) != "" %}
+  data:
+    ldap-ca.crt: |
+{% for line in ldapca.stdout_lines | default([]) %}
+      {{ line }}
+{% endfor %}
+{% endif %}
+    ldap-sync.yml: |
+      kind: LDAPSyncConfig
+      apiVersion: v1
+      url: ${LDAP_URL}
+      bindDN: ${LDAP_BIND_DN}
+      bindPassword: ${LDAP_BIND_PASSWORD}
+{% if (openshift_master_identity_providers[0]['ca'] | default(False)) != False %}
+      ca: /etc/ldap-ca.crt
+      insecure: false
+{% else %}
+      insecure: {{ openshift_master_identity_providers[0]['insecure'] | default('true') }}
+{% endif %}
+{% if (ldap_groupsync_mappings | default(False)) != False %}
+      groupUIDNameMapping:
+{% for mapping in ldap_groupsync_mappings if mapping['ldapgroup'] is defined and mapping['name'] is defined %}
+        "{{ mapping['ldapgroup'] }}": {{ mapping['name'] }}
+{% endfor %}
+{% endif %}
+      rfc2307:
+        groupsQuery:
+          baseDN: "${LDAP_GROUPS_SEARCH_BASE}"
+          scope: sub
+          derefAliases: never
+          filter: ${LDAP_GROUPS_FILTER}
+        groupUIDAttribute: dn
+        groupNameAttributes: [ cn ]
+        groupMembershipAttributes: [ member ]
+        tolerateMemberNotFoundErrors: true
+        tolerateMemberOutOfScopeErrors: true
+        usersQuery:
+          baseDN: "${LDAP_USERS_SEARCH_BASE}"
+          scope: sub
+          derefAliases: never
+        userUIDAttribute: dn
+        userNameAttributes: [ uid ]
+  kind: ConfigMap
+  metadata:
+    labels:
+      template: cronjob-ldap-group-sync
+    name: ldap-config
+- kind: CronJob
+  apiVersion: batch/v1beta1
+  metadata:
+    name: ${JOB_NAME}
+    labels:
+      template: cronjob-ldap-group-sync
+  spec:
+    schedule: "${SCHEDULE}"
+    concurrencyPolicy: Forbid
+    successfulJobsHistoryLimit: "${SUCCESS_JOBS_HISTORY_LIMIT}"
+    failedJobsHistoryLimit: "${FAILED_JOBS_HISTORY_LIMIT}"
+    jobTemplate:
+      spec:
+        template:
+          spec:
+            activeDeadlineSeconds: 500
+            containers:
+            - name: ${JOB_NAME}
+              command:
+              - /bin/bash
+              - "-c"
+              - "oc adm groups sync --sync-config=/etc/config/ldap-group-sync.yaml --confirm || :"
+              image: "docker.io/openshift/jenkins-slave-base-centos7:{{ openshift_version | default('v3.11') }}"
+              volumeMounts:
+              - mountPath: /etc/config
+                name: ldap-sync-volume
+{% if (ldapca.stdout_lines[0] | default('')) != "" %}
+              - mountPath: /etc/ldap-ca.crt
+                name: ldap-ca-cert
+                subPath: ldap-ca.crt
+{% endif %}
+            volumes:
+{% if (ldapca.stdout_lines[0] | default('')) != "" %}
+            - configMap:
+                items:
+                - key: ldap-ca.crt
+                  path: ldap-ca.crt
+                name: ldap-config
+              name: ldap-ca-cert
+{% endif %}
+            - configMap:
+                items:
+                - key: ldap-sync.yml
+                  path: ldap-group-sync.yaml
+                name: ldap-config
+              name: ldap-sync-volume
+            dnsPolicy: ClusterFirst
+            restartPolicy: Never
+            serviceAccountName: ${JOB_SERVICE_ACCOUNT}
+            serviceAccount: ${JOB_SERVICE_ACCOUNT}
+            terminationGracePeriodSeconds: 30
+- apiVersion: v1
+  kind: ClusterRole
+  metadata:
+    labels:
+      template: cronjob-ldap-group-sync
+    name: ldap-group-syncer
+  rules:
+  - apiGroups:
+    - ""
+    - user.openshift.io
+    resources:
+    - groups
+    verbs:
+    - get
+    - list
+    - create
+    - update
+- apiVersion: v1
+  groupNames: null
+  kind: ClusterRoleBinding
+  metadata:
+    labels:
+      template: cronjob-ldap-group-sync
+    name: system:ldap-group-syncers
+  roleRef:
+    name: ldap-group-syncer
+  subjects:
+  - kind: ServiceAccount
+    name: ${JOB_SERVICE_ACCOUNT}
+  userNames:
+  - system:serviceaccount:${NAMESPACE}:${JOB_SERVICE_ACCOUNT}
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    labels:
+      template: cronjob-ldap-group-sync
+    name: ${JOB_SERVICE_ACCOUNT}
+parameters:
+- name: NAMESPACE
+  description: Name of the Namespace where to deploy the Scheduled Job
+  displayName: Namespace
+  required: true
+  value: cluster-ops
+- name: JOB_NAME
+  description: Name of the Scheduled Job to Create.
+  displayName: Job Name
+  required: true
+  value: cronjob-ldap-group-sync
+- name: SCHEDULE
+  description: Cron Schedule to Execute the Job
+  displayName: Cron Schedule
+  required: true
+  value: "@hourly"
+- name: JOB_SERVICE_ACCOUNT
+  description: Name of the Service Account To Exeucte the Job As.
+  displayName: Service Account Name
+  required: true
+  value: ldap-group-syncer
+- name: SUCCESS_JOBS_HISTORY_LIMIT
+  description: The number of successful jobs that will be retained
+  displayName: Successful Job History Limit
+  required: true
+  value: "5"
+- name: FAILED_JOBS_HISTORY_LIMIT
+  description: The number of failed jobs that will be retained
+  displayName: Failed Job History Limit
+  required: true
+  value: "5"
+- name: LDAP_URL
+  description: URL of you LDAP server
+  displayName: LDAP Server URL
+  required: true
+  value: {{ ldap_groupsync_url | default('ldap://localhost') }}
+- name: LDAP_BIND_DN
+  description: The Full DN for the user you wish to use to authenticate to LDAP
+  displayName: LDAP Bind User's DN
+  required: true
+  value: {{ openshift_master_identity_providers[0]['bindDN'] | default('cn=admin,dc=demo,dc=local') }}
+- name: LDAP_BIND_PASSWORD
+  description: Password for the LDAP_BIND_DN user
+  displayName: LDAP Bind User's password
+  required: true
+  value: {{ openshift_master_identity_providers[0]['bindPassword'] | default('secret') }}
+- name: LDAP_GROUPS_SEARCH_BASE
+  description: Location in LDAP tree where you will find groups
+  displayName: Group search query
+  required: true
+  value: {{ ldap_groupsync_groupbase | default('ou=groups,dc=demo,dc=local') }}
+- name: LDAP_GROUPS_FILTER
+  description: LDAP Filter to use when deciding which groups to sync into OpenShift
+  displayName: Group Filter
+  required: true
+  value: (|(objectclass=groupOfNames)(objectclass=groupOfURLs))
+- name: LDAP_USERS_SEARCH_BASE
+  description: Location in LDAP tree where you will find users
+  displayName: User search query
+  required: true
+  value: {{ ldap_groupsync_userbase | default('ou=users,dc=demo,dc=local') }}

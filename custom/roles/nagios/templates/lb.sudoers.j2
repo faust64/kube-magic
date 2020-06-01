@@ -1,0 +1,3 @@
+{% if groups['lbs'] | length > 1 %}
+{{ nagios_user }}	ALL=NOPASSWD:{{ nagios_plugins_dir }}/check_keepalived
+{% endif %}

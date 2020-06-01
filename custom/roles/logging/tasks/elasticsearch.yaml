@@ -1,0 +1,31 @@
+- name: Checks for Existing ElasticSearch Deployment
+  changed_when: False
+  failed_when: False
+  register: has_es
+  shell: "{{ kube_client }} --kubeconfig {{ admin_kubeconfig }} -n {{ logging_ns }} describe deploy elasticsearch"
+- block:
+  - name: Generates ElasticSearch Deployment Configuration
+    template:
+      dest: /tmp/elasticsearch.yaml
+      group: root
+      mode: 0640
+      owner: root
+      src: elasticsearch.j2
+  - name: Installs ElasticSearch
+    args:
+      chdir: /tmp
+    shell: "{{ kube_client }} --kubeconfig {{ admin_kubeconfig }} apply -f elasticsearch.yaml"
+  - name: Cleanups ElasticSearch Temporary Assets
+    file:
+      dest: /tmp/elasticsearch.yaml
+      state: absent
+  - name: Waits for ElasticSearch
+    changed_when: False
+    delay: 5
+    until: (es_there.stdout_lines | default([])) | length > 0
+    register: es_there
+    retries: 30
+    shell: "{{ kube_client }} --kubeconfig {{ admin_kubeconfig }} get pods -n {{ logging_ns }} --selector=name=elasticsearch | grep 1/1"
+  when:
+  - has_es is defined
+  - (has_es.rc | default(0)) != 0

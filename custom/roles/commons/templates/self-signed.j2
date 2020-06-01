@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    name: {{ sc_name }}
+  name: {{ sc_name }}
+  namespace: {{ sc_namespace | default('default') }}
+stringData:
+{% if sc_crt_data is defined and (sc_crt_data.stdout_lines[0] | default('')) != "" %}
+  tls.crt: |
+{% for line in sc_crt_data.stdout_lines | default([]) %}
+    {{ line }}
+{% endfor %}
+{% endif %}
+{% if sc_key_data is defined and (sc_key_data.stdout_lines[0] | default('')) != "" %}
+  tls.key: |
+{% for line in sc_key_data.stdout_lines | default([]) %}
+    {{ line }}
+{% endfor %}
+{% endif %}

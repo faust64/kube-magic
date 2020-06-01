@@ -1,0 +1,52 @@
+- block:
+  - name: Checks for Existing Fluentd ClusterRoleBinding
+    changed_when: False
+    failed_when: False
+    register: has_rbac
+    shell: "oc --config {{ admin_kubeconfig }} get clusterrolebinding fluentd"
+  - block:
+    - name: Generates Fluentd RBAC Configuration
+      template:
+        dest: /tmp/fluentd-rbac.yaml
+        group: root
+        mode: 0640
+        owner: root
+        src: rbac.j2
+    - name: Installs Fluentd RBAC
+      args:
+        chdir: /tmp
+      shell: |
+        oc --config {{ admin_kubeconfig }} apply -f fluentd-rbac.yaml; \
+        oc --config {{ admin_kubeconfig }} adm policy add-scc-to-user privileged system:serviceaccount:{{ logging_ns }}:fluentd
+    when:
+    - has_rbac is defined
+    - (has_rbac.rc | default(0)) != 0
+  when:
+  - kube_client == "oc"
+- block:
+  - name: Checks for Existing Fluentd PodSecurityPolicy
+    changed_when: False
+    failed_when: False
+    register: has_rbac
+    shell: "kubectl --kubeconfig {{ admin_kubeconfig }} get psp fluentd"
+  - block:
+    - name: Generates Fluentd RBAC Configuration
+      template:
+        dest: /tmp/fluentd-rbac.yaml
+        group: root
+        mode: 0640
+        owner: root
+        src: rbac.j2
+    - name: Installs Fluentd RBAC
+      args:
+        chdir: /tmp
+      shell: "kubectl --kubeconfig {{ admin_kubeconfig }} apply -f fluentd-rbac.yaml"
+    when:
+    - has_rbac is defined
+    - (has_rbac.rc | default(0)) != 0
+  when:
+  - kube_client != "oc"
+- name: Cleanups Fluentd RBAC Temporary Assets
+  file:
+    dest: /tmp/fluentd-rbac.yaml
+    state: absent

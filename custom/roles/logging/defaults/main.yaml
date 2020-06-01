@@ -1,0 +1,7 @@
+elasticsearch_tag: 7.7.0
+fluentd_tag: v1.10-debian-elasticsearch7-1
+kibana_do_tls: True
+kibana_fqdn: kibana.demo.local
+kibana_replicas: 1
+logging_ns: logging
+logging_pvc_size: 200Gi

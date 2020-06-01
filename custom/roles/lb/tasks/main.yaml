@@ -1,0 +1,55 @@
+- name: Installs packages
+  apt:
+    name:
+    - keepalived
+    - haproxy
+    - hatop
+    state: present
+
+- name: Enables ip forwarding
+  sysctl:
+    name: net.ipv4.ip_forward
+    reload: yes
+    state: present
+    sysctl_file: /etc/sysctl.d/99-my-fw.conf
+    value: "1"
+- name: Prepares for bash profiles
+  file:
+    dest: /etc/profile.d
+    group: root
+    mode: 0755
+    owner: root
+    state: directory
+
+- name: Configures keepalived
+  notify: Reload keepalived
+  template:
+    dest: /etc/keepalived/keepalived.conf
+    group: root
+    mode: 0640
+    owner: root
+    src: keepalive.j2
+- name: Configures haproxy
+  notify: Reload haproxy
+  template:
+    dest: /etc/haproxy/haproxy.cfg
+    group: haproxy
+    mode: 0640
+    owner: root
+    src: haproxy.j2
+- name: Installs haproxy bash profile
+  copy:
+    dest: /etc/profile.d/haproxy.sh
+    group: root
+    mode: 0644
+    owner: root
+    src: profile.sh
+
+- name: Ensures LB services are active
+  service:
+    enabled: yes
+    name: "{{ item }}"
+    state: started
+  with_items:
+  - keepalived
+  - haproxy

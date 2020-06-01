@@ -1,0 +1,10 @@
+ldap_groupsync_base: dc=demo,dc=local
+ldap_groupsync_groupbase: "ou=groups,{{ ldap_groupsync_base }}"
+ldap_groupsync_jobname: sync-ldap-groups
+ldap_groupsync_mappings:
+- name: Administrators
+  ldapgroup: "cn=admins,{{ ldap_groupsync_groupbase }}"
+ldap_groupsync_project: ops
+ldap_groupsync_url: ldap://localhost
+ldap_groupsync_userbase: "ou=users,{{ ldap_groupsync_base }}"
+openshift_roles: False

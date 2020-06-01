@@ -1,0 +1,56 @@
+- hosts: kube-master[0]
+  vars:
+    tekton_target_version: "{{ tekton_version | default('0.11.0') }}"
+  tasks:
+  - name: Checks for Tekton version
+    changed_when: False
+    failed_when: False
+    register: has_tekton
+    shell: |
+      kubectl get deploy -n tekton-pipelines tekton-pipelines-controller -o yaml | awk '/version:/{print $2;exit;}'
+  - block:
+    - name: Fetches Tekton assets
+      get_url:
+        dest: /tmp/tekton.yaml
+        group: root
+        mode: 0644
+        owner: root
+        url: "https://github.com/tektoncd/pipeline/releases/download/v{{ tekton_target_version }}/release.yaml"
+    - name: Applies Tekton assets
+      args:
+        chdir: /tmp
+      shell: kubectl apply -f tekton.yaml
+    - name: Cleanups Tekton assets
+      file:
+        dest: /tmp/tekton.yaml
+        state: absent
+    - block:
+      - name: Waits for Tekton controller to be ready
+        delay: 5
+        register: controller_there
+        retries: 30
+        until: (controller_there.stdout_lines | default([])) | length > 0
+        shell: "kubectl get pods -n tekton-pipelines --selector=version=v={{ tekton_target_vesion }} | grep 1/1"
+      - name: Purges previous Tekton assets
+        shell: "kubectl delete all -n tekton-pipelines --selector=version=v{{ has_tekton.stdout_lines[0] }} --all"
+      when:
+      - purges_tekton_spurious_assets | default(False)
+      - (has_tekton.stdout_lines | length) == 1
+## TODO/FIXME
+## kubectl patch would be nice ...
+    - name: "WARNING   ---   WARNING   ---   WARNING"
+      debug:
+        msg: |
+          Currently, Tekton containers would fail to start.
+          You still have to add "securityContext.runAsUser: 1000" to
+            both container and Pod definition, in both Deployments
+            from the tekton-pipelines Namespace
+      when:
+      - (has_tekton.stdout_lines | length) == 0
+    when:
+    - has_tekton is defined
+    - has_tekton.stdout_lines is defined
+    - >
+        (has_tekton.stdout_lines | length) == 0
+        or ((has_tekton.stdout_lines | length) == 1
+            and has_tekton.stdout_lines[0] != ("v" ~ tekton_target_version))

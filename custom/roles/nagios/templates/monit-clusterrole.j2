@@ -1,0 +1,73 @@
+{% if kube_client == "oc" %}
+apiVersion: authorization.openshift.io/v1
+{% else %}
+apiVersion: rbac.authorization.k8s.io/v1
+{% endif %}
+kind: ClusterRole
+metadata:
+  annotations:
+{% if kube_client == "oc" %}
+    openshift.io/description: Nagios Monitoring ClusterRole
+    openshift.io/reconcile-protect: "false"
+{% else %}
+    description: Nagios Monitoring ClusterRole
+    rbac.authorization.kubernetes.io/autoupdate: "false"
+{% endif %}
+  name: monit-reader
+rules:
+- apiGroups:
+  - ""
+  attributeRestrictions: null
+  resources:
+  - configmaps
+  - endpoints
+  - limitranges
+  - namespaces
+  - namespaces/status
+  - nodes
+  - nodes/status
+  - persistentvolumeclaims
+  - persistentvolumeclaims/status
+  - persistentvolumes
+  - persistentvolumes/status
+  - pods
+  - pods/eviction
+  - pods/status
+  - resourcequotas
+  - resourcequotas/status
+  - resourcequotausages
+  - services
+  verbs:
+  - get
+  - list
+  - watch
+{% if kube_client == "oc" %}
+- apiGroups:
+  - ""
+  - project.openshift.io
+  attributeRestrictions: null
+  resources:
+  - projects
+  verbs:
+  - list
+  - watch
+  - get
+{% endif %}
+- apiGroups:
+  - ""
+  attributeRestrictions: null
+  resources:
+  - nodes/metrics
+  - nodes/spec
+  verbs:
+  - get
+- apiGroups:
+  - ""
+  attributeRestrictions: null
+  resources:
+  - nodes/proxy
+  - nodes/stats
+  - services/proxy
+  verbs:
+  - create
+  - get

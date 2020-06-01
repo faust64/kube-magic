@@ -1,0 +1,19 @@
+- include_tasks: api-auth.yaml
+  when:
+  - groups['masters'] is defined
+  - (groups['masters'] | length) > 0
+- name: Install OpenShift-Nagios Sudoers Configuration
+  template:
+    dest: /etc/sudoers.d/nagios-ocp3
+    group: root
+    mode: 0400
+    owner: root
+    src: ocp.sudoers.j2
+- name: Install Nagios OpenShift Configuration
+  notify: Reload nrpe
+  template:
+    dest: "{{ nagios_probes_config }}/ocp3.cfg"
+    group: root
+    mode: 0644
+    owner: root
+    src: ocp.nrpe.j2

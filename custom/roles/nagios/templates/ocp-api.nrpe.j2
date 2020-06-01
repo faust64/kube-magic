@@ -1,0 +1,42 @@
+# Checks Ingress Controllers
+command[check_oc_{{ k8s_cluster_name }}_ingress]={{ nagios_plugins_dir }}/check_kube_ingress -w 1 -c 2 -o {{ k8s_cluster_name }} -p '^router-([0-9]+)-([a-z0-9]+)$' -n '^(tcp|)router-.*$' -N infra
+{% if hostvars[groups['masters'][0]]['openshift_logging_install_logging'] | default(False) %}
+
+# Checks ElasticSearch Health -- OpenShift Integrated Logging
+command[check_oc_{{ k8s_cluster_name }}_es_status]={{ nagios_plugins_dir }}/check_kube_es_status -o {{ k8s_cluster_name }} -n {{ hostvars[groups['masters'][0]]['openshift_logging_namespace'] | default('openshift-logging') }}
+{% endif %}
+
+# Checks OpenShift Master Services
+command[check_oc_{{ k8s_cluster_name }}_masters]={{ nagios_plugins_dir }}/check_oc_master_full {{ k8s_cluster_name }}
+command[check_oc_{{ k8s_cluster_name }}_masters_minimal]={{ nagios_plugins_dir }}/check_oc_master {{ k8s_cluster_name }}
+#^^ pick one or the other ^^
+
+# Checks OpenShift Nodes Services
+command[check_oc_{{ k8s_cluster_name }}_node]={{ nagios_plugins_dir }}/check_oc_node_full {{ k8s_cluster_name }}
+command[check_oc_{{ k8s_cluster_name }}_node_minimal]={{ nagios_plugins_dir }}/check_oc_node {{ k8s_cluster_name }}
+#^^ pick one or the other ^^
+
+# Checks OpenShift Nodes Status & Resources Usage
+command[check_oc_{{ k8s_cluster_name }}_limits]={{ nagios_plugins_dir }}/check_kube_limits -w 15 -c 5 -o {{ k8s_cluster_name }}
+command[check_oc_{{ k8s_cluster_name }}_nodes]={{ nagios_plugins_dir }}/check_kube_nodes -w 1 -c 2 -o {{ k8s_cluster_name }}
+command[check_oc_{{ k8s_cluster_name }}_quotas]={{ nagios_plugins_dir }}/check_kube_quotas -w 2 -c 3 -o {{ k8s_cluster_name }}
+command[check_oc_{{ k8s_cluster_name }}_requests]={{ nagios_plugins_dir }}/check_kube_requests -w 15 -c 5 -o {{ k8s_cluster_name }}
+command[check_oc_{{ k8s_cluster_name }}_resources]={{ nagios_plugins_dir }}/check_kube_resources -w 10 -c 3 -o {{ k8s_cluster_name }}
+#^^ probably would not all be necessay / pick checks relevant to your context ^^
+
+# Checks Jenkins Quotas and Slaves Status
+command[check_kube_{{ k8s_cluster_name }}_jenkins_quotas]={{ nagios_plugins_dir }}/check_kube_jenkins_quotas -w 2 -c 5 -o {{ k8s_cluster_name }}
+command[check_kube_{{ k8s_cluster_name }}_jenkins_slaves]={{ nagios_plugins_dir }}/check_kube_jenkins_slaves -w 2 -c 5 -m "([1-9][0-9][ms]|[1-2]h)" -o {{ k8s_cluster_name }}
+
+# Checks Pods Status
+command[check_oc_{{ k8s_cluster_name }}_pods_crashloop]={{ nagios_plugins_dir }}/check_kube_pods -m CrashLoopBackOff -w 2 -c 5 -o {{ k8s_cluster_name }}
+command[check_oc_{{ k8s_cluster_name }}_pods_evicted]={{ nagios_plugins_dir }}/check_kube_pods -m Evicted -w 2 -c 5 -o {{ k8s_cluster_name }}
+command[check_oc_{{ k8s_cluster_name }}_pods_errored]={{ nagios_plugins_dir }}/check_kube_pods -m Error -w 2 -c 5 -o {{ k8s_cluster_name }}
+command[check_oc_{{ k8s_cluster_name }}_pods_oomd]={{ nagios_plugins_dir }}/check_kube_pods -m OOMKilled -w 2 -c 5 -o {{ k8s_cluster_name }}
+command[check_oc_{{ k8s_cluster_name }}_pods_pending]={{ nagios_plugins_dir }}/check_kube_pods -m Pending -w 2 -c 5 -o {{ k8s_cluster_name }}
+
+# Checks PVs Status
+{% if groups['glusterfs'] is defined and (groups['glusterfs'] | length) > 0 %}
+command[check_oc_{{ k8s_cluster_name }}_gluster_heal_info]={{ nagios_plugins_dir }}/check_kube_gluster_volume_heal_info -w 1 -c 2 -o {{ k8s_cluster_name }}
+{% endif %}
+command[check_oc_{{ k8s_cluster_name }}_pvs]={{ nagios_plugins_dir }}/check_kube_pv_status -w 1 -c 2 -o {{ k8s_cluster_name }}
