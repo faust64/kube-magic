@@ -7,6 +7,8 @@ CEPH_STABLE_REL      = stable-5.0
 KUBESPRAY_STABLE_REL = 6bc60e021e39b049ec7135bd4cfb4adfce44d1f7
 OPENSHIFT_STABLE_REL = release-3.11
 
+CLUSTER_IS = Kubernetes
+
 -include Makefile.cust
 
 .PHONY: init
