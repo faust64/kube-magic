@@ -1,8 +1,8 @@
 - include_tasks: kube-rbd.yaml
   vars:
     cluster: "{{ hostvars[groups['kube-master'][0]]['rbd_provisioner_cluster'] | default('ceph') }}"
-    userid: "{{ hostvars[groups['kube-master'][0]]['rbd_provisioner_user_id'] | default('kube') }}"
     pool: "{{ hostvars[groups['kube-master'][0]]['rbd_provisioner_pool'] | default('kube') }}"
+    userid: "{{ hostvars[groups['kube-master'][0]]['rbd_provisioner_user_id'] | default('kube') }}"
   when:
   - hostvars[groups['kube-master'][0]]['rbd_provisioner_enabled'] | default(False)
 - include_tasks: kube-cephfs.yaml

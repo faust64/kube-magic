@@ -87,12 +87,6 @@ deploy-ceph: check
 ##############################
 ### Third-Party Components ###
 ##############################
-.PHONY: deploy-ldap-groupsync
-deploy-ldap-groupsync: check
-	@@ansible-playbook -i $(OPENSHIFT_IV) \
-	    custom/ldap-groupsync.yaml 2>&1 | \
-	    tee -a deploy-ldap-groupsync.log
-
 .PHONY: deploy-logging
 deploy-logging: check
 	@@if test "$(CLUSTER_IS)" = Kubernetes; then
@@ -113,6 +107,12 @@ deploy-nagios: check
 	@@ansible-playbook -i $(CUST_IV) -i $(KUBESPRAY_IV) \
 	    -i $(CEPH_IV) custom/nagios.yaml 2>&1 \
 	    | tee -a deploy-nagios.log
+
+.PHONY: deploy-post-openshift
+deploy-post-openshift: check
+	@@ansible-playbook -i $(OPENSHIFT_IV) \
+	    custom/cluster-post-openshift.yaml 2>&1 | \
+	    tee -a deploy-post-openshift.log
 
 .PHONY: deploy-tekton
 deploy-tekton: check

@@ -1,3 +1,0 @@
-- hosts: masters[0]
-  roles:
-  - ldapgroupsync

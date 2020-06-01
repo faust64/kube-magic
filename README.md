@@ -74,10 +74,10 @@ Dealing with OpenShift, we would deploy our cluster:
 $ make deploy-openshift
 ```
 
-Using LDAP authentication, we would then schedule LDAP Groups sync with:
+Setting up persistent storage, or LDAP Groups sync, we would then use:
 
 ```
-$ make deploy-ldap-groupsync
+$ make deploy-post-openshift
 ```
 
 ### Post Kubernetes/OpenShift Deployment

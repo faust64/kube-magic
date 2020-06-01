@@ -63,3 +63,9 @@
     with_items: [ 'job', 'group' ]
   when:
   - (job_exists.rc | default(0)) != 0
+
+- include_tasks: roles.yml
+  when:
+  - openshift_roles is defined
+  - openshift_roles | length > 0
+  with_items: "{{ openshift_roles | default([]) }}"

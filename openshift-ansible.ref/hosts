@@ -49,4 +49,7 @@ lb
 nodes
 new_nodes
 
+[private:children]
+OSEv3
+
 [new_nodes]

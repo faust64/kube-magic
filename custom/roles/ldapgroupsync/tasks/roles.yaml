@@ -1,0 +1,10 @@
+- name: check role granted
+  changed_when: False
+  failed_when: False
+  register: role_granted
+  shell: oc get clusterrolebinding | grep -E "[ \t]/{{ item['role'] }}[ \t]*{{ item['username'] }}[ \t]*"
+- name: grant oc cluster role
+  shell: "oc adm policy add-cluster-role-to-user {{ item['role'] }} {{ item['username'] }}"
+  when:
+  - role_granted is defined
+  - (role_granted.rc | default(0)) != 0

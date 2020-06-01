@@ -1,0 +1,28 @@
+- include_role:
+    name: commons
+    tasks_from: helpers/namespace.yaml
+  vars:
+    k8s_api_node: "{{ inventory_hostname }}"
+    kube_client: oc
+    ns_name: "{{ cephfs_namespace }}"
+
+- name: Checks for Cephfs StorageClass Prior Definition
+  changed_when: False
+  failed_when: False
+  register: has_cephfs
+  shell: oc describe sc cephfs
+- block:
+  - name: Generates Cephfs StorageClass Assets
+    template:
+      dest: /root/cephfs.yaml
+      group: root
+      mode: 0600
+      owner: root
+      src: cephfs.j2
+  - name: Installs Cephfs StorageClass Assets
+    args:
+      chdir: /root
+    shell: oc process -f cephfs.yaml | oc apply -f- && rm -f cephfs.yaml
+  when:
+  - has_cephfs is defined
+  - (has_cephfs.rc | default(0)) != 0

@@ -1,0 +1,8 @@
+- hosts: mons[0]
+  roles:
+  - post-deploy-ceph
+
+- hosts: masters[0]
+  roles:
+  - ldapgroupsync
+  - post-deploy-openshift

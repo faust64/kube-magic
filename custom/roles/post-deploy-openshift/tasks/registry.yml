@@ -1,0 +1,34 @@
+- name: Checks for Existing PVC
+  changed_when: False
+  failed_when: False
+  register: has_pvc
+  shell: oc get pvc -n default "{{ registry_pvc_name | default('docker-registry') }}"
+- block:
+  - name: Installs PVC Template
+    template:
+      dest: /tmp/registry-pvc.yml
+      group: root
+      mode: 0600
+      owner: root
+      src: registry-pvc.j2
+  - name: Creates docker-registry PVC
+    args:
+      chdir: /tmp
+    shell: oc create -n default -f registry-pvc.yml && rm -f registry-pvc.yml
+  when:
+  - has_pvc is defined
+  - (has_pvc.rc | default(0)) != 0
+
+- name: Checks docker-registry Refers to our Claim
+  changed_when: False
+  failed_when: False
+  register: uses_claim
+  shell: "oc get -o yaml dc -n default docker-registry | grep 'claimName: {{ registry_pvc_name | default('docker-registry') }}'"
+- block:
+  - name: Changes docker-registry Deployment Strategy to Recreate
+    shell: "oc patch -n default dc/docker-registry --patch '{\"spec\":{\"strategy\":{\"type\":\"Recreate\"}}}'"
+  - name: Reconfigures docker-registry Mounting our Claim
+    shell: "oc set volume -n default dc/docker-registry --add --name=registry-storage -t pvc --claim-name={{ registry_pvc_name | default('docker-registry') }} --overwrite"
+  when:
+  - uses_claim is defined
+  - (uses_claim.rc | default(0)) != 0

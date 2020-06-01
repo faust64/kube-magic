@@ -1,0 +1,29 @@
+- include_tasks: ceph-secret.yml
+  vars:
+    kuser: "{{ rbd_provisioner_user_id | default('kube') }}"
+    ksecret: "{{ kube_key }}"
+- include_tasks: ceph-secret.yml
+  vars:
+    kuser: admin
+    ksecret: "{{ admin_key }}"
+
+- name: Checks for Ceph StorageClass
+  failed_when: False
+  changed_when: False
+  register: ceph_check
+  shell: oc describe sc rwo-storage
+- block:
+  - name: Prepares Ceph StorageClass
+    template:
+      dest: /tmp/ceph-sc.yml
+      group: root
+      mode: 0600
+      owner: root
+      src: ceph-sc.j2
+  - name: Installs Ceph StorageClass
+    args:
+      chdir: /tmp
+    shell: oc create -f ceph-sc.yml && rm -f ceph-sc.yml
+  when:
+  - ceph_check is defined
+  - (ceph_check.rc | default(0)) != 0

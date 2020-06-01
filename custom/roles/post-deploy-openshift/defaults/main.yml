@@ -1,0 +1,2 @@
+cephfs_claim_root: /pvc-volumes
+cephfs_namespace: cephfs
