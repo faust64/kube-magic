@@ -6,3 +6,11 @@
   roles:
   - ldapgroupsync
   - post-deploy-openshift
+
+- hosts: k8s-cluster:lbs:etcd:mon:OSEv3
+  roles:
+  - nagios
+
+- hosts: k8s-cluster:OSEv3
+  roles:
+  - post-deploy-host

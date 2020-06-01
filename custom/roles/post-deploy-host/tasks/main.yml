@@ -1,0 +1,43 @@
+- block:
+  - name: Installs ETCd on Masters
+    yum:
+      name: etcd
+      state: present
+    when:
+    - 'masters' in group_names
+  - name: Installs OpenShift Backup Script
+    copy:
+      dest: /usr/local/sbin/openshift-backup
+      group: root
+      mode: 0750
+      owner: root
+      src: backups-oc
+  - name: Schedules OpenShift Backups
+    file:
+      dest: /etc/cron.daily/openshift-backup
+      src: /usr/local/sbin/openshift-backup
+      state: link
+  - name: Installs oc Custom Profile Configuration
+    copy:
+      dest: /etc/profile.d/custom-oc.sh
+      group: root
+      mode: 0755
+      owner: root
+      src: profile-oc
+  when:
+  - 'OSEv3' in group_names
+- block:
+  - name: Installs Kubernetes Backup Script
+    copy:
+      dest: /usr/local/sbin/k8s-backup
+      group: root
+      mode: 0750
+      owner: root
+      src: backups-k8s
+  - name: Schedules Kubernetes Backups
+    file:
+      dest: /etc/cron.daily/k8s-backup
+      src: /usr/local/sbin/k8s-backup
+      state: link
+  when:
+  - 'kube-cluster' in group_names

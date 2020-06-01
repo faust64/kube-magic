@@ -1,0 +1,294 @@
+#!/bin/sh
+# kubernetes-backup - backups Kubernetes
+# 20190604 - smoro@redhat.com
+
+BACKUP_DIR="${BACKUP_DIR:-/root/kubernetes_backup}"
+ETCD_DATA_DIR="${ETCD_DATA_DIR:-/var/lib/etcd}"
+BACKUP_CS_OBJECTS="clusterrolebindings persistentvolumes hostsubnets
+		podsecuritypolicies storageclasses"
+BACKUP_NS_OBJECTS="cronjobs rolebindings serviceaccounts secrets configmaps
+		persistentvolumeclaims deployments daemonsets ingresses
+		statefulsets networkpolicies services"
+
+if test -s /etc/kubernetes/kubernetes-backup.conf; then
+    . /etc/kubernetes/kubernetes-backup.conf
+fi
+
+BACKUPS_RETENTION=${BACKUPS_RETENTION:-7}
+ETCD_DB_DUMP="${ETCD_DB_DUMP:-nope}"
+ETCD_OBJ_DUMP="${ETCD_OBJ_DUMP:-nope}"
+EXPORT_FMT=yaml
+FORCE="${FORCE:-false}"
+KUBE_COMMAND="kubectl --config /etc/kubernetes/admin.conf"
+STARTED_AT=`date +%s`
+TODAY="$BACKUP_DIR/$(date +%Y%m%d)"
+
+umask 077
+if test -d "$TODAY"; then
+    if $FORCE >/dev/null 2>&1; then
+	echo "WARNING: forcing backup, purging previous copy of $TODAY" >&2
+	rm -fr "$TODAY"
+    else
+	echo "FATAL: backup $TODAY already exists, skipping" >&2
+	exit 1
+    fi
+fi
+mkdir -p "$TODAY"
+
+if test "$BACKUPS_RETENTION" -ge 0 >/dev/null 2>&1; then
+    echo "NOTICE: purging backups older than $BACKUPS_RETENTION days" >&2
+    find "$BACKUP_DIR" -maxdepth 1 -type d -name "[0-9]*" \
+	-mtime +$BACKUPS_RETENTION -execdir rm -rf -- '{}' \;
+else
+    cat <<EOF >&2
+WARNING: backups retention set to 0
+    keep an eye on disk usage
+    purging older backups is recommended, to avoid fs saturations
+EOF
+fi
+
+if test -d /etc/haproxy; then
+    echo -n "Backing up haproxy configuration... "
+    if tar -C /etc -cf "$TODAY/haproxy.tar" haproxy; then
+	echo done.
+    else
+	echo failed.
+    fi
+fi
+
+if test -d /etc/etcd; then
+    echo -n "Backing up etcd configuration... "
+    if tar -C /etc -cf "$TODAY/etcd-$(hostname).tar" etcd ssl/etcd; then
+	echo done.
+    else
+	echo failed.
+    fi
+    if echo "$ETCD_DB_DUMP" | grep -iE '(yes|ja|oui|si|true)' >/dev/null; then
+	# beware etcd databases dumps would use way more space than dumping
+	# objects querying Kubernetes API
+	# on the other hand, such backups may be useful, should Kubernetes API
+	# become unavailable - then, our script would not be able to dump anything
+	if etcdctl --version >/dev/null 2>&1; then
+	    echo -n "Backing up etcd database... "
+	    if etcdctl backup --data-dir $ETCD_DATA_DIR \
+		--backup-dir "$TODAY/etcd-$(hostname)" 2>/dev/null; then
+		echo done.
+	    else
+		echo failed.
+	    fi
+	fi
+    fi
+fi
+
+if test -d /etc/kubernetes; then
+    echo -n "Backing up node certificates and keys... "
+    if tar -C /etc -cf "$TODAY/node-$(hostname).tar" kubernetes; then
+	echo done.
+    else
+	echo failed.
+    fi
+    for runtime in docker containerd
+    do
+	echo -n "Backing /etc/$runtime up... "
+	if tar -C /etc -cf "$TODAY/$runtime-$(hostname).tar" $runtime; then
+	    echo done.
+	else
+	    echo failed.
+	fi
+    done
+    if test -d /root/.docker; then
+	echo -n "Backing /root/.docker up... "
+	if tar -C /root -cf "$TODAY/docker-config-$(hostname).tar" .docker; then
+	    echo done.
+	else
+	    echo failed.
+	fi
+    fi
+fi
+
+echo -n "Listing local packages... "
+if test -x /usr/bin/rpm; then
+    if rpm -qa | sort >"$TODAY/rpm-$(hostname).list"; then
+	echo done.
+    else
+	echo failed.
+    fi
+elif ! dpkg -l | sort >"$TODAY/dpkg-$(hostname).list"; then
+    echo done.
+else
+    echo failed.
+fi
+
+echo -n "Backing up custom CA trusts... "
+if test -d /etc/pki/ca-trust/source; then
+    if tar -C /etc/pki/ca-trust/source \
+	-cf "$TODAY/ca-trust-$(hostname).tar" anchors; then
+	echo done.
+    else
+	echo failed.
+    fi
+elif ! tar -C /usr/local/share -cf \
+	"$TODAY/ca-certificates-$(hostname).tar" ca-certificates; then
+    echo done.
+else
+    echo failed.
+
+if echo "$ETCD_OBJ_DUMP" | grep -iE '(yes|ja|oui|si|true)' >/dev/null; then
+    if ! $KUBE_COMMAND version >/dev/null 2>&1; then
+	echo "FATAL: Failed querying Kubernetes API!"
+    else
+	drop_if_empty()
+	{
+	    if test -s "$1"; then
+		if grep '^items: \[\]$' "$1" >/dev/null; then
+		    if test "$DEBUG"; then
+			echo "NOTICE: discarding empty set $1"
+		    fi
+		    rm -f "$1"
+		fi
+	    fi
+	}
+
+	if test -z "$NAMESPACED_CRD"; then
+	    echo "NOTICE: dumping all namespace-scoped CRDs"
+	    for crdName in $($KUBE_COMMAND get crd --no-headers | awk '{print $1}')
+	    do
+		if $KUBE_COMMAND describe crd $crdName \
+		    | grep 'Scope:.*Namespaced' >/dev/null; then
+		    NAMESPACED_CRD="$NAMESPACED_CRD $crdName"
+		fi
+	    done
+	fi
+	if test -z "$GLOBAL_CRD"; then
+	    echo "NOTICE: dumping all cluster-scoped CRDs"
+	    for crdName in $($KUBE_COMMAND get crd --no-headers | awk '{print $1}')
+	    do
+		if ! $KUBE_COMMAND describe crd $crdName \
+		    | grep 'Scope:.*Namespaced' >/dev/null; then
+		    GLOBAL_CRD="$GLOBAL_CRD $crdName"
+		fi
+	    done
+	fi
+	if test -z "$BACKUP_NAMESPACES"; then
+	    if test "$BACKUP_IGNORE_NAMESPACES"; then
+		echo "NOTICE: building namespaces list based on user-defined exclude list"
+		for ns in $($KUBE_COMMAND get ns --no-headers | awk '{print $1}')
+		do
+		    do_backup=true
+		    for check in `echo "$BACKUP_IGNORE_NAMESPACES" | sed 's|,| |g'`
+		    do
+			if test "$check" = "$ns"; then
+			    do_backup=false
+			    break
+			fi
+		    done
+		    if $do_backup; then
+			BACKUP_NAMESPACES="$BACKUP_NAMESPACES $ns"
+		    fi
+		done
+	    else
+		echo "NOTICE: dumping all namespaces"
+		BACKUP_NAMESPACES=$($KUBE_COMMAND get ns --no-headers | awk '{print $1}')
+	    fi
+	fi
+	for ns in $BACKUP_NAMESPACES
+	do
+	    echo -n "== Backing up namespace $ns metadatas... "
+	    mkdir -p "$TODAY/namespaces/$ns"
+	    $KUBE_COMMAND get -o $EXPORT_FMT ns $ns \
+		>"$TODAY/namespaces/$ns/namespace.$EXPORT_FMT" 2>/dev/null
+	    drop_if_empty "$TODAY/namespaces/$ns/namespace.$EXPORT_FMT"
+	    echo done.
+
+	    echo -n "== Backing up namespace $ns assets... "
+	    for kind in $BACKUP_NS_OBJECTS
+	    do
+		$KUBE_COMMAND get --export=true -n $ns -o $EXPORT_FMT $kind \
+		    >"$TODAY/namespaces/$ns/$kind.$EXPORT_FMT" 2>/dev/null
+		drop_if_empty "$TODAY/namespaces/$ns/$kind.$EXPORT_FMT"
+	    done
+	    echo done.
+	    if test "$NAMESPACED_CRD" != skip; then
+		echo -n "== Backing up namespace $ns custom resources... "
+		for crd in $NAMESPACED_CRD
+		do
+		    $KUBE_COMMAND get --export=true -n $ns -o $EXPORT_FMT $crd \
+			>"$TODAY/namespaces/$ns/$crd.$EXPORT_FMT" 2>/dev/null
+		    drop_if_empty "$TODAY/namespaces/$ns/$crd.$EXPORT_FMT"
+		done
+		echo done.
+	    fi
+	done
+
+	if test "$BACKUP_CS_OBJECTS"; then
+	    echo -n "Exporting cluster-wide configurations... "
+	    for kind in $BACKUP_CS_OBJECTS
+	    do
+		$KUBE_COMMAND get --export=true $kind -o $EXPORT_FMT \
+		    >"$TODAY/$kind.$EXPORT_FMT" 2>/dev/null
+		drop_if_empty "$TODAY/$kind.$EXPORT_FMT"
+	    done
+	    echo done.
+	fi
+
+	if test "$GLOBAL_CRD" != skip; then
+	    echo -n "Exporting cluster-wide custom resources... "
+	    for crd in $GLOBAL_CRD
+	    do
+		$KUBE_COMMAND get --export=true -o $EXPORT_FMT $crd \
+		    >"$TODAY/$crd.$EXPORT_FMT" 2>/dev/null
+		drop_if_empty "$TODAY/$crd.$EXPORT_FMT"
+	    done
+	    echo done.
+	fi
+    fi
+fi
+
+BSIZE=`du -sh "$TODAY" | awk '{print $1}'`
+echo "INFO: uncompressed backup weights $BSIZE"
+if test -x /usr/openv/netbackup/bin/bpbackup; then
+    if tar -czf "$BACKUP_DIR/kubernetes-netbackup.tar.gz" "$TODAY"; then
+	CSIZE=`du -sh "$BACKUP_DIR/kubernetes-netbackup.tar.gz" | awk '{print $1}'`
+	echo "INFO: compressed backup weights $CSIZE"
+	test -z "$BPBACKUP_HOST" && BPBACKUP_HOST=netdata.example.com
+	test -z "$BPBACKUP_POLICY" && BPBACKUP_POLICY=KUBERNETES42
+	test -z "$BPBACKUP_RETENTION" && BPBACKUP_RETENTION=Da_40d
+	test -z "$BPBACKUP_WAIT" && BPBACKUP_WAIT=01:00:00
+	if ! /usr/openv/netbackup/bin/bpbackup \
+	    -p "$BPBACKUP_POLICY" -S "$BPBACKUP_HOST" \
+	    -s "$BPBACKUP_RETENTION" -w "$BPBACKUP_WAIT" \
+	    "$BACKUP_DIR/kubernetes-netbackup.tar.gz"; then
+	    echo failed pushing backup to netbackup: $BPBACKUP_HOST >&2
+	else
+	    rm -f "$BACKUP_DIR/kubernetes-netbackup.tar.gz"
+	    echo done pushing to netbackup: $BPBACKUP_HOST
+	fi
+    else
+	echo failed generating archive from todays backup >&2
+    fi
+fi
+if test -d "$BACKUP_DIR/.git"; then
+    ln -sf "$BACKUP_DIR/.git" "$TODAY/"
+    if test -s "$BACKUP_DIR/.gitignore"; then
+	ln -sf "$BACKUP_DIR/.gitignore" "$TODAY/"
+    fi
+    (
+	cd "$TODAY"
+	git status | awk '/deleted:/{print $3}' | xargs git rm
+	git add .
+	git commit -m "$(date +%Y%m%d-%H:%M)"
+	if git remote | grep -E '.*' >/dev/null; then
+	    if ! git push; then
+		echo failed pushing backup to git upstream >&2
+	    else
+		echo done pushing backup to git upstream
+		rm -f .gitignore .git
+	    fi
+	fi
+    )
+fi
+DONE_AT=`date +%s`
+ELAPSED=`expr $DONE_AT - $STARTED_AT`
+
+echo "all done, in $ELAPSED seconds."
+exit 0

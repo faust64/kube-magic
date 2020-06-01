@@ -1,3 +1,0 @@
-- hosts: k8s-cluster:lbs:etcd:mon
-  roles:
-  - nagios

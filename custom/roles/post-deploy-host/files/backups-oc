@@ -1,0 +1,307 @@
+#!/bin/sh
+# openshift-backup - backups OpenShift
+# 20190604 - smoro@redhat.com
+
+BACKUP_DIR="${BACKUP_DIR:-/root/openshift_backup}"
+ETCD_DATA_DIR="${ETCD_DATA_DIR:-/var/lib/etcd}"
+BACKUP_CS_OBJECTS="clusterrolebindings persistentvolumes hostsubnets
+		netnamespaces securitycontextconstraints storageclasses"
+BACKUP_NS_OBJECTS="cronjobs rolebindings serviceaccounts egressnetworkpolicies secrets
+		persistentvolumeclaims deployments deploymentconfigs daemonsets configmaps
+		statefulsets networkpolicies routes imagestreams buildconfigs services"
+
+if test -s /etc/origin/openshift-backup.conf; then
+    . /etc/origin/openshift-backup.conf
+fi
+
+BACKUPS_RETENTION=${BACKUPS_RETENTION:-7}
+ETCD_DB_DUMP="${ETCD_DB_DUMP:-nope}"
+ETCD_OBJ_DUMP="${ETCD_OBJ_DUMP:-nope}"
+EXPORT_FMT=yaml
+FORCE="${FORCE:-false}"
+OC_COMMAND="oc --config /etc/origin/master/admin.kubeconfig"
+STARTED_AT=`date +%s`
+TODAY="$BACKUP_DIR/$(date +%Y%m%d)"
+
+umask 077
+if test -d "$TODAY"; then
+    if $FORCE >/dev/null 2>&1; then
+	echo "WARNING: forcing backup, purging previous copy of $TODAY" >&2
+	rm -fr "$TODAY"
+    else
+	echo "FATAL: backup $TODAY already exists, skipping" >&2
+	exit 1
+    fi
+fi
+mkdir -p "$TODAY"
+
+if test "$BACKUPS_RETENTION" -ge 0 >/dev/null 2>&1; then
+    echo "NOTICE: purging backups older than $BACKUPS_RETENTION days" >&2
+    find "$BACKUP_DIR" -maxdepth 1 -type d -name "[0-9]*" \
+	-mtime +$BACKUPS_RETENTION -execdir rm -rf -- '{}' \;
+else
+    cat <<EOF >&2
+WARNING: backups retention set to 0
+    keep an eye on disk usage
+    purging older backups is recommended, to avoid fs saturations
+EOF
+fi
+
+if test -d /etc/origin/master; then
+    echo -n "Backing up master certificates and keys... "
+    if tar -C /etc/origin --exclude='*origin-audit*.log' \
+	-cf "$TODAY/master-$(hostname).tar" master; then
+	echo done.
+    else
+	echo failed.
+    fi
+fi
+
+for item in sysconfig dnsmasq.d
+do
+    echo -n "Backing up $item configuration"
+    if tar -C /etc/$item -cf "$TODAY/$item.tar" .; then
+	echo done.
+    else
+	echo failed.
+    fi
+
+done
+
+if test -d /etc/haproxy; then
+    echo -n "Backing up haproxy configuration... "
+    if tar -C /etc -cf "$TODAY/haproxy.tar" haproxy; then
+	echo done.
+    else
+	echo failed.
+    fi
+fi
+
+if test -d /etc/etcd; then
+    echo -n "Backing up etcd configuration... "
+    if tar -C /etc -cf "$TODAY/etcd-$(hostname).tar" etcd; then
+	echo done.
+    else
+	echo failed.
+    fi
+    if echo "$ETCD_DB_DUMP" | grep -iE '(yes|ja|oui|si|true)' >/dev/null; then
+	# beware etcd databases dumps would use way more space than dumping
+	# objects querying OpenShift API
+	# on the other hand, such backups may be useful, should OpenShift API
+	# become unavailable - then, our script would not be able to dump anything
+	if etcdctl --version >/dev/null 2>&1; then
+	    echo -n "Backing up etcd database... "
+	    if etcdctl backup --data-dir $ETCD_DATA_DIR \
+		--backup-dir "$TODAY/etcd-$(hostname)" 2>/dev/null; then
+		echo done.
+	    else
+		echo failed.
+	    fi
+	fi
+    fi
+fi
+
+if test -d /etc/origin/node; then
+    echo -n "Backing up node certificates and keys... "
+    if tar -C /etc/origin -cf "$TODAY/node-$(hostname).tar" node; then
+	echo done.
+    else
+	echo failed.
+    fi
+    echo -n "Backing /etc/containers up... "
+    if tar -C /etc -cf "$TODAY/containers-$(hostname).tar" containers; then
+	echo done.
+    else
+	echo failed.
+    fi
+    if test -d /etc/pki/containers; then
+	echo -n "Backing /etc/pki/containers up... "
+	if tar -C /etc -cf "$TODAY/pki-containers-$(hostname).tar" \
+	    pki/containers; then
+	    echo done.
+	else
+	    echo failed.
+	fi
+    fi
+    echo -n "Backing /root/.docker up... "
+    if tar -C /root -cf "$TODAY/docker-config-$(hostname).tar" .docker; then
+	echo done.
+    else
+	echo failed.
+    fi
+fi
+
+echo -n "Listing local packages... "
+if rpm -qa | sort >"$TODAY/rpm-$(hostname).list"; then
+    echo done.
+else
+    echo failed.
+fi
+
+echo -n "Backing up custom CA trusts... "
+if tar -C /etc/pki/ca-trust/source \
+    -cf "$TODAY/ca-trust-$(hostname).tar" anchors; then
+    echo done.
+else
+    echo failed.
+fi
+
+if echo "$ETCD_OBJ_DUMP" | grep -iE '(yes|ja|oui|si|true)' >/dev/null; then
+    if ! $OC_COMMAND whoami >/dev/null 2>&1; then
+	echo "FATAL: Failed querying OpenShift API!"
+    else
+	drop_if_empty()
+	{
+	    if test -s "$1"; then
+		if grep '^items: \[\]$' "$1" >/dev/null; then
+		    if test "$DEBUG"; then
+			echo "NOTICE: discarding empty set $1"
+		    fi
+		    rm -f "$1"
+		fi
+	    fi
+	}
+
+	if test -z "$NAMESPACED_CRD"; then
+	    echo "NOTICE: dumping all namespace-scoped CRDs"
+	    for crdName in $($OC_COMMAND get crd --no-headers | awk '{print $1}')
+	    do
+		if $OC_COMMAND describe crd $crdName \
+		    | grep 'Scope:.*Namespaced' >/dev/null; then
+		    NAMESPACED_CRD="$NAMESPACED_CRD $crdName"
+		fi
+	    done
+	fi
+	if test -z "$GLOBAL_CRD"; then
+	    echo "NOTICE: dumping all cluster-scoped CRDs"
+	    for crdName in $($OC_COMMAND get crd --no-headers | awk '{print $1}')
+	    do
+		if ! $OC_COMMAND describe crd $crdName \
+		    | grep 'Scope:.*Namespaced' >/dev/null; then
+		    GLOBAL_CRD="$GLOBAL_CRD $crdName"
+		fi
+	    done
+	fi
+	if test -z "$BACKUP_PROJECTS"; then
+	    if test "$BACKUP_IGNORE_PROJECTS"; then
+		echo "NOTICE: building projects list based on user-defined exclude list"
+		for project in $($OC_COMMAND get projects --no-headers | awk '{print $1}')
+		do
+		    do_backup=true
+		    for check in `echo "$BACKUP_IGNORE_PROJECTS" | sed 's|,| |g'`
+		    do
+			if test "$check" = "$project"; then
+			    do_backup=false
+			    break
+			fi
+		    done
+		    if $do_backup; then
+			BACKUP_PROJECTS="$BACKUP_PROJECTS $project"
+		    fi
+		done
+	    else
+		echo "NOTICE: dumping all projects"
+		BACKUP_PROJECTS=$($OC_COMMAND get projects --no-headers | awk '{print $1}')
+	    fi
+	fi
+	for project in $BACKUP_PROJECTS
+	do
+	    echo -n "== Backing up project $project metadatas... "
+	    mkdir -p "$TODAY/projects/$project"
+	    $OC_COMMAND get -o $EXPORT_FMT project $project \
+		>"$TODAY/projects/$project/project.$EXPORT_FMT" 2>/dev/null
+	    drop_if_empty "$TODAY/projects/$project/project.$EXPORT_FMT"
+	    echo done.
+
+	    echo -n "== Backing up project $project assets... "
+	    for kind in $BACKUP_NS_OBJECTS
+	    do
+		$OC_COMMAND get --export=true -n $project -o $EXPORT_FMT $kind \
+		    >"$TODAY/projects/$project/$kind.$EXPORT_FMT" 2>/dev/null
+		drop_if_empty "$TODAY/projects/$project/$kind.$EXPORT_FMT"
+	    done
+	    echo done.
+	    if test "$NAMESPACED_CRD" != skip; then
+		echo -n "== Backing up project $project custom resources... "
+		for crd in $NAMESPACED_CRD
+		do
+		    $OC_COMMAND get --export=true -n $project -o $EXPORT_FMT $crd \
+			>"$TODAY/projects/$project/$crd.$EXPORT_FMT" 2>/dev/null
+		    drop_if_empty "$TODAY/projects/$project/$crd.$EXPORT_FMT"
+		done
+		echo done.
+	    fi
+	done
+
+	if test "$BACKUP_CS_OBJECTS"; then
+	    echo -n "Exporting cluster-wide configurations... "
+	    for kind in $BACKUP_CS_OBJECTS
+	    do
+		$OC_COMMAND get --export=true $kind -o $EXPORT_FMT \
+		    >"$TODAY/$kind.$EXPORT_FMT" 2>/dev/null
+		drop_if_empty "$TODAY/$kind.$EXPORT_FMT"
+	    done
+	    echo done.
+	fi
+
+	if test "$GLOBAL_CRD" != skip; then
+	    echo -n "Exporting cluster-wide custom resources... "
+	    for crd in $GLOBAL_CRD
+	    do
+		$OC_COMMAND get --export=true -o $EXPORT_FMT $crd \
+		    >"$TODAY/$crd.$EXPORT_FMT" 2>/dev/null
+		drop_if_empty "$TODAY/$crd.$EXPORT_FMT"
+	    done
+	    echo done.
+	fi
+    fi
+fi
+
+BSIZE=`du -sh "$TODAY" | awk '{print $1}'`
+echo "INFO: uncompressed backup weights $BSIZE"
+if test -x /usr/openv/netbackup/bin/bpbackup; then
+    if tar -czf "$BACKUP_DIR/openshift-netbackup.tar.gz" "$TODAY"; then
+	CSIZE=`du -sh "$BACKUP_DIR/openshift-netbackup.tar.gz" | awk '{print $1}'`
+	echo "INFO: compressed backup weights $CSIZE"
+	test -z "$BPBACKUP_HOST" && BPBACKUP_HOST=netdata.example.com
+	test -z "$BPBACKUP_POLICY" && BPBACKUP_POLICY=OPENSHIFT53
+	test -z "$BPBACKUP_RETENTION" && BPBACKUP_RETENTION=Da_40d
+	test -z "$BPBACKUP_WAIT" && BPBACKUP_WAIT=01:00:00
+	if ! /usr/openv/netbackup/bin/bpbackup \
+	    -p "$BPBACKUP_POLICY" -S "$BPBACKUP_HOST" \
+	    -s "$BPBACKUP_RETENTION" -w "$BPBACKUP_WAIT" \
+	    "$BACKUP_DIR/openshift-netbackup.tar.gz"; then
+	    echo failed pushing backup to netbackup: $BPBACKUP_HOST >&2
+	else
+	    rm -f "$BACKUP_DIR/openshift-netbackup.tar.gz"
+	    echo done pushing to netbackup: $BPBACKUP_HOST
+	fi
+    else
+	echo failed generating archive from todays backup >&2
+    fi
+fi
+if test -d "$BACKUP_DIR/.git"; then
+    ln -sf "$BACKUP_DIR/.git" "$TODAY/"
+    if test -s "$BACKUP_DIR/.gitignore"; then
+	ln -sf "$BACKUP_DIR/.gitignore" "$TODAY/"
+    fi
+    (
+	cd "$TODAY"
+	git status | awk '/deleted:/{print $3}' | xargs git rm
+	git add .
+	git commit -m "$(date +%Y%m%d-%H:%M)"
+	if git remote | grep -E '.*' >/dev/null; then
+	    if ! git push; then
+		echo failed pushing backup to git upstream >&2
+	    else
+		echo done pushing backup to git upstream
+		rm -f .gitignore .git
+	    fi
+	fi
+    )
+fi
+DONE_AT=`date +%s`
+ELAPSED=`expr $DONE_AT - $STARTED_AT`
+
+echo "all done, in $ELAPSED seconds."
+exit 0

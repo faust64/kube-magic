@@ -102,17 +102,19 @@ deploy-logging: check
 	    ) 2>&1 | tee -a deploy-logging.log; \
 	fi
 
-.PHONY: deploy-nagios
-deploy-nagios: check
-	@@ansible-playbook -i $(CUST_IV) -i $(KUBESPRAY_IV) \
-	    -i $(CEPH_IV) custom/nagios.yaml 2>&1 \
-	    | tee -a deploy-nagios.log
-
-.PHONY: deploy-post-openshift
-deploy-post-openshift: check
-	@@ansible-playbook -i $(OPENSHIFT_IV) \
-	    custom/cluster-post-openshift.yaml 2>&1 | \
-	    tee -a deploy-post-openshift.log
+.PHONY: deploy-post
+deploy-post: check
+	@@if test "$(CLUSTER_IS)" = Kubernetes; then \
+	    ansible-playbook -i $(CUST_IV) \
+		-i $(KUBESPRAY_IV) -i $(CEPH_IV) \
+		custom/cluster-post.yaml 2>&1 | \
+		tee -a deploy-post.log; \
+	else \
+	    ansible-playbook -i $(CUST_IV) \
+		-i $(OPENSHIFT_IV) -i $(CEPH_IV) \
+		custom/cluster-post.yaml 2>&1 | \
+		tee -a deploy-post.log; \
+	fi
 
 .PHONY: deploy-tekton
 deploy-tekton: check

@@ -1,0 +1,1 @@
+alias oc-all="oc get --ignore-not-found $(oc api-resources --verbs=list --namespaced -o name | xargs | sed 's/\ /,/g')"

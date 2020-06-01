@@ -74,21 +74,21 @@ Dealing with OpenShift, we would deploy our cluster:
 $ make deploy-openshift
 ```
 
-Setting up persistent storage, or LDAP Groups sync, we would then use:
-
-```
-$ make deploy-post-openshift
-```
-
 ### Post Kubernetes/OpenShift Deployment
+
+Setting up Nagios monitoring, backups, or OpenShift persistent storage
+and LDAP Groups sync, we would then use:
+
+```
+$ make deploy-post
+```
 
 Eventually, we may deploy additional components, such as:
 
  * Logging stack: `make deploy-logging` (kubespray/openshift)
- * Nagios monitoringn: `make deploy-nagios` (kubespray/openshift)
  * Tekton: `make deploy-tekton` (kubespray -- WARNING: some manual fix required afterwards)
 
-#### EFK
+#### EFK on Kubernetes
 
 Note that deploying the logging stack on Kubernetes, you will then have to
 connect Kibana, go to Settings, Kibana / Index Patterns, close the div on
