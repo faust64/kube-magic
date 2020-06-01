@@ -84,6 +84,6 @@ $ make deploy-ldap-groupsync
 
 Eventually, we may deploy additional components, such as:
 
- * Logging stack: `make deploy-logging` (kubespray)
+ * Logging stack: `make deploy-logging` (kubespray/openshift)
  * Nagios monitoringn: `make deploy-nagios` (kubespray/openshift)
  * Tekton: `make deploy-tekton` (kubespray -- WARNING: some manual fix required afterwards)

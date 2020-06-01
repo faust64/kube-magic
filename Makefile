@@ -93,8 +93,18 @@ deploy-ldap-groupsync: check
 
 .PHONY: deploy-logging
 deploy-logging: check
-	@@ansible-playbook -i $(KUBESPRAY_IV) \
-	    custom/logging.yaml 2>&1 | tee -a deploy-logging.log
+	@@if test "$(CLUSTER_IS)" = Kubernetes; then
+	    ansible-playbook -i $(KUBESPRAY_IV) \
+		custom/logging.yaml 2>&1 | \
+		tee -a deploy-logging.log; \
+	else \
+	    ( cd openshift-ansible; \
+		ansible-playbook -i ../custom/$(CUST_IV) \
+		    -i ../$(OPENSHIFT_IV) -i ../$(CEPH_IV) \
+		    -e openshift_logging_install_logging=True \
+		    ./playbooks/openshift-logging/config.yml; \
+	    ) 2>&1 | tee -a deploy-logging.log; \
+	fi
 
 .PHONY: deploy-nagios
 deploy-nagios: check
