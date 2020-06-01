@@ -87,3 +87,13 @@ Eventually, we may deploy additional components, such as:
  * Logging stack: `make deploy-logging` (kubespray/openshift)
  * Nagios monitoringn: `make deploy-nagios` (kubespray/openshift)
  * Tekton: `make deploy-tekton` (kubespray -- WARNING: some manual fix required afterwards)
+
+#### EFK
+
+Note that deploying the logging stack on Kubernetes, you will then have to
+connect Kibana, go to Settings, Kibana / Index Patterns, close the div on
+the right side, as it hides the Create Index Pattern button.
+
+As a pattern, we would enter `logstash-*`, confirm. The more we would wait
+before doing so, the more fields we would discover. A few to look for would
+be `kuberenetes.container.*`, `kubernetes.labels.*` or `SYSLOG_FACILITY`.

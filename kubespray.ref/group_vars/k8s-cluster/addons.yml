@@ -2,9 +2,8 @@
 dashboard_enabled: true
 helm_enabled: false
 
-# Registry deployment
-registry_enabled: false
-registry_namespace: kube-system
+registry_enabled: true
+registry_namespace: registry
 registry_storage_class: rwx-storage
 registry_disk_size: 500Gi
 
@@ -16,9 +15,7 @@ metrics_server_kubelet_preferred_address_types: InternalIP
 cephfs_provisioner_enabled: true
 cephfs_provisioner_namespace: cephfs-provisioner
 cephfs_provisioner_cluster: ceph
-cephfs_provisioner_monitors: "10.42.253.110:6789,10.42.253.111:6789,10.42.253.112:6789"
 cephfs_provisioner_admin_id: admin
-cephfs_provisioner_secret: AQAPPMleEGZAMBAAap9XPdIEAHJqInsdSh1/CA==
 cephfs_provisioner_storage_class: rwx-storage
 cephfs_provisioner_reclaim_policy: Delete
 cephfs_provisioner_claim_root: /volumes
@@ -27,14 +24,11 @@ cephfs_provisioner_deterministic_names: true
 rbd_provisioner_enabled: true
 rbd_provisioner_namespace: rbd-provisioner
 rbd_provisioner_replicas: 2
-rbd_provisioner_monitors: "10.42.253.110:6789,10.42.253.111:6789,10.42.253.112:6789"
 rbd_provisioner_pool: kube
 rbd_provisioner_admin_id: admin
 rbd_provisioner_secret_name: ceph-secret-admin
-rbd_provisioner_secret: AQAPPMleEGZAMBAAap9XPdIEAHJqInsdSh1/CA==
 rbd_provisioner_user_id: kube
 rbd_provisioner_user_secret_name: ceph-secret-user
-rbd_provisioner_user_secret: AQAKfNJeC/z0FhAAbmBgMu0NdWUw2wfua4Lf9Q==
 rbd_provisioner_user_secret_namespace: "{{ rbd_provisioner_namespace }}"
 rbd_provisioner_fs_type: ext4
 rbd_provisioner_image_format: "2"
