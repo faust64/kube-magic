@@ -75,6 +75,13 @@
     when:
     - ansible_distribution in deb_dist_match
 
+  - name: Sets sysctl running Buildah
+    sysctl:
+      name: kernel.unprivileged_userns_clone
+      reload: yes
+      state: present
+      sysctl_file: /etc/sysctl.d/97-k8s-buildah.conf
+      value: "1"
   - name: Sets sysctl hosting ElasticSearch
     sysctl:
       name: vm.max_map_count

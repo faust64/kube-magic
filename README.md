@@ -97,3 +97,102 @@ the right side, as it hides the Create Index Pattern button.
 As a pattern, we would enter `logstash-*`, confirm. The more we would wait
 before doing so, the more fields we would discover. A few to look for would
 be `kuberenetes.container.*`, `kubernetes.labels.*` or `SYSLOG_FACILITY`.
+
+## Feedback
+
+As of June 2020.
+
+### Buildah
+
+The first inconsistency I would find, comparing with OpenShift, is that I can
+not run Buildah on unprivileged containers, building my images. Using either
+the default or VFS drivers (the latter did help in OCP), which gives different
+error messages.
+
+As far as I understand, this would have to do with Apparmor being enabled on
+my (Debian buster) nodes. Build fails with a permission denied, writing on
+some emptyDir.
+
+Allowing my tekton ServiceAccount to run privileged pod, buildah builds do
+work as intended. An to be fair, even openshift tektoncd samples would run
+those as root - as reported, openshift/pipelines-catalog#17 . Quite a shame,
+considering that unprivileged capbility is one of the main argument buildah
+has -- and it's either poorly performing, or not at all ...
+
+### Cert-Manager
+
+The cert-manager operator does not work, as deployed by kube-spray (master
+branch, I should have picked a release first, ...). Looks like we're in
+between two API versions, the operator is lacking permissions over the
+objects it wants to use. If I fix RBAC, the the api server refuses the
+objects created by the operator. The operator image is most definitely wrong,
+in relation to the RBAC/CRD configuration loaded by kube-spray.
+
+Fixing this is still in my todo, I've been manually generating self-signed
+(see `custom/roles/logging`, setting up Kibana Ingress certificate).
+
+### ETCd Quotas
+
+While first deploying kubernetes using those playbooks, I made a mistake in
+setting `etcd_quota_backend_bytes` to 20Mi, instead of 20Gi. Realizing this,
+I corrected the `/etc/etcd.env` on two out of three masters, leaving the last
+one intact, to see what would happend.
+
+About 5 days after initial deployment, while porting an OCP operator to work
+in vanilla k8s (lots of objects creation/updates/deletion and do-overs, ...),
+I eventually reached a point where any kubectl command that might have written
+something into etcd would fail. In most case, the associated error message
+would be clear enough, including something like `mvcc: database space exceeded`.
+
+Empirically, we can see that having all three members healthy, yet only one
+of them reaching its quota, would result in an alarm being set for the whole
+cluster.
+
+Querying etcd cluster status, we can see all members are here. A column mentions
+some `20MB`, matching my initial quota.
+
+```
+. /etc/etcd.env
+ENDPOINTS=$(echo $ETCD_INITIAL_CLUSTER | sed  -e 's|etcd[0-9]=||g' -e 's|2380|2379|g')
+ETCDCTL_API=3 etcdctl --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE \
+    --cacert=$ETCDCTL_CA_FILE --endpoints=$ENDPOINTS endpoint status
+```
+
+We could try compating our database, keeping in mind this process should run in
+background, so don't hope too much out of this:
+
+```
+ETCDCTL_API=3 etcdctl --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE \
+    --cacert=$ETCDCTL_CA_FILE --endpoints=$ENDPOINTS endpoint status \
+    --write-out="json" | egrep -o '"revision":[0-9]*' | egrep -o '[0-9].*'
+<returns-a-revision-number>
+ETCDCTL_API=3 etcdctl --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE \
+    --cacert=$ETCDCTL_CA_FILE --endpoints=$ENDPOINTS compact <revision-number>
+```
+
+While compaction did not help, I eventually went with defrag, which did:
+
+```
+ETCDCTL_API=3 etcdctl --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE \
+    --cacert=$ETCDCTL_CA_FILE --endpoints=$ENDPOINTS defrag
+```
+
+Then, do not forget to clear the alarm:
+
+```
+ETCDCTL_API=3 etcdctl --cert=$ETCD_PEER_CERT_FILE --key=$ETCD_PEER_KEY_FILE \
+    --cacert=$ETCDCTL_CA_FILE --endpoints=$ENDPOINTS alarm disable
+```
+
+Note that while, at that stage, etcd logs would confirm there is no more
+quota issue, we may want to restart the whole cluster, forcing all components
+to acknowledge this -- I could not kubectl exec, logs, ... restarting a pod
+ended up in one being stuck in "terminating" while the other in
+"containercreating", ... situation was quite fucked up.
+
+At which point, I would argue there's no "right" value to pass that
+`etcd_quota_backend_bytes` variable. It would probably be safer to leave it
+undefined and use a dedicated logical volume hosting etcd data - maybe with
+asymetrical capacities, making sure they would not get full all at once, and
+keeping some space available in the parent volume group, which could fasten
+recovery, especially if not everyone in your team knows about etcd operations.
