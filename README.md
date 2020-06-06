@@ -119,6 +119,15 @@ those as root - as reported, openshift/pipelines-catalog#17 . Quite a shame,
 considering that unprivileged capbility is one of the main argument buildah
 has -- and it's either poorly performing, or not at all ...
 
+### CephFS Provisioner
+
+Currently running version 1.2.2 of the cephfs-provisioner, I noticed that
+PVC deletion may never complete. While the PVC itself is indeed deleted,
+the Secret that was created accessing our Volume would remain in our
+Namespace. The Persistent Volume object would remain in a Released state,
+despite my StorageClass reclaimPolicy being set to Delete. Both of which
+would prevent re-creating a PVC you would have deleted.
+
 ### Cert-Manager
 
 The cert-manager operator does not work, as deployed by kube-spray (master
@@ -196,3 +205,17 @@ undefined and use a dedicated logical volume hosting etcd data - maybe with
 asymetrical capacities, making sure they would not get full all at once, and
 keeping some space available in the parent volume group, which could fasten
 recovery, especially if not everyone in your team knows about etcd operations.
+
+### Pulling Container Images from Insecure Registries
+
+Using containerd runtime, it is not yet possible to pull images from an
+insecure registry, unless we have some CA to trust on Kubernetes hosts.
+Such registry would remain usable with Tekton and Buildah, though we would
+not be able to run containers out of it.
+
+Feature has been added to containerd 1.4.0-beta.0, kube-spray currently ships
+with 1.2.13-2 on Debian buster.
+
+In the meantime, when self-signing certificates without a CA, or no way to
+easily trust new CAs into Kubernetes hosts (eg: operator), then http registries
+could still be used.
