@@ -119,6 +119,27 @@ those as root - as reported, openshift/pipelines-catalog#17 . Quite a shame,
 considering that unprivileged capbility is one of the main argument buildah
 has -- and it's either poorly performing, or not at all ...
 
+Another issue we would encounter with Buildah alongside Containerd, is due
+to some wrong metadata dealing with compressed images. Though that bug was
+allegedly fixed, latest images still randomly reproduce the issue (not all
+of them affected). This could be fixed disabling compression pushing
+images - which is definitely not a good solution, though at least it works.
+
+https://github.com/containers/buildah/issues/1589#issuecomment-504504999
+https://github.com/containers/buildah/issues/1589#issuecomment-542509369
+https://www.mankier.com/1/buildah-push#--disable-compression
+
+In some case, disabling compression did not fix. Noticing the remaining
+deployments all used images builds on top of other custom images
+(eg: apache -> php -> whitepages), I tried to manually pull base images,
+which fixed ... A better solution would then to add some extra option to
+buildah (not required on OpenShift, unclear wtf)
+
+https://github.com/containers/image/issues/733#issuecomment-625867772
+
+Overall: quite disappointed by Buildah on Kubernetes - while, to be frank,
+it was not that great on OpenShift either.
+
 ### CephFS Provisioner
 
 Currently running version 1.2.2 of the cephfs-provisioner, I noticed that
