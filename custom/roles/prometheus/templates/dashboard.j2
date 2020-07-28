@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-{{ dashboard_name | lower | regex_replace('[\\.-_ ]', '') }}
+  namespace: {{ prometheus_ns }}
+data:
+  "{{ dashboard_name }}.json": |
+{{ lookup('file', 'dashboards/' ~ dashboard_name ~ '.json') | indent(width=4, indentfirst=True) }}

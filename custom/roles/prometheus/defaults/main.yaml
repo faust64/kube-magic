@@ -1,0 +1,64 @@
+cluster_domain: cluster.local
+k8s_ressource_nodes_selectors:
+- kubernetes.io/arch=amd64
+
+# AlertManager
+alertmanager_cpu_limit: 10m
+alertmanager_cpu_request: 10m
+alertmanager_data_capacity: 2Gi
+alertmanager_do_tls: True
+alertmanager_fqdn: kibana.demo.local
+alertmanager_memory_limit: 50Mi
+alertmanager_memory_request: 50Mi
+alertmanager_replicas: 2
+alertmanager_tag: v0.21.0
+
+# Grafana
+grafana_admin_password: secret
+grafana_admin_user: admin
+grafana_cpu_limit: 100m
+grafana_cpu_request: 50m
+grafana_do_tls: True
+grafana_fqdn: kibana.demo.local
+grafana_memory_limit: 256Mi
+grafana_memory_request: 128Mi
+grafana_replicas: 1
+grafana_tag: 7.0.5
+
+# Kube State Metrics
+kubestatemetrics_cpu_limit: 10m
+kubestatemetrics_cpu_request: 10m
+kubestatemetrics_memory_limit: 50Mi
+kubestatemetrics_memory_request: 50Mi
+kubestatemetrics_tag: v1.9.7
+
+# Node Exporter
+nodeexporter_cpu_limit: 200m
+nodeexporter_cpu_request: 100m
+nodeexporter_memory_limit: 50Mi
+nodeexporter_memory_request: 50Mi
+nodeexporter_tag: v1.0.0
+
+# AlertManager Notifications
+#notify_email_address: alerts@example.com
+#notify_http_address: http://prometheus-msteams:2000/alertmanager"
+#notify_slack_address: https://hooks.slack.com/services/XXX/YYY/ZZZ
+notify_send_resolved: "true"
+notify_slack_channel: monitoring
+smtp_domain: example.com
+smtp_port: 25
+#smtp_relay: smtp.example.com
+
+# Prometheus
+prometheus_cpu_limit: 250m
+prometheus_cpu_request: 100m
+prometheus_data_capacity: 360Gi
+prometheus_do_tls: True
+prometheus_federation: []
+prometheus_fqdn: kibana.demo.local
+prometheus_memory_limit: 2Gi
+prometheus_memory_request: 1Gi
+prometheus_replicas: 2
+prometheus_retention: 15d
+prometheus_scrape_interval: 15s
+prometheus_tag: v2.19.2

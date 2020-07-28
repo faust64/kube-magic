@@ -86,6 +86,7 @@ $ make deploy-post
 Eventually, we may deploy additional components, such as:
 
  * Logging stack: `make deploy-logging` (kubespray/openshift)
+ * Monitoring stack: `make deploy-prometheus` (kubespray/openshift)
  * Tekton: `make deploy-tekton` (kubespray -- WARNING: some manual fix required afterwards)
 
 #### EFK on Kubernetes

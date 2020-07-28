@@ -102,6 +102,18 @@ deploy-logging: check
 	    ) 2>&1 | tee -a deploy-logging.log; \
 	fi
 
+.PHONY: deploy-prometheus
+deploy-prometheus: check
+	@@if test "$(CLUSTER_IS)" = Kubernetes; then
+	    ansible-playbook -i $(KUBESPRAY_IV) \
+		custom/prometheus.yaml 2>&1 | \
+		tee -a deploy-prometheus.log; \
+	else \
+	    ansible-playbook -i $(OPENSHIFT_IV) \
+		custom/prometheus.yaml 2>&1 | \
+		tee -a deploy-prometheus.log; \
+	fi
+
 .PHONY: deploy-post
 deploy-post: check
 	@@if test "$(CLUSTER_IS)" = Kubernetes; then \

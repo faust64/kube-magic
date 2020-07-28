@@ -1,0 +1,344 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: prometheus-monitoring
+rules:
+{% if kube_client == 'oc' %}
+- apiGroups:
+  - ""
+  - apps.openshift.io
+  resources:
+  - deploymentconfigs
+  verbs:
+  - get
+  - list
+  - watch
+{% endif %}
+- apiGroups:
+  - ""
+  resources:
+  - endpoints
+  - nodes
+  - nodes/metrics
+  - nodes/proxy
+  - pods
+  - services
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - daemonsets
+  - deployments
+  - replicasets
+  - statefulsets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - extensions
+  resources:
+  - daemonsets
+  - deployments
+  - replicasets
+  verbs:
+  - get
+  - list
+  - watch
+- nonResourceURLs:
+  - /metrics
+  - /metrics/cadvisor
+  verbs:
+  - get
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: prometheus
+  namespace: {{ prometheus_k8s }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: prometheus-monitoring
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: prometheus-monitoring
+subjects:
+- kind: ServiceAccount
+  name: prometheus
+  namespace: {{ prometheus_ns }}
+---
+{% if kube_client == 'oc' %}
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
+metadata:
+  annotations:
+    kubernetes.io/description: hostaccess-node-exporter allows access to
+      most host features and requires pods to be run with a UID, and SELinux context that are
+      allocated to the namespace.
+  name: hostaccess-node-exporter
+allowHostDirVolumePlugin: false
+allowHostIPC: false
+allowHostNetwork: true
+allowHostPID: true
+allowHostPorts: false
+allowPrivilegeEscalation: true
+allowPrivilegedContainer: false
+allowedCapabilities: []
+defaultAddCapabilities: []
+fsGroup:
+  type: MustRunAs
+groups: []
+priority: null
+readOnlyRootFilesystem: false
+requiredDropCapabilities:
+- ALL
+runAsUser:
+  type: MustRunAsRange
+seLinuxContext:
+  type: MustRunAs
+supplementalGroups:
+  type: RunAsAny
+users:
+- system:serviceaccount:{{ prometheus_ns }}:node-exporter
+volumes:
+- configMap
+- downwardAPI
+- emptyDir
+- hostPath
+- persistentVolumeClaim
+- projected
+- secret
+{% else %}
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: hostaccess-node-exporter
+spec:
+  privileged: false
+  volumes:
+  - configMap
+  - downwardAPI
+  - emptyDir
+  - hostPath
+  - persistentVolumeClaim
+  - projected
+  - secret
+  hostNetwork: true
+  hostIPC: false
+  hostPID: true
+  hostPorts:
+  - min: 0
+    max: 65535
+  runAsUser:
+    rule: RunAsAny
+  seLinux:
+    rule: RunAsAny
+  supplementalGroups:
+    rule: MustRunAs
+    ranges:
+    - min: 0
+      max: 65535
+  fsGroup:
+    rule: MustRunAs
+    ranges:
+    - min: 0
+      max: 65535
+  readOnlyRootFilesystem: false
+{% endif %}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+{% if kube_client == 'oc' %}
+kind: Role
+metadata:
+  name: prometheus-node-exporter
+  namespace: {{ prometheus_ns }}
+{% else %}
+kind: ClusterRole
+metadata:
+  name: prometheus-node-exporter
+{% endif %}
+rules:
+- apiGroups:
+{% if kube_client == 'oc' %}
+  - security.openshift.io
+  resources:
+  - securitycontextconstraints
+{% else %}
+  - policy
+  resources:
+  - podsecuritypolicies
+{% endif %}
+  resourceNames:
+  - hostaccess-nodeexporter
+  verbs:
+  - use
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: node-exporter
+  namespace: {{ prometheus_k8s }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: node-exporter
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: prometheus-node-exporter
+subjects:
+- kind: ServiceAccount
+  name: node-exporter
+  namespace: {{ prometheus_ns }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: prometheus-kube-state-metrics
+rules:
+{% if kube_client == 'oc' %}
+- apiGroups:
+  - ""
+  - apps.openshift.io
+  resources:
+  - deploymentconfigs
+  verbs:
+  - list
+  - watch
+{% endif %}
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  - secrets
+  - nodes
+  - pods
+  - services
+  - resourcequotas
+  - replicationcontrollers
+  - limitranges
+  - persistentvolumeclaims
+  - persistentvolumes
+  - namespaces
+  - endpoints
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - extensions
+  resources:
+  - daemonsets
+  - deployments
+  - replicasets
+  - ingresses
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - statefulsets
+  - daemonsets
+  - deployments
+  - replicasets
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - batch
+  resources:
+  - cronjobs
+  - jobs
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - autoscaling
+  resources:
+  - horizontalpodautoscalers
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - authentication.k8s.io
+  resources:
+  - tokenreviews
+  verbs:
+  - create
+- apiGroups:
+  - authorization.k8s.io
+  resources:
+  - subjectaccessreviews
+  verbs:
+  - create
+- apiGroups:
+  - policy
+  resources:
+  - poddisruptionbudgets
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - certificates.k8s.io
+  resources:
+  - certificatesigningrequests
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - storage.k8s.io
+  resources:
+  - storageclasses
+  - volumeattachments
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - admissionregistration.k8s.io
+  resources:
+  - mutatingwebhookconfigurations
+  - validatingwebhookconfigurations
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - networkpolicies
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - list
+  - watch
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kube-state-metrics
+  namespace: {{ prometheus_k8s }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kube-state-metrics
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: prometheus-kube-state-metrics
+subjects:
+- kind: ServiceAccount
+  name: kube-state-metrics
+  namespace: {{ prometheus_ns }}

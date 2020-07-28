@@ -1,0 +1,77 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: node-exporter
+  namespace: {{ prometheus_ns }}
+spec:
+  selector:
+    matchLabels:
+      name: node-exporter
+  template:
+    metadata:
+      labels:
+        name: node-exporter
+    spec:
+      containers:
+      - args:
+        - --path.procfs=/host/proc
+        - --path.sysfs=/host/sys
+        - --web.listen-address=0.0.0.0:9100
+        name: node-exporter
+        image: quay.io/prometheus/node-exporter:{{ nodeexporter_tag }}
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 9100
+        ports:
+        - name: metrics
+          containerPort: 9100
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 9100
+        resources:
+          limits:
+            cpu: "{{ nodeexporter_cpu_limit }}"
+            memory: {{ nodeexporter_memory_limit }}
+          requests:
+            cpu: "{{ nodeexporter_cpu_request }}"
+            memory: {{ nodeexporter_memory_request }}
+        volumeMounts:
+        - name: proc
+          mountPath: /host/proc
+          readOnly:  true
+        - name: sys
+          mountPath: /host/sys
+          readOnly: true
+      hostNetwork: true
+      hostPID: true
+      serviceAccountName: node-exporter
+      securityContext:
+        fsGroup: 65534
+        runAsGroup: 65534
+        runAsNonRoot: true
+        runAsUser: 65534
+      volumes:
+      - name: proc
+        hostPath:
+          path: /proc
+      - name: sys
+        hostPath:
+          path: /sys
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-node: scrape-me
+  name: node-exporter
+  namespace: {{ prometheus_ns }}
+spec:
+  ports:
+  - name: exporter-9100
+    port: 9100
+  selector:
+    name: node-exporter

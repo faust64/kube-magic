@@ -1,0 +1,72 @@
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    name: alertmanager
+    version: v1
+  name: alertmanager
+  namespace: {{ prometheus_ns }}
+spec:
+{% if alertmanager_do_tls | default(True) %}
+  tls:
+  - hosts:
+    - {{ alertmanager_fqdn }}
+    secretName: alertmanager-tls
+{% endif %}
+  rules:
+  - host: {{ alertmanager_fqdn }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: alertmanager
+          servicePort: 9093
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    name: grafana
+    version: v1
+  name: grafana
+  namespace: {{ prometheus_ns }}
+spec:
+{% if grafana_do_tls | default(True) %}
+  tls:
+  - hosts:
+    - {{ grafana_fqdn }}
+    secretName: grafana-tls
+{% endif %}
+  rules:
+  - host: {{ grafana_fqdn }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: grafana
+          servicePort: 3000
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    name: prometheus
+    version: v1
+  name: prometheus
+  namespace: {{ prometheus_ns }}
+spec:
+{% if prometheus_do_tls | default(True) %}
+  tls:
+  - hosts:
+    - {{ prometheus_fqdn }}
+    secretName: prometheus-tls
+{% endif %}
+  rules:
+  - host: {{ prometheus_fqdn }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: prometheus
+          servicePort: 9090

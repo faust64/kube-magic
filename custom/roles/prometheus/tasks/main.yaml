@@ -1,0 +1,17 @@
+## TODO: components upgrade / use the version label / similar to tekton
+## NiceToHave: NetworkPolicies
+## NiceToHave: TLS-everywhere
+
+- include_role:
+    name: commons
+    tasks_from: helpers/namespace.yaml
+  vars:
+    k8s_api_node: "{{ inventory_hostname }}"
+    ns_name: "{{ prometheus_ns }}"
+- include_tasks: rbac.yaml
+- include_tasks: kube-state-metrics.yaml
+- include_tasks: node-exporter.yaml
+- include_tasks: prometheus.yaml
+- include_tasks: alertmanager.yaml
+- include_tasks: grafana.yaml
+- include_tasks: ingress.yaml

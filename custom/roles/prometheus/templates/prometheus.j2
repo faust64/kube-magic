@@ -1,0 +1,223 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus
+  namespace: {{ prometheus_ns }}
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: {{ prometheus_scrape_interval }}
+      external_labels:
+        monitor: 'opsperator-monitor'
+
+    rule_files:
+    - /etc/prometheus/rules.d/*.yaml
+
+    scrape_configs:
+    - job_name: prometheus
+      static_configs:
+      - targets: ['localhost:9090']
+
+    - job_name: cluster
+      kubernetes_sd_configs:
+      - role: endpoints
+        selectors:
+        - role: endpoints
+          label: k8s-cluster=scrape-me
+      relabel_configs:
+      - source_labels: [__meta_kubernetes_endpoint_address_target_kind]
+        action: replace
+        target_label: kubernetes_cluster
+        replacement: {{ prometheus_local_cluster }}
+      scheme: http
+
+    - job_name: cadvisor
+      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      kubernetes_sd_configs:
+      - role: node
+      metrics_path: /metrics/cadvisor
+      relabel_configs:
+      - source_labels: [__meta_kubernetes_endpoint_address_target_kind]
+        action: replace
+        target_label: kubernetes_cluster
+        replacement: {{ prometheus_local_cluster }}
+      - source_labels: [__meta_kubernetes_node_name]
+        action: replace
+        target_label: kubernetes_node_name
+      scheme: https
+      tls_config:
+        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        insecure_skip_verify: true
+
+    - job_name: kubelet
+      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      kubernetes_sd_configs:
+      - role: node
+      relabel_configs:
+      - source_labels: [__meta_kubernetes_endpoint_address_target_kind]
+        action: replace
+        target_label: kubernetes_cluster
+        replacement: {{ prometheus_local_cluster }}
+      - source_labels: [__meta_kubernetes_node_name]
+        action: replace
+        target_label: kubernetes_node_name
+      scheme: https
+      tls_config:
+        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        insecure_skip_verify: true
+
+    - job_name: nodes
+      kubernetes_sd_configs:
+      - role: endpoints
+        selectors:
+        - role: endpoints
+          label: k8s-nodes=scrape-me
+      relabel_configs:
+      - source_labels: [__meta_kubernetes_endpoint_address_target_kind]
+        action: replace
+        target_label: kubernetes_cluster
+        replacement: {{ prometheus_local_cluster }}
+      - source_labels: [__meta_kubernetes_pod_node_name]
+        action: replace
+        target_label: kubernetes_node_name
+      scheme: http
+
+    - job_name: apps
+      kubernetes_sd_configs:
+      - role: endpoints
+        selectors:
+        - role: endpoints
+          label: k8s-app=scrape-me
+      relabel_configs:
+      - source_labels: [__meta_kubernetes_endpoint_address_target_kind]
+        action: replace
+        target_label: kubernetes_cluster
+        replacement: {{ prometheus_local_cluster }}
+      - source_labels: [__meta_kubernetes_endpoint_port_name]
+        action: keep
+        regex: '(exporter-[0-9]*|tcp-9113)'
+      - source_labels: [__meta_kubernetes_namespace]
+        action: replace
+        target_label: kubernetes_namespace
+      - source_labels: [__meta_kubernetes_pod_node_name]
+        action: replace
+        target_label: kubernetes_node_name
+      - source_labels: [__meta_kubernetes_pod_name]
+        action: replace
+        target_label: kubernetes_pod_name
+      - source_labels: [__meta_kubernetes_pod_label_name]
+        action: replace
+        target_label: kubernetes_service_name
+      scheme: http
+
+    alerting:
+      alertmanagers:
+      - scheme: http
+        static_configs:
+        - targets:
+          - alertmanager.{{ prometheus_ns }}.svc.{{ cluster_domain }}:9093
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: prometheus
+  namespace: {{ prometheus_ns }}
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: {{ prometheus_replicas }}
+  selector:
+    matchLabels:
+      name: prometheus
+  serviceName: prometheus
+  template:
+    metadata:
+      labels:
+        name: prometheus
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: name
+                operator: In
+                values: [ prometheus ]
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - args:
+        - --config.file=/etc/prometheus/prometheus.yml
+        - --storage.tsdb.path=/prometheus
+        - --storage.tsdb.retention.time={{ prometheus_retention }}
+        - --web.console.libraries=/usr/share/prometheus/console_libraries
+        - --web.console.templates=/usr/share/prometheus/consoles
+        image: docker.io/prom/prometheus:{{ prometheus_tag }}
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /-/healthy
+            port: 9090
+          initialDelaySeconds: 30
+          timeoutSeconds: 20
+        name: prometheus
+        ports:
+        - containerPort: 9090
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /-/ready
+            port: 9090
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+        resources:
+          limits:
+            cpu: "{{ prometheus_cpu_limit }}"
+            memory: "{{ prometheus_memory_limit }}"
+          requests:
+            cpu: "{{ prometheus_cpu_request }}"
+            memory: "{{ prometheus_memory_request }}"
+        volumeMounts:
+        - mountPath: /etc/prometheus/prometheus.yml
+          name: config
+          subPath: prometheus.yml
+        - mountPath: /prometheus
+          name: data
+        - mountPath: /etc/prometheus/rules.d
+          name: rules
+{% if k8s_ressource_nodes_selectors | length > 0 %}
+      nodeSelectors:
+{% for sel in k8s_ressource_nodes_selectors %}
+        {{ sel.split('=')[0] }}: "{{ sel.split('=')[1] if (sel.split('=') | length > 1) else '' }}"
+{% endfor %}
+{% endif %}
+      securityContext:
+{% if rwo_needs_fsgroup | default(False) %}
+        fsGroup: {{ rwo_needs_fsgroup }}
+{% endif %}
+        runAsUser: 1001
+      serviceAccount: prometheus
+      serviceAccountName: prometheus
+      volumes:
+      - configMap:
+          name: prometheus
+        name: config
+      - name: rules
+        projected:
+          sources:
+{% for rule_file in prometheus_rules %}
+          - configMap:
+              name: prometheus-rule-{{ rule_file | lower | regex_replace('[\\.-_ ]', '') }}
+              items:
+              - key: {{ rule_file }}.yaml
+                path: {{ rule_file }}.yaml
+{% endfor %}
+  updateStrategy:
+    type: RollingUpdate
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ ReadWriteOnce ]
+      resources:
+        requests:
+          storage: "{{ prometheus_data_capacity }}"

@@ -1,0 +1,156 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: grafana
+  namespace: {{ prometheus_ns }}
+stringData:
+  grafana.ini: |
+    app_mode = production
+    instance_name = grafana
+
+    [log]
+    mode = console
+
+    [security]
+    admin_user = {{ grafana_admin_user }}
+    admin_password = {{ grafana_admin_password }}
+
+    [auth.anonymous]
+    enabled = true
+    org_name = Kubernetes
+    org_role = Viewer
+
+    [server]
+    domain = {{ root_domain }}
+    root_url = https://grafana.{{ root_domain }}
+{% if smtp_relay | default(False) %}
+
+    [smtp]
+    enabled = true
+    host = {{ smtp_relay }}
+    from_address = grafana@{{ smtp_domain | default('example.com') }}
+{% endif %}
+
+    [users]
+    allow_sign_up = false
+    default_theme = dark
+
+    [database]
+    type = sqlite3
+    path = grafana.db
+
+    [session]
+    cookie_name = grafana_kube
+    cookie_secure = true
+  ops-dashboards.yaml: |
+    apiVersion: 1
+    providers:
+    - name: Opsperator
+      allowUiUpdates: true
+      disableDeletion: false
+      editable: true
+      folder: ''
+      options:
+        path: /ops-dashboards
+      orgId: 1
+      type: file
+      updateIntervalSeconds: 0
+  prometheus.yaml: |
+    apiVersion: 1
+    datasources:
+    - access: proxy
+      isDefault: true
+      name: Prometheus
+      type: prometheus
+      url: http://prometheus.{{ prometheus_ns }}.svc.{{ cluster_domain }}:9090
+    deleteDatasources: []
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+  namespace: {{ prometheus_ns }}
+spec:
+  replicas: 1
+  selector:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name: grafana
+    spec:
+      containers:
+      - image: docker.io/grafana/grafana:{{ grafana_tag }}
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 39
+          tcpSocket:
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 5
+        name: grafana
+        ports:
+        - containerPort: 3000
+          name: http
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          timeoutSeconds: 3
+        resources:
+          limits:
+            cpu: "{{ grafana_cpu_limit }}"
+            memory: "{{ grafana_memory_limit }}"
+          requests:
+            cpu: "{{ grafana_cpu_request }}"
+            memory: "{{ grafana_memory_request }}"
+        volumeMounts:
+        - mountPath: /etc/grafana/grafana.ini
+          name: config
+          subPath: grafana.ini
+        - mountPath: /etc/grafana/provisioning/datasources/prometheus.yaml
+          name: config
+          subPath: prometheus.yaml
+        - mountPath: /etc/grafana/provisioning/dashboards
+          name: run
+          subPath: dashboards
+        - mountPath: /etc/grafana/provisioning/dashboards/ops-dashboards.yaml
+          name: config
+          subPath: ops-dashboards.yaml
+        - mountPath: /ops-dashboards
+          name: dashboards
+        - mountPath: /var/lib/grafana
+          name: run
+          subPath: data
+        - mountPath: /var/lib/grafana/plugins
+          name: run
+          subPath: plugins
+{% if k8s_ressource_nodes_selectors | length > 0 %}
+      nodeSelectors:
+{% for sel in k8s_ressource_nodes_selectors %}
+        {{ sel.split('=')[0] }}: "{{ sel.split('=')[1] if (sel.split('=') | length > 1) else '' }}"
+{% endfor %}
+{% endif %}
+      securityContext:
+        runAsUser: 1001
+      volumes:
+      - name: config
+        secret:
+          secretName: grafana
+      - name: dashboards
+        projected:
+          sources:
+{% for dashboard_name in grafana_dashboards %}
+          - configMap:
+              name: grafana-dashboard-{{ dashboard_name | lower | regex_replace('[\\.-_ ]', '') }}
+              items:
+              - key: {{ dashboard_name }}.json
+                path: {{ dashboard_name }}.json
+{% endfor %}
+      - emptyDir: {}
+        name: run

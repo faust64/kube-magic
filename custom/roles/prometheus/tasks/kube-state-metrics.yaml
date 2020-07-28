@@ -1,0 +1,16 @@
+- name: Generates Kube-State-Metrics Configuration
+  template:
+    dest: /tmp/kube-state-metrics.yaml
+    group: root
+    mode: 0640
+    owner: root
+    src: kube-state-metrics.j2
+- name: Installs Kube-State-Metrics
+  args:
+    chdir: /tmp
+  shell: |
+    oc --config {{ admin_kubeconfig }} apply -f kube-state-metrics.yaml
+- name: Cleanups Kube-State-Metrics Temporary Assets
+  file:
+    dest: /tmp/kube-state-metrics.yaml
+    state: absent

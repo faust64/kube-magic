@@ -1,0 +1,66 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-state-metrics
+  namespace: {{ prometheus_ns }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: kube-state-metrics
+  template:
+    metadata:
+      labels:
+        name: kube-state-metrics
+    spec:
+      containers:
+      - image: quay.io/coreos/kube-state-metrics:{{ kubestatemetrics_tag }}
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 19
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 5
+          timeoutSeconds: 4
+        name: kube-state-metrics
+        ports:
+        - containerPort: 8080
+          name: http-metrics
+        - containerPort: 8081
+          name: telemetry
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8081
+          initialDelaySeconds: 5
+          timeoutSeconds: 4
+        resources:
+          limits:
+            cpu: "{{ kubestatemetrics_cpu_limit }}"
+            memory: "{{ kubestatemetrics_memory_limit }}"
+          requests:
+            cpu: "{{ kubestatemetrics_cpu_request }}"
+            memory: "{{ kubestatemetrics_memory_request }}"
+{% if kube_client != 'oc' %}
+      securityContext:
+        runAsUser: 1001
+{% endif %}
+      serviceAccountName: kube-state-metrics
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-cluster: scrape-me
+  name: kube-state-metrics
+  namespace: {{ prometheus_ns }}
+spec:
+  ports:
+  - name: exporter-8080
+    port: 8080
+  - name: exporter-8081
+    port: 8081
+  selector:
+    name: kube-state-metrics

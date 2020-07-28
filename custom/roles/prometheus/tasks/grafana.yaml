@@ -1,0 +1,20 @@
+- include_tasks: install-grafana-dashboard.yaml
+  vars:
+    dashboard_name: "{{ item }}"
+  with_items: "{{ grafana_dashboards }}"
+- name: Generates Grafana Configuration
+  template:
+    dest: /tmp/grafana.yaml
+    group: root
+    mode: 0640
+    owner: root
+    src: grafana.j2
+- name: Installs Grafana
+  args:
+    chdir: /tmp
+  shell: |
+    oc --config {{ admin_kubeconfig }} apply -f grafana.yaml
+- name: Cleanups Grafana Temporary Assets
+  file:
+    dest: /tmp/grafana.yaml
+    state: absent

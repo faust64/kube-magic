@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-rule-{{ rule_file | lower | regex_replace('[\\.-_ ]', '') }}
+  namespace: {{ prometheus_ns }}
+data:
+  "{{ rule_file }}.yaml": |
+{{ lookup('file', 'rules/' ~ rule_file ~ '.yaml') | indent(width=4, indentfirst=True) }}
