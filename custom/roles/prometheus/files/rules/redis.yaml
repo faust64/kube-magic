@@ -49,14 +49,16 @@ groups:
     annotations:
       summary: "Redis cluster flapping (instance {{ $labels.instance }})"
       description: "Changes have been detected in Redis replica connection. This can occur when replica nodes lose connection to the master and reconnect (a.k.a flapping).\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
-  - alert: RedisMissingBackup
-    expr: time() - redis_rdb_last_save_timestamp_seconds > 60 * 60 * 24
-    for: 5m
-    labels:
-      severity: critical
-    annotations:
-      summary: "Redis missing backup (instance {{ $labels.instance }})"
-      description: "Redis has not been backuped for 24 hours\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  # NOTE: while this could make sense, when Redis persistency is required
+  #       running a sessions storage or some application cache, we do not care, nor would setup any database backup
+  #- alert: RedisMissingBackup
+  #  expr: time() - redis_rdb_last_save_timestamp_seconds > 60 * 60 * 24
+  #  for: 5m
+  #  labels:
+  #    severity: critical
+  #  annotations:
+  #    summary: "Redis missing backup (instance {{ $labels.instance }})"
+  #    description: "Redis has not been backuped for 24 hours\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
   - alert: RedisOutOfMemory
     expr: redis_memory_used_bytes / redis_total_system_memory_bytes * 100 > 90
     for: 5m
@@ -73,14 +75,16 @@ groups:
     annotations:
       summary: "Redis too many connections (instance {{ $labels.instance }})"
       description: "Redis instance has too many connections\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
-  - alert: RedisNotEnoughConnections
-    expr: redis_connected_clients < 5
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "Redis not enough connections (instance {{ $labels.instance }})"
-      description: "Redis instance should have more connections (> 5)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  # NOTE: while this could make sense (eg: optimizing resources usage)
+  #       there is nothing fundamentally wrong with few clients being connected to Redis
+  #- alert: RedisNotEnoughConnections
+  #  expr: redis_connected_clients < 5
+  #  for: 5m
+  #  labels:
+  #    severity: warning
+  #  annotations:
+  #    summary: "Redis not enough connections (instance {{ $labels.instance }})"
+  #    description: "Redis instance should have more connections (> 5)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
   - alert: RedisRejectedConnections
     expr: increase(redis_rejected_connections_total[1m]) > 0
     for: 5m
@@ -89,4 +93,3 @@ groups:
     annotations:
       summary: "Redis rejected connections (instance {{ $labels.instance }})"
       description: "Some connections to Redis has been rejected\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
-

@@ -79,16 +79,16 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "container_memory_usage_bytes{kubernetes_cluster=~\"$cluster\",namespace=~\"$namespace\",pod_name=~\"$pod\",container_name=~\"$container\",container_name!=\"POD\"} or container_memory_usage_bytes{kubernetes_cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\",container=~\"$container\"}",
+          "expr": "sum by (kubernetes_cluster,namespace,pod,container) (container_memory_usage_bytes{kubernetes_cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\",container=~\"$container\",container=~\".+\"})",
           "interval": "10s",
           "intervalFactor": 1,
-          "legendFormat": "{{namespace}}/{{pod_name}}{{pod}}/{{container_name}}{{container}} Used",
+          "legendFormat": "{{namespace}}/{{pod}}/{{container}} Consumed",
           "metric": "container_memory_usage_bytes",
           "refId": "A",
           "step": 15
         },
         {
-          "expr": "kube_pod_container_resource_requests_memory_bytes{kubernetes_cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\",container=~\"$container\"}",
+          "expr": "sum by (kubernetes_cluster,namespace,pod,container) (kube_pod_container_resource_requests_memory_bytes{kubernetes_cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\",container=~\"$container\"})",
           "interval": "10s",
           "intervalFactor": 2,
           "legendFormat": "{{namespace}}/{{pod}}/{{container}} Requested",
@@ -97,7 +97,7 @@
           "step": 20
         },
         {
-          "expr": "kube_pod_container_resource_limits_memory_bytes{kubernetes_cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\",container=~\"$container\"}",
+          "expr": "sum by (kubernetes_cluster,namespace,pod,container) (kube_pod_container_resource_limits_memory_bytes{kubernetes_cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\",container=~\"$container\"})",
           "interval": "",
           "legendFormat": "{{namespace}}/{{pod}}/{{container}} Limit",
           "refId": "C"
@@ -198,23 +198,23 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "kube_pod_container_resource_requests_cpu_cores{kubernetes_cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\",container=~\"$container\"}",
+          "expr": "sum by (kubernetes_cluster,namespace,pod,container) (kube_pod_container_resource_requests_cpu_cores{kubernetes_cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\",container=~\"$container\"})",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "{{namespace}}/{{pod}}{{pod_name}}/{{container}}{{container_name}} Requested",
+          "legendFormat": "{{namespace}}/{{pod}}/{{container}} Requested",
           "refId": "A",
           "step": 30
         },
         {
-          "expr": "rate(container_cpu_usage_seconds_total{kubernetes_cluster=~\"$cluster\",namespace=~\"$namespace\",image!=\"\",container_name!=\"POD\",pod_name=~\"$pod\",container_name=~\"$container\"}[1m]) or rate(container_cpu_usage_seconds_total{kubernetes_cluster=~\"$cluster\",namespace=~\"$namespace\",image!=\"\",pod=~\"$pod\",container=~\"$container\"}[1m])",
+          "expr": "rate(container_cpu_usage_seconds_total{kubernetes_cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\",container=~\"$container\",container=~\".+\"}[1m])",
           "interval": "",
-          "legendFormat": "{{namespace}}/{{pod}}{{pod_name}}/{{container}}{{container_name}}",
+          "legendFormat": "{{namespace}}/{{pod}}/{{container}} Consumed",
           "refId": "B"
         },
         {
-          "expr": "kube_pod_container_resource_limits_cpu_cores{kubernetes_cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\",container=~\"$container\"}",
+          "expr": "sum by (kubernetes_cluster,namespace,pod,container) (kube_pod_container_resource_limits_cpu_cores{kubernetes_cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\",container=~\"$container\"})",
           "interval": "",
-          "legendFormat": "{{namespace}}/{{pod}}{{pod_name}}/{{container}}{{container_name}} Limit",
+          "legendFormat": "{{namespace}}/{{pod}}/{{container}} Limit",
           "refId": "C"
         }
       ],

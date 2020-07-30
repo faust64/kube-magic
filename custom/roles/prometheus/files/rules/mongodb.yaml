@@ -82,10 +82,10 @@ groups:
       summary: "MongoDB too many connections (instance {{ $labels.instance }})"
       description: "Too many connections\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
   - alert: MongodbVirtualMemoryUsage
-    expr: (sum(mongodb_memory{type="virtual"}) BY (ip) / sum(mongodb_memory{type="mapped"}) BY (ip)) > 3
+    expr: (sum(mongodb_memory{type="virtual"}) BY (kubernetes_namespace,kubernetes_pod_name) / sum(mongodb_memory{type="mapped"} > 0) BY (kubernetes_namespace,kubernetes_pod_name)) > 3
     for: 5m
     labels:
       severity: warning
     annotations:
-      summary: "MongoDB virtual memory usage (instance {{ $labels.instance }})"
+      summary: "MongoDB virtual memory usage (instance {{ $labels.kubernetes_namespace }}//{{ $labels.kubernetes_pod_name }})"
       description: "High memory usage\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"

@@ -16,8 +16,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 25,
-  "iteration": 1595939394422,
+  "id": 14,
+  "iteration": 1596093397113,
   "links": [],
   "panels": [
     {
@@ -36,19 +36,19 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 8,
-        "w": 24,
+        "w": 12,
         "x": 0,
         "y": 0
       },
       "hiddenSeries": false,
-      "id": 2,
+      "id": 7,
       "legend": {
         "alignAsTable": true,
-        "avg": false,
+        "avg": true,
         "current": true,
-        "max": false,
+        "max": true,
         "min": false,
-        "rightSide": true,
+        "rightSide": false,
         "show": true,
         "total": false,
         "values": true
@@ -69,9 +69,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,GVK) (ansible_operator_reconcile_result{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",GVK=~\"$crd\"})",
+          "expr": "rate(container_cpu_usage_seconds_total{pod=~\"$podname\",container=~\".+\"}[5m])",
           "interval": "",
-          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_service_name}} {{GVK}} {{result}}",
+          "legendFormat": "{{namespace}}/{{pod}}",
           "refId": "A"
         }
       ],
@@ -79,7 +79,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Reconcile Results",
+      "title": "CPU Usage",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -95,6 +95,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:1007",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -103,6 +104,105 @@
           "show": true
         },
         {
+          "$$hashKey": "object:1008",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "hiddenSeries": false,
+      "id": 9,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "container_memory_usage_bytes{pod=~\"$podname\",container=~\".+\"}",
+          "interval": "",
+          "legendFormat": "{{namespace}}/{{pod}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Memory Usage",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1094",
+          "format": "bytes",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1095",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -137,13 +237,14 @@
         "y": 8
       },
       "hiddenSeries": false,
-      "id": 4,
+      "id": 2,
       "legend": {
         "alignAsTable": true,
-        "avg": true,
+        "avg": false,
         "current": true,
+        "hideEmpty": true,
         "hideZero": true,
-        "max": true,
+        "max": false,
         "min": false,
         "rightSide": true,
         "show": true,
@@ -166,9 +267,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.95, sum(rate(ansible_operator_reconciles_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",GVK=~\"$crd\"}[5m])) by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,GVK,le))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,GVK,result) (increase(ansible_operator_reconcile_result{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",GVK=~\"$crd\"}[6h]))",
           "interval": "",
-          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_service_name}} {{GVK}}",
+          "legendFormat": "{{result}} {{GVK}} {{kubernetes_namespace}}/{{kubernetes_service_name}}",
           "refId": "A"
         }
       ],
@@ -176,10 +277,10 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Reconciles Bucket",
+      "title": "Reconcile Results",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -192,6 +293,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:430",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -200,6 +302,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:431",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -234,11 +337,12 @@
         "y": 16
       },
       "hiddenSeries": false,
-      "id": 5,
+      "id": 4,
       "legend": {
         "alignAsTable": true,
-        "avg": false,
-        "current": true,
+        "avg": true,
+        "current": false,
+        "hideEmpty": false,
         "hideZero": true,
         "max": true,
         "min": false,
@@ -263,7 +367,207 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,GVK) (rate(ansible_operator_reconciles_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",GVK=~\"$crd\"}[24h]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,GVK,name) (workqueue_work_duration_seconds_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",GVK=~\"$crd\"} / workqueue_work_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",GVK=~\"$crd\"})",
+          "interval": "",
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_service_name}} {{name}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Work Duration",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:513",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:514",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 24
+      },
+      "hiddenSeries": false,
+      "id": 10,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": true,
+        "max": true,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,GVK,name) (workqueue_queue_duration_seconds_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",GVK=~\"$crd\"} / workqueue_queue_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",GVK=~\"$crd\"})",
+          "interval": "",
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_service_name}} {{name}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Work Queue",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:513",
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:514",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 32
+      },
+      "hiddenSeries": false,
+      "id": 5,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "hideZero": true,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,GVK) (increase(ansible_operator_reconciles_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",GVK=~\"$crd\"}[6h]))",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_service_name}} {{GVK}}",
           "refId": "A"
@@ -273,7 +577,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Reconciles Count per day",
+      "title": "Reconciles Count",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -289,6 +593,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:596",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -297,6 +602,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:597",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -323,10 +629,10 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
-          "text": "k8s-prod",
+          "selected": false,
+          "text": "All",
           "value": [
-            "k8s-prod"
+            "$__all"
           ]
         },
         "datasource": "Prometheus",
@@ -353,7 +659,9 @@
         "current": {
           "selected": false,
           "text": "All",
-          "value": "$__all"
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": "Prometheus",
         "definition": "label_values(ansible_operator_reconciles_bucket{kubernetes_cluster=~\"$cluster\"},kubernetes_namespace)",
@@ -377,7 +685,7 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
           "value": [
             "$__all"
@@ -396,6 +704,34 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(ansible_operator_reconciles_bucket{kubernetes_cluster=~\"$cluster\"},kubernetes_pod_name)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Kubernetes Pod Name",
+        "multi": true,
+        "name": "podname",
+        "options": [],
+        "query": "label_values(ansible_operator_reconciles_bucket{kubernetes_cluster=~\"$cluster\"},kubernetes_pod_name)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
         "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
