@@ -6,6 +6,7 @@ grafana_dashboards:
 - ElasticSearch
 - Gitea
 - Go_Applications
+- Kubernetes_Backups
 - Kubernetes_Capacity_Planning
 - Kubernetes_Clusters_Health
 - Kubernetes_Clusters_Metrics
@@ -29,6 +30,8 @@ grafana_dashboards:
 - Postgres
 - Redis
 - RocketChat
+- Tekton_PipelineRuns
+- Tekton_TaskRuns
 prometheus_rules:
 - apache
 - blackbox
