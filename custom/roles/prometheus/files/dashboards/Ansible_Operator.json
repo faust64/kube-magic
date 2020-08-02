@@ -17,7 +17,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 14,
-  "iteration": 1596093397113,
+  "iteration": 1596326926287,
   "links": [],
   "panels": [
     {
@@ -240,11 +240,11 @@
       "id": 2,
       "legend": {
         "alignAsTable": true,
-        "avg": false,
+        "avg": true,
         "current": true,
         "hideEmpty": true,
         "hideZero": true,
-        "max": false,
+        "max": true,
         "min": false,
         "rightSide": true,
         "show": true,
@@ -267,7 +267,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,GVK,result) (increase(ansible_operator_reconcile_result{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",GVK=~\"$crd\"}[6h]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,GVK,result) (increase(ansible_operator_reconcile_result{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",GVK=~\"$crd\"}[$interval]))",
           "interval": "",
           "legendFormat": "{{result}} {{GVK}} {{kubernetes_namespace}}/{{kubernetes_service_name}}",
           "refId": "A"
@@ -277,7 +277,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Reconcile Results",
+      "title": "Reconcile Results in Interval",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -542,9 +542,9 @@
       "legend": {
         "alignAsTable": true,
         "avg": true,
-        "current": false,
+        "current": true,
         "hideZero": true,
-        "max": false,
+        "max": true,
         "min": false,
         "rightSide": true,
         "show": true,
@@ -567,7 +567,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,GVK) (increase(ansible_operator_reconciles_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",GVK=~\"$crd\"}[6h]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,GVK) (increase(ansible_operator_reconciles_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",GVK=~\"$crd\"}[$interval]))",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_service_name}} {{GVK}}",
           "refId": "A"
@@ -577,7 +577,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Reconciles Count",
+      "title": "Reconciles Count by Interval",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -627,9 +627,69 @@
   "templating": {
     "list": [
       {
+        "auto": false,
+        "auto_count": 30,
+        "auto_min": "10s",
+        "current": {
+          "selected": true,
+          "text": "6h",
+          "value": "6h"
+        },
+        "hide": 0,
+        "label": "Interval",
+        "name": "interval",
+        "options": [
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          },
+          {
+            "selected": false,
+            "text": "1h",
+            "value": "1h"
+          },
+          {
+            "selected": true,
+            "text": "6h",
+            "value": "6h"
+          },
+          {
+            "selected": false,
+            "text": "12h",
+            "value": "12h"
+          },
+          {
+            "selected": false,
+            "text": "1d",
+            "value": "1d"
+          },
+          {
+            "selected": false,
+            "text": "7d",
+            "value": "7d"
+          },
+          {
+            "selected": false,
+            "text": "14d",
+            "value": "14d"
+          },
+          {
+            "selected": false,
+            "text": "30d",
+            "value": "30d"
+          }
+        ],
+        "query": "30m,1h,3h,6h,12h,1d,7d,14d,30d",
+        "queryValue": "",
+        "refresh": 2,
+        "skipUrlSync": false,
+        "type": "interval"
+      },
+      {
         "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "All",
           "value": [
             "$__all"
@@ -657,7 +717,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "All",
           "value": [
             "$__all"
@@ -685,7 +745,7 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "All",
           "value": [
             "$__all"
@@ -713,7 +773,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "All",
           "value": [
             "$__all"
@@ -741,7 +801,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
