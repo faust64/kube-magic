@@ -12,466 +12,119 @@
       }
     ]
   },
-  "description": "Postgres metrics overview.",
+  "description": "Grafana metrics overview.",
   "editable": true,
-  "gnetId": 3742,
+  "gnetId": 3590,
   "graphTooltip": 0,
-  "id": 22,
-  "iteration": 1594842306997,
+  "id": 35,
+  "iteration": 1597660565795,
   "links": [],
   "panels": [
     {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": true,
-      "colors": [
-        "rgba(50, 172, 45, 0.97)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(245, 54, 54, 0.9)"
-      ],
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "format": "percent",
-      "gauge": {
-        "maxValue": 200,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
+      "collapsed": false,
+      "datasource": null,
       "gridPos": {
-        "h": 5,
-        "w": 4,
+        "h": 1,
+        "w": 24,
         "x": 0,
         "y": 0
       },
-      "height": "200px",
+      "id": 21,
+      "panels": [],
+      "repeat": null,
+      "title": "General Counters",
+      "type": "row"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "Prometheus",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [
+            {
+              "$$hashKey": "object:3529",
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 0,
+        "y": 1
+      },
       "id": 16,
       "interval": null,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
+      "options": {
+        "colorMode": "value",
+        "fieldOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
         }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(189, 58, 31, 0.18)",
-        "full": false,
-        "lineColor": "rgb(255, 46, 0)",
-        "show": true
       },
-      "tableColumn": "iowait",
       "targets": [
         {
-          "expr": "sum(rate(node_cpu_seconds_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\",mode=\"iowait\"}[$interval])) by (mode)* 100 / scalar(count(node_cpu_seconds_total{mode=\"user\",kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"})) or sum(irate(node_cpu_seconds_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\",mode=\"iowait\"}[5m])) by (mode) * 100 / scalar(count(node_cpu_seconds_total{mode=\"user\",kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"}))",
+          "expr": "time()-max(process_start_time_seconds{kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"})",
+          "format": "time_series",
           "interval": "",
-          "legendFormat": "{{mode}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": "50,90",
-      "title": "Current IOwait",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": true,
-      "colors": [
-        "rgba(50, 172, 45, 0.97)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(245, 54, 54, 0.9)"
-      ],
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "format": "percent",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 4,
-        "x": 4,
-        "y": 0
-      },
-      "height": "200px",
-      "id": 15,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(234, 172, 235, 0.18)",
-        "full": false,
-        "lineColor": "rgb(188, 0, 255)",
-        "show": true
-      },
-      "tableColumn": "user",
-      "targets": [
-        {
-          "expr": "sum(rate(node_cpu_seconds_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\",mode=\"user\"}[$interval])) by (mode) * 100 / scalar(count(node_cpu_seconds_total{mode=\"user\",kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"})) or sum(irate(node_cpu_seconds_total{kubernetes_host_name=~\"$host\",mode=\"user\"}[5m])) by (mode) * 100 / scalar(count(node_cpu_seconds_total{mode=\"user\",kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"}))",
-          "interval": "",
-          "legendFormat": "{{mode}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": "50,80",
-      "title": "Current CPU",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": true,
-      "colorValue": false,
-      "colors": [
-        "rgba(50, 172, 45, 0.97)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(245, 54, 54, 0.9)"
-      ],
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "format": "percent",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": false
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 2,
-        "x": 8,
-        "y": 0
-      },
-      "height": "200px",
-      "id": 17,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(189, 58, 31, 0.18)",
-        "full": false,
-        "lineColor": "rgb(255, 46, 0)",
-        "show": false
-      },
-      "tableColumn": "Memory Used",
-      "targets": [
-        {
-          "expr": "(sum((node_memory_MemTotal_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"} - (node_memory_MemFree_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"} + node_memory_Buffers_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"} + node_memory_Cached_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"}))) / sum(node_memory_MemTotal_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"})) * 100",
-          "interval": "",
-          "legendFormat": "Memory Used",
-          "refId": "A"
-        }
-      ],
-      "thresholds": "50,90",
-      "title": "RAM used",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": true,
-      "colorValue": false,
-      "colors": [
-        "rgba(245, 54, 54, 0.9)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(50, 172, 45, 0.97)"
-      ],
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "format": "percent",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": false
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 2,
-        "x": 10,
-        "y": 0
-      },
-      "height": "200px",
-      "id": 19,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(189, 58, 31, 0.18)",
-        "full": false,
-        "lineColor": "rgb(255, 46, 0)",
-        "show": false
-      },
-      "tableColumn": "Memory Cached",
-      "targets": [
-        {
-          "expr": "sum((node_memory_Cached_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"}) * 100) / sum(node_memory_MemTotal_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"})",
-          "interval": "",
-          "legendFormat": "Memory Cached",
-          "refId": "A"
-        }
-      ],
-      "thresholds": "50,90",
-      "title": "RAM cached",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(245, 54, 54, 0.9)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(50, 172, 45, 0.97)"
-      ],
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "format": "decbytes",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 4,
-        "x": 12,
-        "y": 0
-      },
-      "height": "200px",
-      "id": 10,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "SUM(pg_stat_database_tup_fetched{datname=~\"$datname\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
-          "interval": "",
+          "intervalFactor": 2,
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "thresholds": "",
-      "title": "Current fetch data",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
+      "title": "Start Time (last)",
+      "type": "stat"
     },
     {
       "cacheTimeout": null,
       "colorBackground": false,
       "colorValue": false,
       "colors": [
-        "rgba(245, 54, 54, 0.9)",
+        "#299c46",
         "rgba(237, 129, 40, 0.89)",
-        "rgba(50, 172, 45, 0.97)"
+        "#d44a3a"
       ],
       "datasource": "Prometheus",
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "custom": {}
         },
         "overrides": []
       },
-      "format": "decbytes",
+      "format": "none",
       "gauge": {
         "maxValue": 100,
         "minValue": 0,
@@ -480,252 +133,68 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 5,
-        "w": 4,
-        "x": 16,
-        "y": 0
+        "h": 3,
+        "w": 3,
+        "x": 3,
+        "y": 1
       },
-      "height": "200px",
-      "id": 11,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "SUM(pg_stat_database_tup_inserted{datname=~\"$datname\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": "",
-      "title": "Current insert data",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(245, 54, 54, 0.9)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(50, 172, 45, 0.97)"
-      ],
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "format": "decbytes",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 4,
-        "x": 20,
-        "y": 0
-      },
-      "height": "200px",
-      "id": 12,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "SUM(pg_stat_database_tup_updated{datname=~\"$datname\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": "",
-      "title": "Current update data",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 0,
-        "y": 5
-      },
-      "hiddenSeries": false,
       "id": 5,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": false,
-        "show": true,
-        "sort": "current",
-        "sortDesc": true,
-        "total": true,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
+      "interval": null,
       "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
       },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "tableColumn": "",
       "targets": [
         {
-          "expr": "pg_stat_database_tup_fetched{datname=~\"$datname\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"} != 0",
+          "expr": "sum (sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name) (grafana_stat_totals_dashboard{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"}))",
+          "format": "time_series",
           "interval": "",
-          "legendFormat": "{{kubernetes_pod_name}}/{{datname}}",
+          "intervalFactor": 2,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Fetch data (SELECT)",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
+      "thresholds": "",
+      "title": "Dashboards Count",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
         {
-          "format": "bytes",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
         }
       ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "valueName": "avg"
     },
     {
       "aliasColors": {},
@@ -733,6 +202,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -742,23 +212,21 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 8,
-        "y": 5
+        "h": 6,
+        "w": 18,
+        "x": 6,
+        "y": 1
       },
       "hiddenSeries": false,
-      "id": 6,
+      "id": 17,
       "legend": {
         "alignAsTable": true,
         "avg": true,
         "current": true,
         "max": true,
-        "min": false,
+        "min": true,
         "show": true,
-        "sort": "current",
-        "sortDesc": true,
-        "total": true,
+        "total": false,
         "values": true
       },
       "lines": true,
@@ -778,9 +246,11 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "pg_stat_database_tup_inserted{datname=~\"$datname\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"} != 0",
+          "expr": "process_open_fds{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"}",
+          "format": "time_series",
           "interval": "",
-          "legendFormat": "{{kubernetes_pod_name}}/{{datname}}",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
         }
       ],
@@ -788,7 +258,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Insert data",
+      "title": "Open File Descriptors",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -804,7 +274,9 @@
       },
       "yaxes": [
         {
-          "format": "bytes",
+          "$$hashKey": "object:1318",
+          "decimals": null,
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -812,6 +284,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:1319",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -826,102 +299,197 @@
       }
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
       "datasource": "Prometheus",
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "custom": {}
         },
         "overrides": []
       },
-      "fill": 1,
-      "fillGradient": 0,
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
       "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 16,
-        "y": 5
+        "h": 3,
+        "w": 3,
+        "x": 0,
+        "y": 4
       },
-      "hiddenSeries": false,
-      "id": 8,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": false,
-        "show": true,
-        "sort": "current",
-        "sortDesc": true,
-        "total": true,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
+      "id": 2,
+      "interval": null,
       "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
       },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "tableColumn": "",
       "targets": [
         {
-          "expr": "pg_stat_database_tup_updated{datname=~\"$datname\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"} != 0",
+          "expr": "sum(sum by (kubernetes_cluster,kubernetes_service_name) (grafana_stat_total_orgs{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"}))",
+          "format": "time_series",
           "interval": "",
-          "legendFormat": "{{kubernetes_pod_name}}/{{datname}}",
+          "intervalFactor": 2,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Update data",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
+      "thresholds": "",
+      "title": "Organisations Count",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
         {
-          "format": "bytes",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
         }
       ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "Prometheus",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 3,
+        "y": 4
+      },
+      "id": 3,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "sum (sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name) (grafana_stat_total_users{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"}))",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "thresholds": "",
+      "title": "Users Count",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
+      "id": 23,
+      "panels": [],
+      "repeat": null,
+      "title": "Responce Codes and Logins",
+      "type": "row"
     },
     {
       "aliasColors": {},
@@ -929,6 +497,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -941,118 +510,17 @@
         "h": 7,
         "w": 8,
         "x": 0,
-        "y": 12
+        "y": 8
       },
       "hiddenSeries": false,
-      "id": 1,
+      "id": 18,
       "legend": {
         "alignAsTable": true,
         "avg": true,
         "current": true,
         "max": true,
-        "min": false,
+        "min": true,
         "show": true,
-        "sort": "current",
-        "sortDesc": true,
-        "total": false,
-        "values": true
-      },
-      "lines": false,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "connected",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 3,
-      "points": true,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "pg_stat_activity_count{datname=~\"$datname\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",state=\"active\"} != 0",
-          "interval": "",
-          "legendFormat": "{{kubernetes_pod_name}}/{{datname}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Active sessions",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "decimals": 0,
-          "format": "none",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 8,
-        "y": 12
-      },
-      "hiddenSeries": false,
-      "id": 4,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": false,
-        "show": true,
-        "sort": "current",
-        "sortDesc": false,
         "total": false,
         "values": true
       },
@@ -1073,17 +541,35 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "pg_stat_activity_count{datname=~\"$datname\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",state=~\"idle|idle in transaction|idle in transaction (aborted)\"} != 0",
+          "expr": "increase(grafana_api_response_status_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"}[$interval])",
+          "format": "time_series",
           "interval": "",
-          "legendFormat": "{{kubernetes_pod_name}}/{{datname}} ({{state}})",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} API {{code}}",
           "refId": "A"
+        },
+        {
+          "expr": "increase(grafana_page_response_status_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"}[$interval])",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Page {{code}}",
+          "refId": "B"
+        },
+        {
+          "expr": "increase(grafana_proxy_response_status_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"}[$interval])",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Proxy {{code}}",
+          "refId": "C"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Idle sessions",
+      "title": "Grafana Accesses in $interval",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1099,6 +585,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:1415",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1107,6 +594,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:1416",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1126,516 +614,23 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "custom": {}
         },
         "overrides": []
       },
-      "fill": 2,
+      "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 8,
-        "x": 16,
-        "y": 12
+        "x": 8,
+        "y": 8
       },
       "hiddenSeries": false,
       "id": 20,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": false,
-        "show": true,
-        "sort": "current",
-        "sortDesc": true,
-        "total": true,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 2,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": true,
-      "targets": [
-        {
-          "expr": "rate(node_disk_io_time_seconds_total{device=~\"$device\",kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"}[$interval]) * 100 or irate(node_disk_io_time_seconds_total{device=~\"$device\",kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"}[$interval]) * 100",
-          "interval": "",
-          "legendFormat": "{{kubernetes_node_name}}/{{device}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Disk IO Utilization",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "percent",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 0,
-        "y": 19
-      },
-      "hiddenSeries": false,
-      "id": 7,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": false,
-        "show": true,
-        "sort": "current",
-        "sortDesc": true,
-        "total": true,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "pg_stat_database_tup_deleted{datname=~\"$datname\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"} != 0",
-          "interval": "",
-          "legendFormat": "{{kubernetes_pod_name}}/{{datname}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Delete data",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "bytes",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 8,
-        "y": 19
-      },
-      "hiddenSeries": false,
-      "id": 14,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": false,
-        "show": true,
-        "sort": "total",
-        "sortDesc": true,
-        "total": true,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "pg_stat_database_tup_returned{datname=~\"$datname\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"} != 0",
-          "interval": "",
-          "legendFormat": "{{kubernetes_pod_name}}/{{datname}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Return data",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "bytes",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 16,
-        "y": 19
-      },
-      "hiddenSeries": false,
-      "id": 3,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "hideEmpty": false,
-        "max": true,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "sort": "current",
-        "sortDesc": true,
-        "total": true,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "pg_locks_count{datname=~\"$datname\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",mode=~\"$mode\"} != 0",
-          "interval": "",
-          "legendFormat": "{{kubernetes_pod_name}}/{{datname}} ({{mode}})",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Lock tables",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "decimals": 0,
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 0,
-        "y": 26
-      },
-      "hiddenSeries": false,
-      "id": 9,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "sort": "current",
-        "sortDesc": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "1 - (node_filesystem_free_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\",fstype!~\"selinuxfs|autofs|rpc_pipefs|tmpfs\"} / node_filesystem_size_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\",fstype!~\"selinuxfs|autofs|rpc_pipefs|tmpfs\"})",
-          "interval": "",
-          "legendFormat": "{{kubernetes_node_name}}:{{mountpoint}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Disk Use",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "percentunit",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 12,
-        "y": 26
-      },
-      "hiddenSeries": false,
-      "id": 13,
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -1644,14 +639,11 @@
         "hideZero": true,
         "max": true,
         "min": true,
-        "rightSide": false,
         "show": true,
-        "sort": "current",
-        "sortDesc": true,
-        "total": true,
+        "total": false,
         "values": true
       },
-      "lines": false,
+      "lines": true,
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
@@ -1659,8 +651,8 @@
         "dataLinks": []
       },
       "percentage": false,
-      "pointradius": 1,
-      "points": true,
+      "pointradius": 5,
+      "points": false,
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
@@ -1668,23 +660,19 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "(rate(node_disk_read_time_seconds_total{device=~\"$device\",kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"}[$interval]) / rate(node_disk_reads_completed_total{device=~\"$device\",kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"}[$interval])) or (irate(node_disk_read_time_seconds_total{device=~\"$device\",kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"}[$interval]) / irate(node_disk_reads_completed_total{device=~\"$device\",kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"}[$interval]))",
+          "expr": "increase(http_request_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"}[$interval])",
+          "format": "time_series",
           "interval": "",
-          "legendFormat": "{{kubernetes_node_name}} Read {{device}}",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{method}} {{handler}} {{statuscode}}",
           "refId": "A"
-        },
-        {
-          "expr": "(rate(node_disk_write_time_seconds_total{device=~\"$device\",kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"}[$interval]) / rate(node_disk_writes_completed_total{device=~\"$device\",kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"}[$interval])) or (irate(node_disk_write_time_seconds_total{device=~\"$device\",kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"}[$interval]) / irate(node_disk_write_completed_total{device=~\"$device\",kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"}[$interval]))",
-          "interval": "",
-          "legendFormat": "{{kubernetes_node_name}} Write {{device}}",
-          "refId": "B"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Disk Latency",
+      "title": "HTTP Req/Resp by $interval",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1700,15 +688,1058 @@
       },
       "yaxes": [
         {
-          "format": "ms",
+          "$$hashKey": "object:1919",
+          "format": "short",
           "label": null,
-          "logBase": 2,
+          "logBase": 1,
           "max": null,
           "min": null,
           "show": true
         },
         {
+          "$$hashKey": "object:1920",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 16,
+        "y": 8
+      },
+      "hiddenSeries": false,
+      "id": 19,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "increase(grafana_api_login_post_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"}[$interval])",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} POST",
+          "refId": "A"
+        },
+        {
+          "expr": "increase(grafana_api_login_oauth_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"}[$interval])",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} OAuth",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Logins by $interval",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:2000",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:2001",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
+      "id": 24,
+      "panels": [],
+      "repeat": null,
+      "title": "Dataproxy Stats",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      },
+      "hiddenSeries": false,
+      "id": 6,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "grafana_api_dataproxy_request_all_milliseconds{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\",quantile=\"0.5\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} 0.5 ",
+          "refId": "A"
+        },
+        {
+          "expr": "grafana_api_dataproxy_request_all_milliseconds{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\",quantile=\"0.9\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} 0.9",
+          "refId": "B"
+        },
+        {
+          "expr": "grafana_api_dataproxy_request_all_milliseconds{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\",quantile=\"0.99\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} 0.99",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Dataproxy Request Quantiles",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:2081",
           "format": "ms",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:2082",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      },
+      "hiddenSeries": false,
+      "id": 7,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "rate(grafana_api_dataproxy_request_all_milliseconds_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"}[$interval]) / rate(grafana_api_dataproxy_request_all_milliseconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"}[$interval])",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Dataproxy Request Duration by $interval",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:2478",
+          "format": "ms",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:2479",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 23
+      },
+      "id": 25,
+      "panels": [],
+      "repeat": null,
+      "title": "Dashboard Get Stats",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 24
+      },
+      "hiddenSeries": false,
+      "id": 8,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "grafana_api_dashboard_get_milliseconds{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\",quantile=\"0.5\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} 0.5",
+          "refId": "A"
+        },
+        {
+          "expr": "grafana_api_dashboard_get_milliseconds{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\",quantile=\"0.9\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} 0.9",
+          "refId": "B"
+        },
+        {
+          "expr": "grafana_api_dashboard_get_milliseconds{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\",quantile=\"0.99\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} 0.99",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Dashboard Get Duration Quantiles",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:2804",
+          "format": "ms",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:2805",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      },
+      "hiddenSeries": false,
+      "id": 9,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "grafana_api_dashboard_get_milliseconds_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"} / grafana_api_dashboard_get_milliseconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Average Dashboard Get Duration",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:2885",
+          "format": "ms",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:2886",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 31
+      },
+      "id": 26,
+      "panels": [],
+      "repeat": null,
+      "title": "Dashboard Save Stats",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 32
+      },
+      "hiddenSeries": false,
+      "id": 10,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "grafana_api_dashboard_save_milliseconds{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\",quantile=\"0.5\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} 0.5",
+          "refId": "A"
+        },
+        {
+          "expr": "grafana_api_dashboard_save_milliseconds{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\",quantile=\"0.9\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} 0.9",
+          "refId": "B"
+        },
+        {
+          "expr": "grafana_api_dashboard_save_milliseconds{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\",quantile=\"0.99\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} 0.99",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Dashboard Save Duration Quantiles",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:3047",
+          "format": "ms",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:3048",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 32
+      },
+      "hiddenSeries": false,
+      "id": 11,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "grafana_api_dashboard_save_milliseconds_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"} / grafana_api_dashboard_save_milliseconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Average Dashboard Save Duration",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:2966",
+          "format": "ms",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:2967",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 39
+      },
+      "id": 27,
+      "panels": [],
+      "repeat": null,
+      "title": "Dashboard Search Stats",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "summary for dashboard search duration",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 40
+      },
+      "hiddenSeries": false,
+      "id": 12,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "grafana_api_dashboard_search_milliseconds{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\",quantile=\"0.5\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} 0.5",
+          "refId": "A"
+        },
+        {
+          "expr": "grafana_api_dashboard_search_milliseconds{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\",quantile=\"0.9\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} 0.9",
+          "refId": "B"
+        },
+        {
+          "expr": "grafana_api_dashboard_search_milliseconds{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\",quantile=\"0.99\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} 0.99",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Dashboard Search Duration Quantiles",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:3367",
+          "format": "ms",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:3368",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 40
+      },
+      "hiddenSeries": false,
+      "id": 13,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "grafana_api_dashboard_search_milliseconds_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"}/grafana_api_dashboard_search_milliseconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Average Dashboard Search Duration",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:3128",
+          "format": "ms",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:3129",
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -1726,49 +1757,45 @@
   "schemaVersion": 25,
   "style": "dark",
   "tags": [
-    "database",
-    "postgres",
-    "sgbd"
+    "application",
+    "go",
+    "grafana",
+    "monitoring"
   ],
   "templating": {
     "list": [
       {
         "auto": true,
-        "auto_count": 200,
-        "auto_min": "1s",
+        "auto_count": 30,
+        "auto_min": "1m",
         "current": {
           "selected": false,
-          "text": "auto",
-          "value": "$__auto_interval_interval"
+          "text": "1m",
+          "value": "1m"
         },
         "hide": 0,
-        "label": "Interval",
+        "label": null,
         "name": "interval",
         "options": [
           {
-            "selected": true,
+            "selected": false,
             "text": "auto",
             "value": "$__auto_interval_interval"
           },
           {
-            "selected": false,
-            "text": "1s",
-            "value": "1s"
-          },
-          {
-            "selected": false,
-            "text": "5s",
-            "value": "5s"
-          },
-          {
-            "selected": false,
+            "selected": true,
             "text": "1m",
             "value": "1m"
           },
           {
             "selected": false,
-            "text": "5m",
-            "value": "5m"
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
           },
           {
             "selected": false,
@@ -1782,12 +1809,31 @@
           },
           {
             "selected": false,
+            "text": "12h",
+            "value": "12h"
+          },
+          {
+            "selected": false,
             "text": "1d",
             "value": "1d"
+          },
+          {
+            "selected": false,
+            "text": "7d",
+            "value": "7d"
+          },
+          {
+            "selected": false,
+            "text": "14d",
+            "value": "14d"
+          },
+          {
+            "selected": false,
+            "text": "30d",
+            "value": "30d"
           }
         ],
-        "query": "1s,5s,1m,5m,1h,6h,1d",
-        "queryValue": "",
+        "query": "1m,10m,30m,1h,6h,12h,1d,7d,14d,30d",
         "refresh": 2,
         "skipUrlSync": false,
         "type": "interval"
@@ -1795,25 +1841,23 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
-          "value": [
-            "$__all"
-          ]
+          "value": "$__all"
         },
         "datasource": "Prometheus",
-        "definition": "label_values(pg_exporter_scrapes_total{},kubernetes_cluster)",
+        "definition": "label_values(grafana_build_info,kubernetes_cluster)",
         "hide": 0,
         "includeAll": true,
         "label": "Kubernetes Cluster",
         "multi": true,
-        "name": "kube",
+        "name": "cluster",
         "options": [],
-        "query": "label_values(pg_exporter_scrapes_total{},kubernetes_cluster)",
-        "refresh": 1,
+        "query": "label_values(grafana_build_info,kubernetes_cluster)",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
@@ -1823,22 +1867,20 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
-          "value": [
-            "$__all"
-          ]
+          "value": "$__all"
         },
         "datasource": "Prometheus",
-        "definition": "label_values(pg_exporter_scrapes_total{kubernetes_cluster=~\"$kube\"},kubernetes_namespace)",
+        "definition": "label_values(grafana_build_info{kubernetes_cluster=~\"$cluster\"},kubernetes_namespace)",
         "hide": 0,
         "includeAll": true,
         "label": "Kubernetes Namespace",
         "multi": true,
         "name": "namespace",
         "options": [],
-        "query": "label_values(pg_exporter_scrapes_total{kubernetes_cluster=~\"$kube\"},kubernetes_namespace)",
-        "refresh": 1,
+        "query": "label_values(grafana_build_info{kubernetes_cluster=~\"$cluster\"},kubernetes_namespace)",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
@@ -1851,22 +1893,20 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
-          "value": [
-            "$__all"
-          ]
+          "value": "$__all"
         },
         "datasource": "Prometheus",
-        "definition": "label_values(pg_exporter_scrapes_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\"},kubernetes_service_name)",
+        "definition": "label_values(grafana_build_info{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\"},kubernetes_service_name)",
         "hide": 0,
         "includeAll": true,
         "label": "Kubernetes Deployment",
         "multi": true,
         "name": "deployment",
         "options": [],
-        "query": "label_values(pg_exporter_scrapes_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\"},kubernetes_service_name)",
-        "refresh": 1,
+        "query": "label_values(grafana_build_info{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\"},kubernetes_service_name)",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
@@ -1886,128 +1926,15 @@
           ]
         },
         "datasource": "Prometheus",
-        "definition": "label_values(pg_exporter_scrapes_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_node_name)",
+        "definition": "label_values(grafana_build_info{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_pod_name)",
         "hide": 0,
         "includeAll": true,
-        "label": "Kubernetes Host",
+        "label": "Kubernetes Pod",
         "multi": true,
-        "name": "host",
+        "name": "pod",
         "options": [],
-        "query": "label_values(pg_exporter_scrapes_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_node_name)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "selected": true,
-          "text": "All",
-          "value": [
-            "$__all"
-          ]
-        },
-        "datasource": "Prometheus",
-        "definition": "label_values(pg_exporter_scrapes_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_node_name=~\"$host\"},kubernetes_pod_name)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Pod Name",
-        "multi": true,
-        "name": "instance",
-        "options": [],
-        "query": "label_values(pg_exporter_scrapes_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_node_name=~\"$host\"},kubernetes_pod_name)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": ".*",
-        "current": {
-          "selected": true,
-          "tags": [],
-          "text": "All",
-          "value": [
-            "$__all"
-          ]
-        },
-        "datasource": "Prometheus",
-        "definition": "label_values(node_disk_reads_completed_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\",device!~\"dm-.+\"},device)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Device",
-        "multi": true,
-        "name": "device",
-        "options": [],
-        "query": "label_values(node_disk_reads_completed_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\",device!~\"dm-.+\"},device)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": ".*",
-        "current": {
-          "selected": true,
-          "text": "All",
-          "value": [
-            "$__all"
-          ]
-        },
-        "datasource": "Prometheus",
-        "definition": "label_values(pg_stat_database_checksum_last_failure{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_node_name=~\"$host\",kubernetes_pod_name=~\"$instance\"},datname)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Database",
-        "multi": true,
-        "name": "datname",
-        "options": [],
-        "query": "label_values(pg_stat_database_checksum_last_failure{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_node_name=~\"$host\",kubernetes_pod_name=~\"$instance\"},datname)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "selected": true,
-          "text": "All",
-          "value": [
-            "$__all"
-          ]
-        },
-        "datasource": "Prometheus",
-        "definition": "label_values({mode=~\"accessexclusivelock|accesssharelock|exclusivelock|rowexclusivelock|rowsharelock|sharelock|sharerowexclusivelock|shareupdateexclusivelock\"},mode)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Lock table",
-        "multi": true,
-        "name": "mode",
-        "options": [],
-        "query": "label_values({mode=~\"accessexclusivelock|accesssharelock|exclusivelock|rowexclusivelock|rowsharelock|sharelock|sharerowexclusivelock|shareupdateexclusivelock\"},mode)",
-        "refresh": 1,
+        "query": "label_values(grafana_build_info{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_pod_name)",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
@@ -2048,7 +1975,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "Postgres",
-  "uid": "postgres",
+  "title": "Grafana",
+  "uid": "grafana",
   "version": 1
 }

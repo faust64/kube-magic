@@ -103,7 +103,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "min(elasticsearch_cluster_health_status{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",color=\"red\"}) == 1 or (min(elasticsearch_cluster_health_status{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",color=\"green\"}) == 1) + 4 or (min(elasticsearch_cluster_health_status{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",color=\"yellow\"} == 1)) + 22",
+          "expr": "min(elasticsearch_cluster_health_status{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",color=\"red\"}) == 1 or (min(elasticsearch_cluster_health_status{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",color=\"green\"}) == 1) + 4 or (min(elasticsearch_cluster_health_status{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",color=\"yellow\"} == 1)) + 22",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -206,7 +206,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count(elasticsearch_breakers_tripped{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"} > 0)",
+          "expr": "count(elasticsearch_breakers_tripped{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"} > 0)",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -305,7 +305,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (elasticsearch_process_cpu_percent{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}) / count(elasticsearch_process_cpu_percent{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+          "expr": "sum (elasticsearch_process_cpu_percent{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}) / count(elasticsearch_process_cpu_percent{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -394,7 +394,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (elasticsearch_jvm_memory_used_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}) / sum (elasticsearch_jvm_memory_max_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+          "expr": "sum (elasticsearch_jvm_memory_used_bytes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}) / sum (elasticsearch_jvm_memory_max_bytes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -484,7 +484,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "avg(elasticsearch_cluster_health_number_of_nodes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+          "expr": "avg(elasticsearch_cluster_health_number_of_nodes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -574,7 +574,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "avg(elasticsearch_cluster_health_number_of_data_nodes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+          "expr": "avg(elasticsearch_cluster_health_number_of_data_nodes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -665,7 +665,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(elasticsearch_cluster_health_number_of_pending_tasks{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}) / count(elasticsearch_cluster_health_number_of_nodes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+          "expr": "sum(elasticsearch_cluster_health_number_of_pending_tasks{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}) / count(elasticsearch_cluster_health_number_of_nodes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -754,7 +754,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (elasticsearch_process_open_files_count{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+          "expr": "sum (elasticsearch_process_open_files_count{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -855,7 +855,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(elasticsearch_cluster_health_active_primary_shards{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+          "expr": "sum(elasticsearch_cluster_health_active_primary_shards{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -946,7 +946,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(elasticsearch_cluster_health_active_shards{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+          "expr": "sum(elasticsearch_cluster_health_active_shards{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1037,7 +1037,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(elasticsearch_cluster_health_initializing_shards{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+          "expr": "sum(elasticsearch_cluster_health_initializing_shards{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1128,7 +1128,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(elasticsearch_cluster_health_relocating_shards{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+          "expr": "sum(elasticsearch_cluster_health_relocating_shards{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1219,7 +1219,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(elasticsearch_cluster_health_delayed_unassigned_shards{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+          "expr": "sum(elasticsearch_cluster_health_delayed_unassigned_shards{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1310,7 +1310,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(elasticsearch_cluster_health_unassigned_shards{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+          "expr": "sum(elasticsearch_cluster_health_unassigned_shards{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1402,7 +1402,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_jvm_gc_collection_seconds_count{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_jvm_gc_collection_seconds_count{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
@@ -1508,7 +1508,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_jvm_gc_collection_seconds_sum{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_jvm_gc_collection_seconds_sum{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
@@ -1617,7 +1617,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_translog_operations{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_translog_operations{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -1647,7 +1647,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -1714,7 +1714,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_translog_size_in_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_translog_size_in_bytes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -1744,7 +1744,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -1829,7 +1829,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,breaker) (elasticsearch_breakers_tripped{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,breaker) (elasticsearch_breakers_tripped{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{breaker}}",
               "refId": "A"
@@ -1859,7 +1859,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -1928,13 +1928,13 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,breaker) (elasticsearch_breakers_estimated_size_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,breaker) (elasticsearch_breakers_estimated_size_bytes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{breaker}} estimated size",
               "refId": "A"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,breaker) (elasticsearch_breakers_limit_size_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,breaker) (elasticsearch_breakers_limit_size_bytes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{breaker}} limit",
               "refId": "B"
@@ -1964,7 +1964,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -2055,19 +2055,19 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (elasticsearch_os_load1{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (elasticsearch_os_load1{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} load1",
               "refId": "A"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (elasticsearch_os_load5{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (elasticsearch_os_load5{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} load5",
               "refId": "B"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (elasticsearch_os_load15{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (elasticsearch_os_load15{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} load15",
               "refId": "C"
@@ -2173,7 +2173,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (elasticsearch_process_cpu_percent{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (elasticsearch_process_cpu_percent{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}//{{kubernetes_pod_name}}",
               "refId": "A"
@@ -2279,19 +2279,19 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,area) (elasticsearch_jvm_memory_used_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,area) (elasticsearch_jvm_memory_used_bytes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{area}} Used",
               "refId": "A"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,area) (elasticsearch_jvm_memory_max_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,area) (elasticsearch_jvm_memory_max_bytes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{area}} Max",
               "refId": "B"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,pool) (elasticsearch_jvm_memory_pool_peak_used_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,pool) (elasticsearch_jvm_memory_pool_peak_used_bytes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} peak used in pool {{pool}}",
               "refId": "C"
@@ -2397,13 +2397,13 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,area) (elasticsearch_jvm_memory_committed_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,area) (elasticsearch_jvm_memory_committed_bytes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{area}} Comitted",
               "refId": "A"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,area) (elasticsearch_jvm_memory_max_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,area) (elasticsearch_jvm_memory_max_bytes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{area}} Max",
               "refId": "B"
@@ -2525,7 +2525,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,path) (1 - (elasticsearch_filesystem_data_available_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"} / elasticsearch_filesystem_data_size_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,path) (1 - (elasticsearch_filesystem_data_available_bytes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"} / elasticsearch_filesystem_data_size_bytes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{path}}",
               "refId": "A"
@@ -2655,13 +2655,13 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_transport_tx_size_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_transport_tx_size_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} sent",
               "refId": "A"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_transport_rx_size_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_transport_rx_size_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} received",
               "refId": "B"
@@ -2692,7 +2692,7 @@
               "label": "Bytes/sec",
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -2784,7 +2784,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (elasticsearch_indices_docs{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (elasticsearch_indices_docs{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -2816,7 +2816,7 @@
               "label": "",
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -2889,7 +2889,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_indexing_index_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_indexing_index_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -2920,7 +2920,7 @@
               "label": "index calls/s",
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -2996,7 +2996,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_docs_deleted{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_docs_deleted{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -3027,7 +3027,7 @@
               "label": "Documents/s",
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -3101,7 +3101,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_merges_docs_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_merges_docs_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -3133,7 +3133,7 @@
               "label": "Documents/s",
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -3206,7 +3206,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_merges_total_size_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_merges_total_size_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -3238,7 +3238,7 @@
               "label": "Bytes/s",
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -3327,7 +3327,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_search_query_time_seconds{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_search_query_time_seconds{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -3358,7 +3358,7 @@
               "label": "Time",
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -3431,7 +3431,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_indexing_index_time_seconds_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_indexing_index_time_seconds_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -3462,7 +3462,7 @@
               "label": "Time",
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -3537,7 +3537,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_merges_total_time_seconds_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_merges_total_time_seconds_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -3568,7 +3568,7 @@
               "label": "Time",
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -3643,7 +3643,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_store_throttle_time_seconds_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_store_throttle_time_seconds_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -3674,7 +3674,7 @@
               "label": "Time",
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -3765,61 +3765,61 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_indexing_index_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_indexing_index_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} indexing",
               "refId": "A"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_search_query_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_search_query_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} query",
               "refId": "B"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_search_fetch_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_search_fetch_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} fetch",
               "refId": "C"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_merges_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_merges_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} merges",
               "refId": "D"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_refresh_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_refresh_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} refresh",
               "refId": "E"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_flush_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_flush_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} flush",
               "refId": "F"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_get_exists_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_get_exists_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} get exists",
               "refId": "G"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_get_missing_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_get_missing_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} get missing",
               "refId": "H"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_get_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_get_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} get",
               "refId": "I"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_indexing_delete_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_indexing_delete_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} indexing_delete",
               "refId": "J"
@@ -3850,7 +3850,7 @@
               "label": "Operations/s",
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -3925,67 +3925,67 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_indexing_index_time_seconds_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_indexing_index_time_seconds_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} indexing",
               "refId": "A"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_search_query_time_seconds{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_search_query_time_seconds{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} query",
               "refId": "B"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_search_fetch_time_seconds{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_search_fetch_time_seconds{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} fetch",
               "refId": "C"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_merges_total_time_seconds_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_merges_total_time_seconds_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} merges",
               "refId": "D"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_refresh_time_seconds_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_refresh_time_seconds_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} refresh",
               "refId": "E"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_flush_time_seconds{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_flush_time_seconds{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} flush",
               "refId": "F"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_get_exists_time_seconds{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_get_exists_time_seconds{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} get_exists",
               "refId": "G"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_get_time_seconds{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_get_time_seconds{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} get_time",
               "refId": "H"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_get_missing_time_seconds{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_get_missing_time_seconds{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} get_missing",
               "refId": "I"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_indexing_delete_time_seconds_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_indexing_delete_time_seconds_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} indexing_delete",
               "refId": "J"
             },
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_get_time_seconds{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_indices_get_time_seconds{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} get",
               "refId": "K"
@@ -4016,7 +4016,7 @@
               "label": "Time",
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -4103,7 +4103,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_thread_pool_rejected_count{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (irate(elasticsearch_thread_pool_rejected_count{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -4134,7 +4134,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -4205,7 +4205,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,type) (elasticsearch_thread_pool_active_count{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,type) (elasticsearch_thread_pool_active_count{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{type}}",
               "refId": "A"
@@ -4236,7 +4236,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -4308,7 +4308,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,type) (elasticsearch_thread_pool_active_count{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,type) (elasticsearch_thread_pool_active_count{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{type}}",
               "refId": "A"
@@ -4339,7 +4339,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -4410,7 +4410,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,type) (irate(elasticsearch_thread_pool_completed_count{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,type) (irate(elasticsearch_thread_pool_completed_count{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{type}}",
               "refId": "A"
@@ -4441,7 +4441,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -4532,7 +4532,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (elasticsearch_indices_fielddata_memory_size_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (elasticsearch_indices_fielddata_memory_size_bytes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -4563,7 +4563,7 @@
               "label": "Memory",
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -4638,7 +4638,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(elasticsearch_indices_fielddata_evictions{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(elasticsearch_indices_fielddata_evictions{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -4669,7 +4669,7 @@
               "label": "Evictions/s",
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -4744,7 +4744,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (elasticsearch_indices_query_cache_memory_size_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (elasticsearch_indices_query_cache_memory_size_bytes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -4775,7 +4775,7 @@
               "label": "Size",
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -4850,7 +4850,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(elasticsearch_indices_query_cache_evictions{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(elasticsearch_indices_query_cache_evictions{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -4881,7 +4881,7 @@
               "label": "Evictions/s",
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -4956,7 +4956,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(elasticsearch_indices_filter_cache_evictions{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(elasticsearch_indices_filter_cache_evictions{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"}[$interval]))",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -4987,7 +4987,7 @@
               "label": "Evictions/s",
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -5072,7 +5072,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (elasticsearch_indices_segments_count{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (elasticsearch_indices_segments_count{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -5102,7 +5102,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -5171,7 +5171,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (elasticsearch_indices_segments_memory_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (elasticsearch_indices_segments_memory_bytes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -5201,7 +5201,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -5286,7 +5286,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_docs_primary{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_docs_primary{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
@@ -5316,7 +5316,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -5385,7 +5385,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_store_size_bytes_primary{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_store_size_bytes_primary{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
@@ -5415,7 +5415,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -5484,7 +5484,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_store_size_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_store_size_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
@@ -5514,7 +5514,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -5600,7 +5600,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_index_writer_memory_bytes_primary{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_index_writer_memory_bytes_primary{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
@@ -5630,7 +5630,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -5700,7 +5700,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_index_writer_memory_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_index_writer_memory_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
@@ -5730,7 +5730,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -5815,7 +5815,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_count_primary{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_count_primary{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
@@ -5845,7 +5845,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -5914,7 +5914,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_count_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_count_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
@@ -5944,7 +5944,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -6013,7 +6013,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_memory_bytes_primary{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_memory_bytes_primary{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
@@ -6043,7 +6043,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -6112,7 +6112,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_memory_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_memory_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
@@ -6142,7 +6142,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -6227,7 +6227,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_doc_values_memory_bytes_primary{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_doc_values_memory_bytes_primary{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -6257,7 +6257,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -6326,7 +6326,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_doc_values_memory_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_doc_values_memory_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
@@ -6356,7 +6356,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -6441,7 +6441,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_fields_memory_bytes_primary{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_fields_memory_bytes_primary{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
@@ -6471,7 +6471,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -6540,7 +6540,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_fields_memory_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_fields_memory_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
@@ -6570,7 +6570,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -6655,7 +6655,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_fixed_bit_set_memory_bytes_primary{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_fixed_bit_set_memory_bytes_primary{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
@@ -6685,7 +6685,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -6754,7 +6754,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_fixed_bit_set_memory_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_fixed_bit_set_memory_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -6784,7 +6784,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -6869,7 +6869,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_norms_memory_bytes_primary{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_norms_memory_bytes_primary{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
@@ -6899,7 +6899,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -6968,7 +6968,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_norms_memory_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_norms_memory_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
@@ -6998,7 +6998,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -7083,7 +7083,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_points_memory_bytes_primary{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_points_memory_bytes_primary{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
@@ -7113,7 +7113,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -7182,7 +7182,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_points_memory_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_points_memory_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
@@ -7212,7 +7212,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -7297,7 +7297,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_terms_memory_primary{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_terms_memory_primary{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
@@ -7327,7 +7327,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -7396,7 +7396,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_terms_memory_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_terms_memory_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
@@ -7426,7 +7426,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -7512,7 +7512,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_version_map_memory_bytes_primary{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_version_map_memory_bytes_primary{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
@@ -7542,7 +7542,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -7612,7 +7612,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_version_map_memory_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+              "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_version_map_memory_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
@@ -7642,7 +7642,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": 0,
               "show": true
             },
             {
@@ -7843,42 +7843,14 @@
           ]
         },
         "datasource": "Prometheus",
-        "definition": "label_values(elasticsearch_indices_docs{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_node_name)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Kubernetes Host",
-        "multi": true,
-        "name": "node",
-        "options": [],
-        "query": "label_values(elasticsearch_indices_docs{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_node_name)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": null,
-        "tags": [],
-        "tagsQuery": null,
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "selected": true,
-          "text": "All",
-          "value": [
-            "$__all"
-          ]
-        },
-        "datasource": "Prometheus",
-        "definition": "label_values(elasticsearch_indices_docs{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_node_name=~\"$node\"},cluster)",
+        "definition": "label_values(elasticsearch_indices_docs{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},cluster)",
         "hide": 0,
         "includeAll": true,
         "label": "ElasticSearch Сluster",
         "multi": true,
         "name": "cluster",
         "options": [],
-        "query": "label_values(elasticsearch_indices_docs{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_node_name=~\"$node\"},cluster)",
+        "query": "label_values(elasticsearch_indices_docs{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},cluster)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -7899,14 +7871,14 @@
           ]
         },
         "datasource": "Prometheus",
-        "definition": "label_values(elasticsearch_indices_docs{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_node_name=~\"$node\",cluster=~\"$cluster\"},name)",
+        "definition": "label_values(elasticsearch_indices_docs{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",cluster=~\"$cluster\"},name)",
         "hide": 0,
         "includeAll": true,
         "label": "ElasticSearch Node Name",
         "multi": true,
         "name": "name",
         "options": [],
-        "query": "label_values(elasticsearch_indices_docs{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_node_name=~\"$node\",cluster=~\"$cluster\"},name)",
+        "query": "label_values(elasticsearch_indices_docs{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",cluster=~\"$cluster\"},name)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -7927,14 +7899,14 @@
           ]
         },
         "datasource": "Prometheus",
-        "definition": "label_values(elasticsearch_indices_docs{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_node_name=~\"$node\",cluster=~\"$cluster\"},kubernetes_pod_name)",
+        "definition": "label_values(elasticsearch_indices_docs{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",cluster=~\"$cluster\"},kubernetes_pod_name)",
         "hide": 0,
         "includeAll": true,
         "label": "Pod Name",
         "multi": true,
         "name": "host",
         "options": [],
-        "query": "label_values(elasticsearch_indices_docs{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_node_name=~\"$node\",cluster=~\"$cluster\"},kubernetes_pod_name)",
+        "query": "label_values(elasticsearch_indices_docs{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",cluster=~\"$cluster\"},kubernetes_pod_name)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -7948,7 +7920,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {

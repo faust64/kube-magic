@@ -105,7 +105,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "max(mysql_global_variables_innodb_compression_level{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_node_name=~\"$node\",kubernetes_pod_name=~\"$host\"})",
+          "expr": "max(mysql_global_variables_innodb_compression_level{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -197,7 +197,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "max(mysql_global_variables_innodb_compression_failure_threshold_pct{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+          "expr": "max(mysql_global_variables_innodb_compression_failure_threshold_pct{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -298,7 +298,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "max(mysql_global_variables_innodb_compression_pad_pct_max{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+          "expr": "max(mysql_global_variables_innodb_compression_pad_pct_max{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -390,7 +390,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "max(mysql_global_variables_innodb_log_compressed_pages{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+          "expr": "max(mysql_global_variables_innodb_log_compressed_pages{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -495,7 +495,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,page_size) (rate(mysql_info_schema_innodb_cmp_compress_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_cmp_compress_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,page_size) (rate(mysql_info_schema_innodb_cmp_compress_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_cmp_compress_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "interval": "$interval",
@@ -613,7 +613,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,page_size) (rate(mysql_info_schema_innodb_cmp_uncompress_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or \nirate(mysql_info_schema_innodb_cmp_uncompress_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,page_size) (rate(mysql_info_schema_innodb_cmp_uncompress_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or \nirate(mysql_info_schema_innodb_cmp_uncompress_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -732,7 +732,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,page_size) (rate(mysql_info_schema_innodb_cmp_compress_ops_ok_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) / rate(mysql_info_schema_innodb_cmp_compress_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or rate(mysql_info_schema_innodb_cmp_compress_ops_ok_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]) / rate(mysql_info_schema_innodb_cmp_compress_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,page_size) (rate(mysql_info_schema_innodb_cmp_compress_ops_ok_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) / rate(mysql_info_schema_innodb_cmp_compress_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or rate(mysql_info_schema_innodb_cmp_compress_ops_ok_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]) / rate(mysql_info_schema_innodb_cmp_compress_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "interval": "$interval",
@@ -857,7 +857,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by(kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,page_size) (mysql_info_schema_innodb_cmpmem_pages_used_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"\n})",
+          "expr": "sum by(kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,page_size) (mysql_info_schema_innodb_cmpmem_pages_used_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"\n})",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -965,7 +965,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by(kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,page_size) (mysql_info_schema_innodb_cmpmem_pages_free_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"\n})",
+          "expr": "sum by(kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,page_size) (mysql_info_schema_innodb_cmpmem_pages_free_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"\n})",
           "format": "time_series",
           "hide": false,
           "interval": "$interval",
@@ -1104,7 +1104,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,page_size) (mysql_info_schema_innodb_cmpmem_pages_used_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"\n,buffer_pool=~\"$buffer\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,page_size) (mysql_info_schema_innodb_cmpmem_pages_used_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"\n,buffer_pool=~\"$buffer\"})",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1218,7 +1218,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,page_size) (mysql_info_schema_innodb_cmpmem_pages_free_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",buffer_pool=\"$buffer\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,page_size) (mysql_info_schema_innodb_cmpmem_pages_free_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",buffer_pool=\"$buffer\"})",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1268,7 +1268,7 @@
       }
     }
   ],
-  "refresh": "5m",
+  "refresh": "1m",
   "schemaVersion": 25,
   "style": "dark",
   "tags": [
@@ -1427,34 +1427,6 @@
         "useTags": false
       },
       {
-        "allValue": null,
-        "current": {
-          "selected": true,
-          "text": "All",
-          "value": [
-            "$__all"
-          ]
-        },
-        "datasource": "Prometheus",
-        "definition": "label_values(mysql_global_variables_innodb_compression_failure_threshold_pct{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_node_name)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Kubernetes Host",
-        "multi": true,
-        "name": "node",
-        "options": [],
-        "query": "label_values(mysql_global_variables_innodb_compression_failure_threshold_pct{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_node_name)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
         "allFormat": "glob",
         "allValue": null,
         "current": {
@@ -1465,7 +1437,7 @@
           ]
         },
         "datasource": "Prometheus",
-        "definition": "label_values(mysql_global_variables_innodb_compression_failure_threshold_pct{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_node_name=~\"$node\"},kubernetes_pod_name)",
+        "definition": "label_values(mysql_global_variables_innodb_compression_failure_threshold_pct{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_pod_name)",
         "hide": 0,
         "includeAll": true,
         "label": "Pod Name",
@@ -1473,7 +1445,7 @@
         "multiFormat": "regex values",
         "name": "host",
         "options": [],
-        "query": "label_values(mysql_global_variables_innodb_compression_failure_threshold_pct{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_node_name=~\"$node\"},kubernetes_pod_name)",
+        "query": "label_values(mysql_global_variables_innodb_compression_failure_threshold_pct{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_pod_name)",
         "refresh": 1,
         "refresh_on_load": false,
         "regex": "",
@@ -1493,14 +1465,14 @@
           "value": "$__all"
         },
         "datasource": "Prometheus",
-        "definition": "label_values(mysql_info_schema_innodb_cmpmem_pages_used_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_pod_name=~\"$host\"},buffer_pool)",
+        "definition": "label_values(mysql_info_schema_innodb_cmpmem_pages_used_total{kubernetes_cluster=~\"$cluster\",kubernetes_pod_name=~\"$host\"},buffer_pool)",
         "hide": 2,
         "includeAll": true,
         "label": "Buffer Pool",
         "multi": true,
         "name": "buffer",
         "options": [],
-        "query": "label_values(mysql_info_schema_innodb_cmpmem_pages_used_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_pod_name=~\"$host\"},buffer_pool)",
+        "query": "label_values(mysql_info_schema_innodb_cmpmem_pages_used_total{kubernetes_cluster=~\"$cluster\",kubernetes_pod_name=~\"$host\"},buffer_pool)",
         "refresh": 1,
         "regex": "/./",
         "skipUrlSync": false,
@@ -1514,7 +1486,7 @@
     ]
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {

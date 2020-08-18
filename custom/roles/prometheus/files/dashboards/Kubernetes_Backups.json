@@ -78,7 +78,6 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "7.0.5",
       "targets": [
         {
           "expr": "100 * backup_filesystem_free_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"} / backup_filesystem_total_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"}",
@@ -138,7 +137,6 @@
         },
         "showUnfilled": true
       },
-      "pluginVersion": "7.0.5",
       "targets": [
         {
           "expr": "topk(5, backup_job_successful_count_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",jobname=~\"$jobname\"} > 0)",
@@ -198,7 +196,6 @@
         },
         "showUnfilled": true
       },
-      "pluginVersion": "7.0.5",
       "targets": [
         {
           "expr": "bottomk(5, backup_job_failed_count_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",jobname=~\"$jobname\"} > 0)",
@@ -270,7 +267,6 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "7.0.5",
       "targets": [
         {
           "expr": "100 * backup_filesystem_free_inodes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"} / backup_filesystem_total_inodes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"}",
@@ -334,7 +330,6 @@
         },
         "showUnfilled": true
       },
-      "pluginVersion": "7.0.5",
       "targets": [
         {
           "expr": "topk(6, (time() - (backup_job_last_failed_timestamp_seconds{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",jobname=~\"$jobname\"} > 0)))",
@@ -398,7 +393,6 @@
         },
         "showUnfilled": true
       },
-      "pluginVersion": "7.0.5",
       "targets": [
         {
           "expr": "topk(6, (time() - (backup_job_last_successful_timestamp_seconds{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",jobname=~\"$jobname\"} > 0)))",
@@ -530,7 +524,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {

@@ -106,7 +106,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_insert_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_insert_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_insert_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_insert_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -116,7 +116,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_delete_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_delete_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_delete_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_delete_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -126,7 +126,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_delete_mark_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_delete_mark_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_delete_mark_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_delete_mark_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -135,7 +135,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -144,7 +144,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) ((rate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_insert_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) + rate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_delete_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) + rate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_delete_mark_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval])) / rate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or (irate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_insert_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]) + irate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_delete_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]) + irate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_delete_mark_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m])) / irate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) ((rate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_insert_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) + rate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_delete_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) + rate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_delete_mark_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval])) / rate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or (irate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_insert_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]) + irate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_delete_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]) + irate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_delete_mark_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m])) / irate(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -269,7 +269,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (mysql_global_variables_innodb_log_buffer_size{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (mysql_global_variables_innodb_log_buffer_size{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -279,7 +279,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (mysql_info_schema_innodb_metrics_recovery_log_lsn_current{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"} - mysql_info_schema_innodb_metrics_recovery_log_lsn_last_flush{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (mysql_info_schema_innodb_metrics_recovery_log_lsn_current{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"} - mysql_info_schema_innodb_metrics_recovery_log_lsn_last_flush{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -411,7 +411,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_index_index_page_merge_attempts_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_index_index_page_merge_attempts_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_index_index_page_merge_attempts_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_index_index_page_merge_attempts_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -421,7 +421,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_index_index_page_merge_successful_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_index_index_page_merge_successful_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_index_index_page_merge_successful_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_index_index_page_merge_successful_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "interval": "$interval",
@@ -431,7 +431,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_index_index_page_splits_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_index_index_page_splits_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_index_index_page_splits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_index_index_page_splits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "interval": "$interval",
@@ -441,7 +441,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) ((rate(mysql_info_schema_innodb_metrics_index_index_page_merge_successful_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_index_index_page_merge_successful_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m])) / (rate(mysql_info_schema_innodb_metrics_index_index_page_merge_attempts_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_index_index_page_merge_attempts_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m])) * 100)",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) ((rate(mysql_info_schema_innodb_metrics_index_index_page_merge_successful_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_index_index_page_merge_successful_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m])) / (rate(mysql_info_schema_innodb_metrics_index_index_page_merge_attempts_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_index_index_page_merge_attempts_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m])) * 100)",
           "format": "time_series",
           "hide": false,
           "interval": "$interval",
@@ -574,7 +574,7 @@
       "steppedLine": true,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_index_index_page_reorg_attempts_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_index_index_page_reorg_attempts_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_index_index_page_reorg_attempts_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_index_index_page_reorg_attempts_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -583,7 +583,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_index_index_page_reorg_successful_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_index_index_page_reorg_successful_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_index_index_page_reorg_successful_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_index_index_page_reorg_successful_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -592,7 +592,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) ((rate(mysql_info_schema_innodb_metrics_index_index_page_reorg_successful_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_index_index_page_reorg_successful_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m])) / (rate(mysql_info_schema_innodb_metrics_index_index_page_reorg_attempts_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_index_index_page_reorg_attempts_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m])) * 100)",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) ((rate(mysql_info_schema_innodb_metrics_index_index_page_reorg_successful_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_index_index_page_reorg_successful_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m])) / (rate(mysql_info_schema_innodb_metrics_index_index_page_reorg_attempts_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_index_index_page_reorg_attempts_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m])) * 100)",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -716,7 +716,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_purge_purge_upd_exist_or_extern_records_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_purge_purge_upd_exist_or_extern_records_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_purge_purge_upd_exist_or_extern_records_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_purge_purge_upd_exist_or_extern_records_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -726,7 +726,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_purge_purge_del_mark_records_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_purge_purge_del_mark_records_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_purge_purge_del_mark_records_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_purge_purge_del_mark_records_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -736,7 +736,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_purge_purge_undo_log_pages_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_purge_purge_undo_log_pages_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_purge_purge_undo_log_pages_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_purge_purge_undo_log_pages_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -860,7 +860,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_lock_lock_rec_lock_created_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_lock_lock_rec_lock_created_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_lock_lock_rec_lock_created_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_lock_lock_rec_lock_created_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -870,7 +870,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_lock_lock_rec_lock_removed_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_lock_lock_rec_lock_removed_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_lock_lock_rec_lock_removed_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_lock_lock_rec_lock_removed_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -880,7 +880,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_lock_lock_rec_lock_requests_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_lock_lock_rec_lock_requests_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_lock_lock_rec_lock_requests_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_lock_lock_rec_lock_requests_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1004,7 +1004,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_server_innodb_log_flush_usec_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) / 1000000 or irate(mysql_info_schema_innodb_metrics_server_innodb_log_flush_usec_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]) / 1000000)",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_server_innodb_log_flush_usec_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) / 1000000 or irate(mysql_info_schema_innodb_metrics_server_innodb_log_flush_usec_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]) / 1000000)",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1014,7 +1014,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_server_innodb_ibuf_merge_usec_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) / 1000000 or irate(mysql_info_schema_innodb_metrics_server_innodb_ibuf_merge_usec_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]) / 1000000)",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_server_innodb_ibuf_merge_usec_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) / 1000000 or irate(mysql_info_schema_innodb_metrics_server_innodb_ibuf_merge_usec_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]) / 1000000)",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1023,7 +1023,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_server_innodb_checkpoint_usec_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) / 1000000 or irate(mysql_info_schema_innodb_metrics_server_innodb_checkpoint_usec_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]) / 1000000)",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_server_innodb_checkpoint_usec_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) / 1000000 or irate(mysql_info_schema_innodb_metrics_server_innodb_checkpoint_usec_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]) / 1000000)",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1147,7 +1147,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_transaction_trx_rw_commits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_transaction_trx_rw_commits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_transaction_trx_rw_commits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_transaction_trx_rw_commits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1157,7 +1157,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_transaction_trx_rollbacks_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_transaction_trx_rollbacks_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_transaction_trx_rollbacks_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_transaction_trx_rollbacks_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1166,7 +1166,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_transaction_trx_ro_commits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_transaction_trx_ro_commits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_transaction_trx_ro_commits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_transaction_trx_ro_commits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1175,7 +1175,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_transaction_trx_nl_ro_commits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_transaction_trx_nl_ro_commits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_transaction_trx_nl_ro_commits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_transaction_trx_nl_ro_commits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1184,7 +1184,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_transaction_trx_commits_insert_update_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_transaction_trx_commits_insert_update_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_transaction_trx_commits_insert_update_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_transaction_trx_commits_insert_update_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1193,7 +1193,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_global_status_innodb_max_trx_id{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_global_status_innodb_max_trx_id{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_global_status_innodb_max_trx_id{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_global_status_innodb_max_trx_id{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1317,7 +1317,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (mysql_info_schema_innodb_metrics_transaction_trx_rseg_current_size{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"} * mysql_global_status_innodb_page_size{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (mysql_info_schema_innodb_metrics_transaction_trx_rseg_current_size{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"} * mysql_global_status_innodb_page_size{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1444,7 +1444,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_server_innodb_activity_count_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_server_innodb_activity_count_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_server_innodb_activity_count_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_server_innodb_activity_count_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1571,7 +1571,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_s_os_waits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_s_os_waits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_s_os_waits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_s_os_waits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1581,7 +1581,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_sx_os_waits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_sx_os_waits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_sx_os_waits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_sx_os_waits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1590,7 +1590,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_x_os_waits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_x_os_waits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_x_os_waits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_x_os_waits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1716,7 +1716,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_s_spin_rounds_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_s_spin_rounds_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_s_spin_rounds_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_s_spin_rounds_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1726,7 +1726,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_sx_spin_rounds_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_sx_spin_rounds_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_sx_spin_rounds_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_sx_spin_rounds_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1735,7 +1735,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_x_spin_rounds_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_x_spin_rounds_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_x_spin_rounds_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_server_innodb_rwlock_x_spin_rounds_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1861,7 +1861,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_transaction_trx_rw_commits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval])/rate(mysql_global_status_innodb_log_writes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_transaction_trx_rw_commits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m])/irate(mysql_global_status_innodb_log_writes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_transaction_trx_rw_commits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval])/rate(mysql_global_status_innodb_log_writes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_transaction_trx_rw_commits_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m])/irate(mysql_global_status_innodb_log_writes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1992,7 +1992,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (mysql_info_schema_innodb_metrics_purge_purge_dml_delay_usec{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (mysql_info_schema_innodb_metrics_purge_purge_dml_delay_usec{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -2002,7 +2002,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (mysql_global_variables_innodb_max_purge_lag_delay{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (mysql_global_variables_innodb_max_purge_lag_delay{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -2133,7 +2133,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_btree_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval])+\nrate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or\nirate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_btree_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m])+\nirate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_btree_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval])+\nrate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or\nirate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_btree_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m])+\nirate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -2143,7 +2143,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or\nirate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or\nirate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -2152,7 +2152,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (1 - (rate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval])) / (rate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) +\nrate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_btree_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval])) or\n1 - (irate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m])) /\n(irate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]) +\nirate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_btree_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m])))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (1 - (rate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval])) / (rate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) +\nrate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_btree_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval])) or\n1 - (irate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m])) /\n(irate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]) +\nirate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_searches_btree_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m])))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -2278,7 +2278,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_pages_added_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_pages_added_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_pages_added_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_pages_added_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -2288,7 +2288,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_pages_removed_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_pages_removed_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_pages_removed_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_pages_removed_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -2297,7 +2297,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_rows_added_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate( mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_rows_added_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_rows_added_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate( mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_rows_added_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -2306,7 +2306,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_rows_removed_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_rows_removed_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_rows_removed_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_rows_removed_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -2315,7 +2315,7 @@
           "step": 300
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_rows_updated_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_rows_updated_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_rows_updated_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_info_schema_innodb_metrics_adaptive_hash_index_adaptive_hash_rows_updated_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -2437,12 +2437,12 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "mysql_global_status_innodb_onlineddl_pct_progress{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"} / 100",
+          "expr": "mysql_global_status_innodb_onlineddl_pct_progress{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"} / 100",
           "format": "time_series",
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "% Progress",
+          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} % Progress",
           "metric": "",
           "refId": "D",
           "step": 5
@@ -2451,7 +2451,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_global_status_innodb_onlineddl_rowlog_pct_used{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_global_status_innodb_onlineddl_rowlog_pct_used{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_global_status_innodb_onlineddl_rowlog_pct_used{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_global_status_innodb_onlineddl_rowlog_pct_used{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -2464,7 +2464,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_global_status_innodb_onlineddl_rowlog_rows{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_global_status_innodb_onlineddl_rowlog_rows{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_global_status_innodb_onlineddl_rowlog_rows{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_global_status_innodb_onlineddl_rowlog_rows{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -2575,7 +2575,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_global_status_innodb_defragment_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_global_status_innodb_defragment_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_global_status_innodb_defragment_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_global_status_innodb_defragment_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -2588,7 +2588,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_global_status_innodb_defragment_compression_failures{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_global_status_innodb_defragment_compression_failures{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_global_status_innodb_defragment_compression_failures{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_global_status_innodb_defragment_compression_failures{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -2601,7 +2601,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_global_status_innodb_defragment_failures{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_global_status_innodb_defragment_failures{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (rate(mysql_global_status_innodb_defragment_failures{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or irate(mysql_global_status_innodb_defragment_failures{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -2830,38 +2830,7 @@
           ]
         },
         "datasource": "Prometheus",
-        "definition": "label_values(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_insert_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_node_name)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Kubernetes Host",
-        "multi": true,
-        "multiFormat": "regex values",
-        "name": "node",
-        "options": [],
-        "query": "label_values(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_insert_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_node_name)",
-        "refresh": 1,
-        "refresh_on_load": false,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": null,
-        "tags": [],
-        "tagsQuery": null,
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allFormat": "glob",
-        "allValue": null,
-        "current": {
-          "selected": true,
-          "text": "All",
-          "value": [
-            "$__all"
-          ]
-        },
-        "datasource": "Prometheus",
-        "definition": "label_values(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_insert_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_node_name=~\"$node\"},kubernetes_pod_name)",
+        "definition": "label_values(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_insert_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_pod_name)",
         "hide": 0,
         "includeAll": true,
         "label": "Pod Name",
@@ -2869,7 +2838,7 @@
         "multiFormat": "regex values",
         "name": "host",
         "options": [],
-        "query": "label_values(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_insert_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_node_name=~\"$node\"},kubernetes_pod_name)",
+        "query": "label_values(mysql_info_schema_innodb_metrics_change_buffer_ibuf_merges_insert_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_pod_name)",
         "refresh": 2,
         "refresh_on_load": false,
         "regex": "",
@@ -2884,7 +2853,7 @@
     ]
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {

@@ -87,7 +87,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "max(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:net:failuredetector:upendpointcount\"})",
+          "expr": "max(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:net:failuredetector:upendpointcount\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -174,7 +174,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "max(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:net:failuredetector:downendpointcount\"})",
+          "expr": "max(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:net:failuredetector:downendpointcount\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -261,7 +261,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "max(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:client:connectednativeclients:value\"})",
+          "expr": "max(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:client:connectednativeclients:value\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -349,7 +349,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "avg(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:table:percentrepaired:value\"})",
+          "expr": "avg(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:table:percentrepaired:value\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -467,43 +467,43 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "max(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:(read|write|casread|caswrite|rangeslice|viewwrite):latency:oneminuterate\"})",
+          "expr": "max(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:(read|write|casread|caswrite|rangeslice|viewwrite):latency:oneminuterate\"})",
           "interval": "",
           "legendFormat": "All",
           "refId": "B"
         },
         {
-          "expr": "max(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:read:latency:oneminuterate\"})",
+          "expr": "max(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:read:latency:oneminuterate\"})",
           "interval": "",
           "legendFormat": "Read",
           "refId": "C"
         },
         {
-          "expr": "max(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:write:latency:oneminuterate\"})",
+          "expr": "max(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:write:latency:oneminuterate\"})",
           "interval": "",
           "legendFormat": "Write",
           "refId": "D"
         },
         {
-          "expr": "max(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:casread:latency:oneminuterate\"})",
+          "expr": "max(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:casread:latency:oneminuterate\"})",
           "interval": "",
           "legendFormat": "CasRead",
           "refId": "A"
         },
         {
-          "expr": "max(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:caswrite:latency:oneminuterate\"})",
+          "expr": "max(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:caswrite:latency:oneminuterate\"})",
           "interval": "",
           "legendFormat": "CasWrite",
           "refId": "E"
         },
         {
-          "expr": "max(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:rangeslice:latency:oneminuterate\"})",
+          "expr": "max(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:rangeslice:latency:oneminuterate\"})",
           "interval": "",
           "legendFormat": "RangeSlice",
           "refId": "F"
         },
         {
-          "expr": "max(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:viewwrite:latency:oneminuterate\"})",
+          "expr": "max(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:viewwrite:latency:oneminuterate\"})",
           "interval": "",
           "legendFormat": "ViewWrite",
           "refId": "G"
@@ -602,7 +602,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:(read|write|casread|caswrite|rangeslice|viewwrite):latency:oneminuterate\"}) by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name)",
+          "expr": "sum(cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:(read|write|casread|caswrite|rangeslice|viewwrite):latency:oneminuterate\"}) by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name)",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
@@ -724,7 +724,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:read:latency:oneminuterate\"}+0.00000001)",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:read:latency:oneminuterate\"}+0.00000001)",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
@@ -824,7 +824,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:write:latency:oneminuterate\"}+0.00000001)",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:write:latency:oneminuterate\"}+0.00000001)",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
@@ -948,7 +948,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:read:latency:max\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:read:latency:max\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
@@ -1047,7 +1047,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:read:latency:75thpercentile\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:read:latency:75thpercentile\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
@@ -1146,7 +1146,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:read:latency:99thpercentile\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:read:latency:99thpercentile\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
@@ -1245,7 +1245,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:write:latency:max\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:write:latency:max\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
@@ -1344,7 +1344,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:write:latency:75thpercentile\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:write:latency:75thpercentile\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
@@ -1443,7 +1443,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:write:latency:99thpercentile\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:write:latency:99thpercentile\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
@@ -1564,19 +1564,19 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:.*:timeouts:oneminuterate\"}+0.00000001)",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:.*:timeouts:oneminuterate\"}+0.00000001)",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} All",
           "refId": "A"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:read:timeouts:oneminuterate\"}+0.00000001)",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:read:timeouts:oneminuterate\"}+0.00000001)",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Read",
           "refId": "B"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:write:timeouts:oneminuterate\"}+0.00000001)",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:write:timeouts:oneminuterate\"}+0.00000001)",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Write",
           "refId": "C"
@@ -1676,19 +1676,19 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:.*:unavailables:oneminuterate\"}+0.00000001)",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:.*:unavailables:oneminuterate\"}+0.00000001)",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} All",
           "refId": "A"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:write:unavailables:oneminuterate\"}+0.00000001)",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:write:unavailables:oneminuterate\"}+0.00000001)",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Write",
           "refId": "B"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:read:unavailables:oneminuterate\"}+0.00000001)",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:clientrequest:read:unavailables:oneminuterate\"}+0.00000001)",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Read",
           "refId": "C"
@@ -1809,7 +1809,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:storage:exceptions:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:storage:exceptions:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
@@ -1908,7 +1908,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:connection:totaltimeouts:oneminuterate\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:connection:totaltimeouts:oneminuterate\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
@@ -2030,133 +2030,133 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:antientropystage:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:antientropystage:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} AntiEntropyStage",
           "refId": "A"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:cachecleanupexecutor:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:cachecleanupexecutor:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} CacheCleanupExecutor",
           "refId": "B"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:compactionexecutor:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:compactionexecutor:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} CompactionExecutor",
           "refId": "C"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:gossipstage:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:gossipstage:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} GossipStage",
           "refId": "D"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:hintsdispatcher:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:hintsdispatcher:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} HintsDispatcher",
           "refId": "E"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:internalresponsestage:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:internalresponsestage:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} InternalResponseStage",
           "refId": "F"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:memtableflushwriter:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:memtableflushwriter:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} MemTableFlushWriter",
           "refId": "G"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:memtablepostflush:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:memtablepostflush:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} MemTablePostFlush",
           "refId": "H"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:memtablereclaimmemory:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:memtablereclaimmemory:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} MemTableReclaimMemory",
           "refId": "I"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:migrationstage:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:migrationstage:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} MigrationStage",
           "refId": "J"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:miscstage:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:miscstage:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} MiscStage",
           "refId": "K"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:pendingrangecalculator:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:pendingrangecalculator:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} PendingRangeCalculator",
           "refId": "L"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:perdiskmemtableflushwriter_0:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:perdiskmemtableflushwriter_0:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} PerDiskMemTableFlushWriter",
           "refId": "M"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:sampler:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:sampler:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Sampler",
           "refId": "N"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:secondaryindexmanagement:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:secondaryindexmanagement:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} SecondaryIndexManagement",
           "refId": "O"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:validationexecutor:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:validationexecutor:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} ValidationExecutor",
           "refId": "P"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:countermutationstage:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:countermutationstage:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} CounterMutationStage",
           "refId": "Q"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:mutationstage:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:mutationstage:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} MutationStage",
           "refId": "R"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:readrepairstage:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:readrepairstage:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} ReadRepairStage",
           "refId": "S"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:requestresponsestage:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:requestresponsestage:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} RequestResponseStage",
           "refId": "T"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:viewmutationstage:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:viewmutationstage:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} ViewMutationStage",
           "refId": "U"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:transport:native-transport-requests:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:transport:native-transport-requests:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} NativeTransportRequest",
           "refId": "V"
@@ -2256,133 +2256,133 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:antientropystage:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:antientropystage:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} AntiEntropyStage",
           "refId": "A"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:cachecleanupexecutor:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:cachecleanupexecutor:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} CacheCleanupExecutor",
           "refId": "B"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:compactionexecutor:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:compactionexecutor:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} CompactionExecutor",
           "refId": "C"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:gossipstage:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:gossipstage:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} GossipStage",
           "refId": "D"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:hintsdispatcher:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:hintsdispatcher:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} HintsDispatcher",
           "refId": "E"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:internalresponsestage:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:internalresponsestage:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} InternalResponseStage",
           "refId": "F"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:memtableflushwriter:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:memtableflushwriter:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} MemTableFlushWriter",
           "refId": "G"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:memtablepostflush:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:memtablepostflush:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} MemTablePostFlush",
           "refId": "H"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:memtablereclaimmemory:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:memtablereclaimmemory:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} MemTableReclaimMemory",
           "refId": "I"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:migrationstage:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:migrationstage:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} MigrationStage",
           "refId": "J"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:miscstage:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:miscstage:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} MiscStage",
           "refId": "K"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:pendingrangecalculator:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:pendingrangecalculator:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} PendingRangeCalculator",
           "refId": "L"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:perdiskmemtableflushwriter_0:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:perdiskmemtableflushwriter_0:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} PerDiskMemTableFlushWriter",
           "refId": "M"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:sampler:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:sampler:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Sampler",
           "refId": "N"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:secondaryindexmanagement:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:secondaryindexmanagement:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} SecondaryIndexManagement",
           "refId": "O"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:validationexecutor:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:validationexecutor:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} ValidationExecutor",
           "refId": "P"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:countermutationstage:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:countermutationstage:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} CounterMutationStage",
           "refId": "Q"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:mutationstage:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:mutationstage:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} MutationStage",
           "refId": "R"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:readrepairstage:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:readrepairstage:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} ReadRepairStage",
           "refId": "S"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:requestresponsestage:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:requestresponsestage:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} RequestResponseStage",
           "refId": "T"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:viewmutationstage:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:viewmutationstage:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} ViewMutationStage",
           "refId": "U"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:transport:native-transport-requests:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:transport:native-transport-requests:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} NativeTransportRequest",
           "refId": "V"
@@ -2482,133 +2482,133 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:antientropystage:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:antientropystage:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} AntiEntropyStage",
           "refId": "A"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:cachecleanupexecutor:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:cachecleanupexecutor:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} CacheCleanupExecutor",
           "refId": "B"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:compactionexecutor:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:compactionexecutor:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} CompactionExecutor",
           "refId": "C"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:gossipstage:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:gossipstage:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} GossipStage",
           "refId": "D"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:hintsdispatcher:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:hintsdispatcher:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} HintsDispatcher",
           "refId": "E"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:internalresponsestage:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:internalresponsestage:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} InternalResponseStage",
           "refId": "F"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:memtableflushwriter:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:memtableflushwriter:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} MemTableFlushWriter",
           "refId": "G"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:memtablepostflush:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:memtablepostflush:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} MemTablePostFlush",
           "refId": "H"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:memtablereclaimmemory:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:memtablereclaimmemory:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} MemTableReclaimMemory",
           "refId": "I"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:migrationstage:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:migrationstage:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} MigrationStage",
           "refId": "J"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:miscstage:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:miscstage:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} MiscStage",
           "refId": "K"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:pendingrangecalculator:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:pendingrangecalculator:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} PendingRangeCalculator",
           "refId": "L"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:perdiskmemtableflushwriter_0:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:perdiskmemtableflushwriter_0:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} PerDiskMemTableFlushWriter",
           "refId": "M"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:sampler:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:sampler:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Sampler",
           "refId": "N"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:secondaryindexmanagement:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:secondaryindexmanagement:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} SecondaryIndexManagement",
           "refId": "O"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:validationexecutor:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:validationexecutor:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} ValidationExecutor",
           "refId": "P"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:countermutationstage:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:countermutationstage:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} CounterMutationStage",
           "refId": "Q"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:mutationstage:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:mutationstage:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} MutationStage",
           "refId": "R"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:readrepairstage:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:readrepairstage:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} ReadRepairStage",
           "refId": "S"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:requestresponsestage:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:requestresponsestage:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} RequestResponseStage",
           "refId": "T"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:viewmutationstage:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:request:viewmutationstage:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} ViewMutationStage",
           "refId": "U"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:transport:native-transport-requests:currentlyblockedtasks:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:transport:native-transport-requests:currentlyblockedtasks:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} NativeTransportRequest",
           "refId": "V"
@@ -2708,67 +2708,67 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:batch_remove:dropped:oneminuterate\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:batch_remove:dropped:oneminuterate\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} BatchRemove",
           "refId": "A"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:batch_store:dropped:oneminuterate\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:batch_store:dropped:oneminuterate\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} BatchStore",
           "refId": "B"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:counter_mutation:dropped:oneminuterate\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:counter_mutation:dropped:oneminuterate\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} CounterMutation",
           "refId": "C"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:hint:dropped:oneminuterate\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:hint:dropped:oneminuterate\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Hint",
           "refId": "D"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:mutation:dropped:oneminuterate\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:mutation:dropped:oneminuterate\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Mutation",
           "refId": "E"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:paged_range:dropped:oneminuterate\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:paged_range:dropped:oneminuterate\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} PagedRange",
           "refId": "F"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:range_slice:dropped:oneminuterate\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:range_slice:dropped:oneminuterate\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} RangeSlice",
           "refId": "G"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:read:dropped:oneminuterate\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:read:dropped:oneminuterate\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Read",
           "refId": "H"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:read_repair:dropped:oneminuterate\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:read_repair:dropped:oneminuterate\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} ReadRepair",
           "refId": "I"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:request_response:dropped:oneminuterate\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:request_response:dropped:oneminuterate\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} RequestResponse",
           "refId": "J"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:_trace:dropped:oneminuterate\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=\"$cluster\",datacenter=~\"$datacenter\",name=\"org:apache:cassandra:metrics:droppedmessage:_trace:dropped:oneminuterate\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} _Trace",
           "refId": "K"
@@ -2889,13 +2889,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:compaction:pendingtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:compaction:pendingtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Pending",
           "refId": "A"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:compactionexecutor:activetasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:threadpools:internal:compactionexecutor:activetasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Running",
           "refId": "B"
@@ -2994,7 +2994,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:compaction:completedtasks:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:compaction:completedtasks:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
@@ -3093,7 +3093,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:compaction:totalcompactionscompleted:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:compaction:totalcompactionscompleted:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
@@ -3192,7 +3192,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:compaction:bytescompacted:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:compaction:bytescompacted:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
@@ -3291,7 +3291,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:table:livesstablecount:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:table:livesstablecount:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
@@ -3390,25 +3390,25 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:table:sstablesperreadhistogram:50thpercentile\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:table:sstablesperreadhistogram:50thpercentile\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} 50th percentile",
           "refId": "A"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:table:sstablesperreadhistogram:75thpercentile\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:table:sstablesperreadhistogram:75thpercentile\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} 75th percentile",
           "refId": "B"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:table:sstablesperreadhistogram:99thpercentile\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:table:sstablesperreadhistogram:99thpercentile\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} 99th percentile",
           "refId": "C"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:table:sstablesperreadhistogram:max\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:table:sstablesperreadhistogram:max\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} max",
           "refId": "D"
@@ -3529,7 +3529,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:cache:keycache:oneminutehitrate:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:cache:keycache:oneminutehitrate:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
@@ -3628,13 +3628,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:cache:keycache:size:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:cache:keycache:size:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Size",
           "refId": "A"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:cache:keycache:entries:value\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:cache:keycache:entries:value\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Entries",
           "refId": "B"
@@ -3733,13 +3733,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:cache:keycache:hits:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:cache:keycache:hits:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Hits",
           "refId": "A"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:cache:keycache:requests:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:cache:keycache:requests:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Requests",
           "refId": "B"
@@ -3860,7 +3860,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:storage:load:count\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (cassandra_stats{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",datacenter=~\"$datacenter\",name=~\"org:apache:cassandra:metrics:storage:load:count\"})",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
@@ -3910,7 +3910,7 @@
       }
     }
   ],
-  "refresh": "30s",
+  "refresh": "1m",
   "schemaVersion": 25,
   "style": "dark",
   "tags": [
@@ -4037,32 +4037,6 @@
           "value": "$__all"
         },
         "datasource": "Prometheus",
-        "definition": "label_values(cassandra_stats{name=\"java:lang:memory:heapmemoryusage:max\",kubernetes_cluster=~\"$kube\",cluster=~\"$cluster\",datacenter=~\"$datacenter\"},kubernetes_node_name)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Kubernetes Host",
-        "multi": true,
-        "name": "node",
-        "options": [],
-        "query": "label_values(cassandra_stats{name=\"java:lang:memory:heapmemoryusage:max\",kubernetes_cluster=~\"$kube\",cluster=~\"$cluster\",datacenter=~\"$datacenter\"},kubernetes_node_name)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": "Prometheus",
         "definition": "label_values(cassandra_stats{name=\"java:lang:memory:heapmemoryusage:max\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\"},kubernetes_service_name)",
         "hide": 0,
         "includeAll": true,
@@ -4089,14 +4063,14 @@
           "value": "$__all"
         },
         "datasource": "Prometheus",
-        "definition": "label_values(cassandra_stats{name=\"java:lang:memory:heapmemoryusage:max\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\"},kubernetes_pod_name)",
+        "definition": "label_values(cassandra_stats{name=\"java:lang:memory:heapmemoryusage:max\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_pod_name)",
         "hide": 0,
         "includeAll": true,
         "label": "Pod Name",
         "multi": true,
         "name": "host",
         "options": [],
-        "query": "label_values(cassandra_stats{name=\"java:lang:memory:heapmemoryusage:max\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_node_name=~\"$node\",kubernetes_service_name=~\"$deployment\"},kubernetes_pod_name)",
+        "query": "label_values(cassandra_stats{name=\"java:lang:memory:heapmemoryusage:max\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_pod_name)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -4110,7 +4084,7 @@
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {

@@ -12,89 +12,27 @@
       }
     ]
   },
-  "description": "Apache metrics overview.",
+  "description": "Ceph OSDs performance overview.",
   "editable": true,
-  "gnetId": 3894,
+  "gnetId": null,
   "graphTooltip": 0,
-  "id": 19,
-  "iteration": 1594887582702,
+  "id": 39,
+  "iteration": 1597659675757,
   "links": [],
   "panels": [
     {
-      "cacheTimeout": null,
-      "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "decimals": 1,
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
-            }
-          ],
-          "nullValueMode": "connected",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
+      "collapsed": false,
+      "datasource": null,
       "gridPos": {
-        "h": 3,
-        "w": 4,
+        "h": 1,
+        "w": 24,
         "x": 0,
         "y": 0
       },
-      "id": 8,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "value",
-        "fieldOptions": {
-          "calcs": [
-            "mean"
-          ]
-        },
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "/^Value$/",
-          "values": false
-        }
-      },
-      "targets": [
-        {
-          "expr": "min(apache_server_uptime{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"})",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "",
-          "refId": "A",
-          "step": 1800
-        }
-      ],
-      "title": "Min Uptime",
-      "type": "stat"
+      "id": 14,
+      "panels": [],
+      "title": "OSD Performance",
+      "type": "row"
     },
     {
       "aliasColors": {},
@@ -102,36 +40,35 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
-      "decimals": 0,
       "fieldConfig": {
         "defaults": {
           "custom": {}
         },
         "overrides": []
       },
-      "fill": 7,
+      "fill": 0,
       "fillGradient": 0,
       "gridPos": {
-        "h": 3,
-        "w": 20,
-        "x": 4,
-        "y": 0
+        "h": 9,
+        "w": 8,
+        "x": 0,
+        "y": 1
       },
       "hiddenSeries": false,
-      "id": 5,
+      "id": 2,
       "legend": {
         "alignAsTable": true,
         "avg": true,
         "current": true,
-        "max": true,
-        "min": true,
+        "max": false,
+        "min": false,
         "rightSide": true,
         "show": true,
         "total": false,
         "values": true
       },
       "lines": true,
-      "linewidth": 3,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
       "options": {
@@ -143,11 +80,7 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "alias": "Apache Down",
-          "color": "#BF1B00"
-        },
-        {
-          "alias": "Apache Down",
+          "alias": "read",
           "transform": "negative-Y"
         }
       ],
@@ -156,118 +89,19 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "count(apache_version{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,ceph_daemon) (irate(ceph_osd_op_r_latency_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\"}[1m]) / on (ceph_daemon) irate(ceph_osd_op_r_latency_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\"}[1m]))",
           "format": "time_series",
           "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "Apache Up",
-          "refId": "A",
-          "step": 120
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Apache Up / Down",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": "1",
-          "min": null,
-          "show": true
+          "intervalFactor": 1,
+          "legendFormat": "{{ceph_daemon}} read",
+          "refId": "A"
         },
         {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "Prometheus",
-      "decimals": 2,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 10,
-        "w": 12,
-        "x": 0,
-        "y": 3
-      },
-      "hiddenSeries": false,
-      "id": 3,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "rate(http_response_size_bytes_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"}[5m])",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,ceph_daemon) (irate(ceph_osd_op_w_latency_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\"}[1m]) / on (ceph_daemon) irate(ceph_osd_op_w_latency_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\"}[1m]))",
           "format": "time_series",
           "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} bytes Sent",
-          "refId": "A",
-          "step": 240
-        },
-        {
-          "expr": "rate(http_request_size_bytes_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"}[5m])",
-          "interval": "",
-          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} bytes Received",
+          "intervalFactor": 1,
+          "legendFormat": "{{ceph_daemon}} write",
           "refId": "B"
         }
       ],
@@ -275,7 +109,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Network I/O",
+      "title": "$osd Latency",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -291,14 +125,16 @@
       },
       "yaxes": [
         {
-          "format": "deckbytes",
-          "label": null,
+          "$$hashKey": "object:718",
+          "format": "s",
+          "label": "Read (-) / Write (+)",
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
+          "$$hashKey": "object:719",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -318,129 +154,28 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
-      "decimals": 2,
       "fieldConfig": {
         "defaults": {
           "custom": {}
         },
         "overrides": []
       },
-      "fill": 1,
+      "fill": 0,
       "fillGradient": 0,
       "gridPos": {
-        "h": 10,
-        "w": 12,
-        "x": 12,
-        "y": 3
+        "h": 9,
+        "w": 8,
+        "x": 8,
+        "y": 1
       },
       "hiddenSeries": false,
-      "id": 1,
+      "id": 8,
       "legend": {
         "alignAsTable": true,
         "avg": true,
         "current": true,
-        "max": true,
-        "min": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "rate(apache_total_accesses{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"}[5m])",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Accesses",
-          "refId": "A",
-          "step": 240
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Current total apache accesses",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "Prometheus",
-      "decimals": 2,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 10,
-        "w": 24,
-        "x": 0,
-        "y": 13
-      },
-      "hiddenSeries": false,
-      "id": 2,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": true,
+        "max": false,
+        "min": false,
         "rightSide": true,
         "show": true,
         "total": false,
@@ -457,26 +192,38 @@
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [],
+      "seriesOverrides": [
+        {
+          "alias": "Reads",
+          "transform": "negative-Y"
+        }
+      ],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "expr": "apache_requests_per_second{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"}",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,ceph_daemon) (irate(ceph_osd_op_r{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\"}[1m]))",
           "format": "time_series",
           "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
-          "refId": "A",
-          "step": 120
+          "intervalFactor": 1,
+          "legendFormat": "{{ceph_daemon}} Reads",
+          "refId": "A"
+        },
+        {
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,ceph_daemon) (irate(ceph_osd_op_w{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\"}[1m]))",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{ceph_daemon}} Writes",
+          "refId": "B"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Apache Requests per Second",
+      "title": "$osd R/W IOPS",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -492,14 +239,16 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:898",
           "format": "short",
-          "label": null,
+          "label": "Read (-) / Write (+)",
           "logBase": 1,
           "max": null,
           "min": null,
           "show": true
         },
         {
+          "$$hashKey": "object:899",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -519,20 +268,19 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
-      "decimals": 2,
       "fieldConfig": {
         "defaults": {
           "custom": {}
         },
         "overrides": []
       },
-      "fill": 1,
+      "fill": 0,
       "fillGradient": 0,
       "gridPos": {
-        "h": 10,
-        "w": 12,
-        "x": 0,
-        "y": 23
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 1
       },
       "hiddenSeries": false,
       "id": 7,
@@ -540,8 +288,9 @@
         "alignAsTable": true,
         "avg": true,
         "current": true,
-        "max": true,
-        "min": true,
+        "max": false,
+        "min": false,
+        "rightSide": true,
         "show": true,
         "total": false,
         "values": true
@@ -557,26 +306,38 @@
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [],
+      "seriesOverrides": [
+        {
+          "alias": "Read Bytes",
+          "transform": "negative-Y"
+        }
+      ],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,worker) (apache_total_workers{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"})",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,ceph_daemon) (irate(ceph_osd_op_r_out_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\"}[1m]))",
           "format": "time_series",
           "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{worker}}",
-          "refId": "A",
-          "step": 240
+          "intervalFactor": 1,
+          "legendFormat": "{{ceph_daemon}} Read",
+          "refId": "A"
+        },
+        {
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,ceph_daemon) (irate(ceph_osd_op_w_in_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\"}[1m]))",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{ceph_daemon}} Written",
+          "refId": "B"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Apache worker statuses",
+      "title": "$osd R/W Bytes",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -592,14 +353,142 @@
       },
       "yaxes": [
         {
-          "format": "short",
-          "label": null,
+          "$$hashKey": "object:975",
+          "format": "bytes",
+          "label": "Read (-) / Write (+)",
           "logBase": 1,
           "max": null,
           "min": null,
           "show": true
         },
         {
+          "$$hashKey": "object:976",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 10
+      },
+      "id": 12,
+      "panels": [],
+      "title": "Physical Device Performance",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 0,
+        "y": 11
+      },
+      "hiddenSeries": false,
+      "id": 9,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null as zero",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "/.*Reads/",
+          "transform": "negative-Y"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "(irate(node_disk_read_time_seconds_total[1m]) / irate(node_disk_reads_completed_total[1m]) and on (instance, device) label_replace(label_replace(ceph_disk_occupation{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\"}, \"device\", \"$1\", \"device\", \"/dev/(.*)\"), \"instance\", \"$1:9100\", \"exported_instance\", \"(.*)\"))",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{instance}}/{{device}} Reads",
+          "refId": "A"
+        },
+        {
+          "expr": "(irate(node_disk_write_time_seconds_total[1m]) / irate(node_disk_writes_completed_total[1m]) and on (instance, device) label_replace(label_replace(ceph_disk_occupation{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\"}, \"device\", \"$1\", \"device\", \"/dev/(.*)\"), \"instance\", \"$1:9100\", \"exported_instance\", \"(.*)\"))",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{instance}}/{{device}} Writes",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Physical Device Latency for $osd",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1283",
+          "format": "ms",
+          "label": "Read (-) / Write (+)",
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1284",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -619,7 +508,118 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
-      "decimals": 2,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 6,
+        "y": 11
+      },
+      "hiddenSeries": false,
+      "id": 5,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "/.*Reads/",
+          "transform": "negative-Y"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "irate(node_disk_writes_completed_total[1m]) and on (instance, device) label_replace(label_replace(ceph_disk_occupation{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\"}, \"device\", \"$1\", \"device\", \"/dev/(.*)\"), \"instance\", \"$1:9100\", \"exported_instance\", \"(.*)\")",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{device}} on {{instance}} Writes",
+          "refId": "A"
+        },
+        {
+          "expr": "irate(node_disk_reads_completed_total[1m]) and on (instance, device) label_replace(label_replace(ceph_disk_occupation{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\"}, \"device\", \"$1\", \"device\", \"/dev/(.*)\"), \"instance\", \"$1:9100\", \"exported_instance\", \"(.*)\")",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{device}} on {{instance}} Reads",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Physical Device R/W IOPS for $osd",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1360",
+          "format": "short",
+          "label": "Read (-) / Write (+)",
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1361",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -629,22 +629,133 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 10,
-        "w": 12,
+        "h": 9,
+        "w": 6,
         "x": 12,
-        "y": 23
+        "y": 11
+      },
+      "hiddenSeries": false,
+      "id": 10,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "/.*Reads/",
+          "transform": "negative-Y"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "irate(node_disk_read_bytes_total[1m]) and on (instance, device) label_replace(label_replace(ceph_disk_occupation{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\"}, \"device\", \"$1\", \"device\", \"/dev/(.*)\"), \"instance\", \"$1:9100\", \"exported_instance\", \"(.*)\")",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{instance}} {{device}} Reads",
+          "refId": "A"
+        },
+        {
+          "expr": "irate(node_disk_written_bytes_total[1m]) and on (instance, device) label_replace(label_replace(ceph_disk_occupation{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\"}, \"device\", \"$1\", \"device\", \"/dev/(.*)\"), \"instance\", \"$1:9100\", \"exported_instance\", \"(.*)\")",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{instance}} {{device}} Writes",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Physical Device R/W Bytes for $osd",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:1441",
+          "format": "Bps",
+          "label": "Read (-) / Write (+)",
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:1442",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 18,
+        "y": 11
       },
       "hiddenSeries": false,
       "id": 4,
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": true,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
         "show": true,
         "total": false,
-        "values": true
+        "values": false
       },
       "lines": true,
       "linewidth": 1,
@@ -663,20 +774,19 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "apache_cpu_load{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$pod\"}",
+          "expr": "irate(node_disk_io_time_seconds_total[1m]) and on (instance, device) label_replace(label_replace(ceph_disk_occupation{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\"}, \"device\", \"$1\", \"device\", \"/dev/(.*)\"), \"instance\", \"$1:9100\", \"exported_instance\", \"(.*)\")",
           "format": "time_series",
           "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Load",
-          "refId": "A",
-          "step": 240
+          "intervalFactor": 1,
+          "legendFormat": "{{device}} on {{instance}}",
+          "refId": "A"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Apache CPU load",
+      "title": "Physical Device Util% for $osd",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -692,7 +802,8 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "$$hashKey": "object:1519",
+          "format": "percentunit",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -700,12 +811,13 @@
           "show": true
         },
         {
+          "$$hashKey": "object:1520",
           "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
           "min": null,
-          "show": false
+          "show": true
         }
       ],
       "yaxis": {
@@ -714,12 +826,12 @@
       }
     }
   ],
-  "refresh": "1m",
   "schemaVersion": 25,
   "style": "dark",
   "tags": [
-    "apache",
-    "application"
+    "ceph",
+    "cluster",
+    "osd"
   ],
   "templating": {
     "list": [
@@ -727,20 +839,20 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "text": "All",
+          "text": "k8s-prod",
           "value": [
-            "$__all"
+            "k8s-prod"
           ]
         },
         "datasource": "Prometheus",
-        "definition": "label_values(apache_server_uptime,kubernetes_cluster)",
+        "definition": "label_values(ceph_osd_metadata,kubernetes_cluster)",
         "hide": 0,
         "includeAll": true,
         "label": "Kubernetes Cluster",
         "multi": true,
         "name": "cluster",
         "options": [],
-        "query": "label_values(apache_server_uptime,kubernetes_cluster)",
+        "query": "label_values(ceph_osd_metadata,kubernetes_cluster)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -754,21 +866,19 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
-          "value": [
-            "$__all"
-          ]
+          "value": "$__all"
         },
         "datasource": "Prometheus",
-        "definition": "label_values(apache_server_uptime{kubernetes_cluster=~\"$cluster\"},kubernetes_namespace)",
+        "definition": "label_values(ceph_osd_metadata{kubernetes_cluster=~\"$cluster\"},kubernetes_namespace)",
         "hide": 0,
         "includeAll": true,
         "label": "Kubernetes Namespace",
         "multi": true,
         "name": "namespace",
         "options": [],
-        "query": "label_values(apache_server_uptime{kubernetes_cluster=~\"$cluster\"},kubernetes_namespace)",
+        "query": "label_values(ceph_osd_metadata{kubernetes_cluster=~\"$cluster\"},kubernetes_namespace)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -789,42 +899,14 @@
           ]
         },
         "datasource": "Prometheus",
-        "definition": "label_values(apache_server_uptime{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\"},kubernetes_service_name)",
+        "definition": "label_values(ceph_osd_metadata{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\"},ceph_daemon)",
         "hide": 0,
         "includeAll": true,
-        "label": "Kubernetes Deployment",
+        "label": "OSD",
         "multi": true,
-        "name": "deployment",
+        "name": "osd",
         "options": [],
-        "query": "label_values(apache_server_uptime{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\"},kubernetes_service_name)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "selected": true,
-          "text": "All",
-          "value": [
-            "$__all"
-          ]
-        },
-        "datasource": "Prometheus",
-        "definition": "label_values(apache_server_uptime{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_pod_name)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Pod Name",
-        "multi": true,
-        "name": "pod",
-        "options": [],
-        "query": "label_values(apache_server_uptime{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_pod_name)",
+        "query": "label_values(ceph_osd_metadata{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\"},ceph_daemon)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -866,7 +948,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "Apache",
-  "uid": "apache",
+  "title": "Ceph OSD Performance",
+  "uid": "cephosdperformance",
   "version": 1
 }

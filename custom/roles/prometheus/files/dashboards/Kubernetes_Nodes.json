@@ -12,11 +12,12 @@
       }
     ]
   },
-  "description": "Kubernetes Nodes metrics overview.",
+  "description": "Kubernetes Nodes overview.",
   "editable": true,
   "gnetId": 3140,
   "graphTooltip": 1,
-  "iteration": 1594291211457,
+  "id": 48,
+  "iteration": 1597745742287,
   "links": [],
   "panels": [
     {
@@ -30,7 +31,8 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -50,7 +52,7 @@
         "current": false,
         "max": false,
         "min": false,
-        "show": true,
+        "show": false,
         "total": false,
         "values": false
       },
@@ -58,9 +60,6 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -75,7 +74,7 @@
           "hide": false,
           "interval": "",
           "intervalFactor": 10,
-          "legendFormat": "{{cpu}}",
+          "legendFormat": "core #{{cpu}}",
           "refId": "A",
           "step": 50
         }
@@ -101,6 +100,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:2238",
           "format": "percent",
           "label": "cpu usage",
           "logBase": 1,
@@ -109,6 +109,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:2239",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -133,7 +134,8 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -153,7 +155,7 @@
         "current": false,
         "max": false,
         "min": false,
-        "show": true,
+        "show": false,
         "total": false,
         "values": false
       },
@@ -161,9 +163,6 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -209,7 +208,7 @@
       "tooltip": {
         "msResolution": false,
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "cumulative"
       },
       "type": "graph",
@@ -222,6 +221,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:2319",
           "format": "percentunit",
           "label": null,
           "logBase": 1,
@@ -230,6 +230,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:2320",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -254,7 +255,8 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -278,7 +280,7 @@
         "max": false,
         "min": false,
         "rightSide": false,
-        "show": true,
+        "show": false,
         "total": false,
         "values": false
       },
@@ -286,9 +288,6 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -344,7 +343,7 @@
       "tooltip": {
         "msResolution": false,
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -357,6 +356,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:2558",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -365,8 +365,9 @@
           "show": true
         },
         {
+          "$$hashKey": "object:2559",
           "format": "short",
-          "label": null,
+          "label": "",
           "logBase": 1,
           "max": null,
           "min": null,
@@ -380,29 +381,43 @@
     },
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(50, 172, 45, 0.97)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(245, 54, 54, 0.9)"
-      ],
       "datasource": "Prometheus",
-      "editable": true,
-      "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "mappings": [
+            {
+              "$$hashKey": "object:3034",
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "max": 100,
+          "min": 0,
+          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 80
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percent"
         },
         "overrides": []
-      },
-      "format": "percent",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
       },
       "gridPos": {
         "h": 7,
@@ -413,38 +428,19 @@
       "id": 5,
       "interval": null,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
+      "options": {
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
       },
-      "tableColumn": "",
       "targets": [
         {
           "expr": "avg(((node_memory_MemTotal_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\"} - node_memory_MemFree_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\"}  - node_memory_Buffers_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\"} - node_memory_Cached_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\"}) / node_memory_MemTotal_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\"}) * 100)",
@@ -456,18 +452,8 @@
           "target": ""
         }
       ],
-      "thresholds": "80, 90",
       "title": "Memory usage",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "avg"
+      "type": "gauge"
     },
     {
       "alerting": {},
@@ -480,7 +466,8 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -500,7 +487,7 @@
         "current": false,
         "max": false,
         "min": false,
-        "show": true,
+        "show": false,
         "total": false,
         "values": false
       },
@@ -508,9 +495,6 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -555,7 +539,7 @@
       "tooltip": {
         "msResolution": false,
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "cumulative"
       },
       "type": "graph",
@@ -568,6 +552,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:2718",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -576,6 +561,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:2719",
           "format": "ms",
           "label": null,
           "logBase": 1,
@@ -591,29 +577,43 @@
     },
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(50, 172, 45, 0.97)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(245, 54, 54, 0.9)"
-      ],
       "datasource": "Prometheus",
-      "editable": true,
-      "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "mappings": [
+            {
+              "$$hashKey": "object:3083",
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "max": 1,
+          "min": 0,
+          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 0.8
+              },
+              {
+                "color": "red",
+                "value": 0.9
+              }
+            ]
+          },
+          "unit": "percentunit"
         },
         "overrides": []
-      },
-      "format": "percentunit",
-      "gauge": {
-        "maxValue": 1,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
       },
       "gridPos": {
         "h": 7,
@@ -624,38 +624,19 @@
       "id": 7,
       "interval": null,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
+      "options": {
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
       },
-      "tableColumn": "",
       "targets": [
         {
           "expr": "(sum(node_filesystem_size_bytes{device!=\"rootfs\",kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\"}) - sum(node_filesystem_free_bytes{device!=\"rootfs\",kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\"})) / sum(node_filesystem_size_bytes{device!=\"rootfs\",kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\"})",
@@ -667,18 +648,8 @@
           "target": ""
         }
       ],
-      "thresholds": "0.75, 0.9",
       "title": "Disk space usage",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
+      "type": "gauge"
     },
     {
       "alerting": {},
@@ -691,7 +662,8 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -711,7 +683,7 @@
         "current": false,
         "max": false,
         "min": false,
-        "show": true,
+        "show": false,
         "total": false,
         "values": false
       },
@@ -719,9 +691,6 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -750,7 +719,7 @@
       "tooltip": {
         "msResolution": false,
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "cumulative"
       },
       "type": "graph",
@@ -763,6 +732,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:2878",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -771,6 +741,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:2879",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -795,7 +766,8 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -815,7 +787,7 @@
         "current": false,
         "max": false,
         "min": false,
-        "show": true,
+        "show": false,
         "total": false,
         "values": false
       },
@@ -823,9 +795,6 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -854,7 +823,7 @@
       "tooltip": {
         "msResolution": false,
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "cumulative"
       },
       "type": "graph",
@@ -867,6 +836,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:2959",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -875,6 +845,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:2960",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -889,8 +860,8 @@
       }
     }
   ],
-  "refresh": false,
-  "schemaVersion": 25,
+  "refresh": "1m",
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [
     "cluster",
@@ -957,7 +928,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {

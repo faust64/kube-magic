@@ -27,3 +27,24 @@
   when:
   - ceph_check is defined
   - (ceph_check.rc | default(0)) != 0
+
+- name: Checks for Ceph Exporter Service
+  failed_when: False
+  changed_when: False
+  register: ceph_xp_check
+  shell: oc describe svc -n default exporter-ceph
+- block:
+  - name: Prepares Ceph Exporter Service
+    template:
+      dest: /tmp/ceph-xp.yml
+      group: root
+      mode: 0600
+      owner: root
+      src: ceph-xp.j2
+  - name: Installs Ceph Exporter Service
+    args:
+      chdir: /tmp
+    shell: oc create -f ceph-xp.yml && rm -f ceph-xp.yml
+  when:
+  - ceph_xp_check is defined
+  - (ceph_xp_check.rc | default(0)) != 0

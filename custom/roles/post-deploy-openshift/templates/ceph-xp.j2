@@ -1,0 +1,31 @@
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  labels:
+    k8s-cluster: scrape-me
+  name: exporter-ceph
+  namespace: default
+subsets:
+- addresses:
+{% for monitor in rbd_provisioner_monitors | split(',') %}
+  - ip: {{ (monitor | split(':'))[0] }}
+{% endfor %}
+  ports:
+  - name: exporter-9283
+    port: 9283
+    protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-cluster: scrape-me
+  name: exporter-ceph
+  namespace: default
+spec:
+  ports:
+  - name: exporter-9283
+    port: 9283
+    protocol: TCP
+    targetPort: 9283

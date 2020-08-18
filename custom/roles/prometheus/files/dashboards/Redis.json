@@ -82,7 +82,6 @@
           "values": false
         }
       },
-      "pluginVersion": "7.0.5",
       "targets": [
         {
           "expr": "max(max_over_time(redis_uptime_in_seconds{kubernetes_cluster=~\"$cluster\",kubernetes_service_name=~\"$deployment\",kubernetes_namespace=~\"$namespace\",kubernetes_pod_name=~\"$instance\"}[$__interval]))",
@@ -1196,7 +1195,7 @@
       }
     }
   ],
-  "refresh": "30s",
+  "refresh": "1m",
   "schemaVersion": 25,
   "style": "dark",
   "tags": [

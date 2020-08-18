@@ -276,7 +276,6 @@
         "dataLinks": []
       },
       "percentage": false,
-      "pluginVersion": "7.0.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -492,7 +491,6 @@
         "dataLinks": []
       },
       "percentage": false,
-      "pluginVersion": "7.0.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1379,8 +1377,8 @@
   "style": "dark",
   "tags": [
     "application",
-    "Gitea",
-    "Go"
+    "gitea",
+    "go"
   ],
   "templating": {
     "list": [
@@ -1493,7 +1491,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {

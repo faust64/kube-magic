@@ -12,12 +12,12 @@
       }
     ]
   },
-  "description": "Ansible Operator overview.",
+  "description": "Ceph RadosGW overview.",
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 14,
-  "iteration": 1596326926287,
+  "id": 44,
+  "iteration": 1597670948041,
   "links": [],
   "panels": [
     {
@@ -25,7 +25,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -35,32 +35,31 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 7,
+        "w": 9,
         "x": 0,
         "y": 0
       },
       "hiddenSeries": false,
-      "id": 7,
+      "id": 29,
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
+        "avg": false,
+        "current": false,
+        "max": false,
         "min": false,
-        "rightSide": false,
         "show": true,
         "total": false,
-        "values": true
+        "values": false
       },
       "lines": true,
       "linewidth": 1,
+      "links": [],
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
       "percentage": false,
-      "pointradius": 2,
+      "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [],
@@ -69,17 +68,27 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(container_cpu_usage_seconds_total{pod=~\"$podname\",container=~\".+\"}[5m])",
+          "expr": "avg(rate(ceph_rgw_get_initial_lat_sum{kubernetes_cluster=~\"$cluster\",ceph_daemon=~\"$rgw_servers\"}[$interval]) / rate(ceph_rgw_get_initial_lat_count{kubernetes_cluster=~\"$cluster\",ceph_daemon=~\"$rgw_servers\"}[$interval]))",
+          "format": "time_series",
           "interval": "",
-          "legendFormat": "{{namespace}}/{{pod}}",
+          "intervalFactor": 1,
+          "legendFormat": "GET",
           "refId": "A"
+        },
+        {
+          "expr": "avg(rate(ceph_rgw_put_initial_lat_sum{kubernetes_cluster=~\"$cluster\",ceph_daemon=~\"$rgw_servers\"}[$interval]) / rate(ceph_rgw_put_initial_lat_count{kubernetes_cluster=~\"$cluster\",ceph_daemon=~\"$rgw_servers\"}[$interval]))",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "PUT",
+          "refId": "B"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "CPU Usage",
+      "title": "Average Latencies",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -95,22 +104,22 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1007",
-          "format": "short",
+          "$$hashKey": "object:3943",
+          "format": "s",
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
-          "$$hashKey": "object:1008",
+          "$$hashKey": "object:3944",
           "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
           "min": null,
-          "show": true
+          "show": false
         }
       ],
       "yaxis": {
@@ -123,7 +132,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "Prometheus",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -134,242 +143,44 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
+        "h": 7,
+        "w": 8,
+        "x": 9,
         "y": 0
-      },
-      "hiddenSeries": false,
-      "id": 9,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "container_memory_usage_bytes{pod=~\"$podname\",container=~\".+\"}",
-          "interval": "",
-          "legendFormat": "{{namespace}}/{{pod}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Memory Usage",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:1094",
-          "format": "bytes",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:1095",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 8
-      },
-      "hiddenSeries": false,
-      "id": 2,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "hideEmpty": true,
-        "hideZero": true,
-        "max": true,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,GVK,result) (increase(ansible_operator_reconcile_result{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",GVK=~\"$crd\"}[$interval]))",
-          "interval": "",
-          "legendFormat": "{{result}} {{GVK}} {{kubernetes_namespace}}/{{kubernetes_service_name}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Reconcile Results in Interval",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:430",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:431",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 16
       },
       "hiddenSeries": false,
       "id": 4,
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
+        "avg": false,
         "current": false,
-        "hideEmpty": false,
-        "hideZero": true,
-        "max": true,
+        "max": false,
         "min": false,
-        "rightSide": true,
         "show": true,
         "total": false,
-        "values": true
+        "values": false
       },
       "lines": true,
       "linewidth": 1,
+      "links": [],
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
       "percentage": false,
-      "pointradius": 2,
+      "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": false,
+      "stack": true,
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,GVK,name) (workqueue_work_duration_seconds_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",GVK=~\"$crd\"} / workqueue_work_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",GVK=~\"$crd\"})",
+          "expr": "sum by (rgw_host) (label_replace(rate(ceph_rgw_req{kubernetes_cluster=~\"$cluster\",ceph_daemon=~\"$rgw_servers\"}[$interval]), \"rgw_host\", \"$1\", \"ceph_daemon\", \"rgw.(.*)\"))",
+          "format": "time_series",
           "interval": "",
-          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_service_name}} {{name}}",
+          "intervalFactor": 1,
+          "legendFormat": "{{rgw_host}}",
           "refId": "A"
         }
       ],
@@ -377,10 +188,10 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Work Duration",
+      "title": "Requests/$interval by RGW client",
       "tooltip": {
         "shared": true,
-        "sort": 2,
+        "sort": 0,
         "value_type": "individual"
       },
       "type": "graph",
@@ -393,16 +204,17 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:513",
-          "format": "s",
+          "$$hashKey": "object:4021",
+          "decimals": 0,
+          "format": "none",
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
-          "$$hashKey": "object:514",
+          "$$hashKey": "object:4022",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -421,7 +233,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "Prometheus",
+      "description": "Latencies are shown stacked, without a yaxis to provide a visual indication of GET latency imbalance across RGW hosts",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -431,45 +244,44 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 24
+        "h": 7,
+        "w": 7,
+        "x": 17,
+        "y": 0
       },
       "hiddenSeries": false,
-      "id": 10,
+      "id": 31,
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
+        "avg": false,
         "current": false,
-        "hideEmpty": false,
-        "hideZero": true,
-        "max": true,
+        "max": false,
         "min": false,
-        "rightSide": true,
         "show": true,
         "total": false,
-        "values": true
+        "values": false
       },
       "lines": true,
       "linewidth": 1,
+      "links": [],
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
       "percentage": false,
-      "pointradius": 2,
+      "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": false,
+      "stack": true,
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,GVK,name) (workqueue_queue_duration_seconds_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",GVK=~\"$crd\"} / workqueue_queue_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",GVK=~\"$crd\"})",
+          "expr": "sum by (rgw_host) (label_replace(rate(ceph_rgw_get_initial_lat_sum{kubernetes_cluster=~\"$cluster\",ceph_daemon=~\"$rgw_servers\"}[$interval]),\"rgw_host\",\"$1\",\"ceph_daemon\",\"rgw.(.*)\") / \nlabel_replace(rate(ceph_rgw_get_initial_lat_count{kubernetes_cluster=~\"$cluster\",ceph_daemon=~\"$rgw_servers\"}[$interval]),\"rgw_host\",\"$1\",\"ceph_daemon\",\"rgw.(.*)\"))",
+          "format": "time_series",
           "interval": "",
-          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_service_name}} {{name}}",
+          "intervalFactor": 1,
+          "legendFormat": "{{rgw_host}}",
           "refId": "A"
         }
       ],
@@ -477,10 +289,10 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Work Queue",
+      "title": "GET Latencies by RGW client",
       "tooltip": {
         "shared": true,
-        "sort": 2,
+        "sort": 0,
         "value_type": "individual"
       },
       "type": "graph",
@@ -493,16 +305,125 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:513",
+          "$$hashKey": "object:4102",
+          "decimals": null,
           "format": "s",
           "label": null,
           "logBase": 1,
           "max": null,
+          "min": "0",
+          "show": false
+        },
+        {
+          "$$hashKey": "object:4103",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
           "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "Total bytes transferred in/out of all radosgw instances within the cluster",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 9,
+        "x": 0,
+        "y": 7
+      },
+      "hiddenSeries": false,
+      "id": 6,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(rate(ceph_rgw_get_b{kubernetes_cluster=~\"$cluster\",ceph_daemon=~\"$rgw_servers\"}[$interval]))",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "GETs",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(rate(ceph_rgw_put_b{kubernetes_cluster=~\"$cluster\",ceph_daemon=~\"$rgw_servers\"}[$interval]))",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "PUTs",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Bandwidth Consumed",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:4177",
+          "format": "bytes",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
           "show": true
         },
         {
-          "$$hashKey": "object:514",
+          "$$hashKey": "object:4178",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -521,8 +442,8 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
-      "description": "",
+      "datasource": "Prometheus",
+      "description": "Total bytes transferred in/out through get/put operations, by radosgw instance",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -532,44 +453,44 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 32
+        "h": 6,
+        "w": 8,
+        "x": 9,
+        "y": 7
       },
       "hiddenSeries": false,
-      "id": 5,
+      "id": 9,
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "hideZero": true,
-        "max": true,
+        "avg": false,
+        "current": false,
+        "max": false,
         "min": false,
-        "rightSide": true,
         "show": true,
         "total": false,
-        "values": true
+        "values": false
       },
       "lines": true,
       "linewidth": 1,
+      "links": [],
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
       "percentage": false,
-      "pointradius": 2,
+      "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": false,
+      "stack": true,
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,GVK) (increase(ansible_operator_reconciles_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",GVK=~\"$crd\"}[$interval]))",
+          "expr": "sum by (rgw_host) ((label_replace(rate(ceph_rgw_get_b{kubernetes_cluster=~\"$cluster\",ceph_daemon=~\"$rgw_servers\"}[$interval]), \"rgw_host\",\"$1\",\"ceph_daemon\",\"rgw.(.*)\")) + (label_replace(rate(ceph_rgw_put_b{kubernetes_cluster=~\"$cluster\",ceph_daemon=~\"$rgw_servers\"}[$interval]), \"rgw_host\",\"$1\",\"ceph_daemon\",\"rgw.(.*)\")))",
+          "format": "time_series",
           "interval": "",
-          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_service_name}} {{GVK}}",
+          "intervalFactor": 1,
+          "legendFormat": "{{rgw_host}}",
           "refId": "A"
         }
       ],
@@ -577,10 +498,10 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Reconciles Count by Interval",
+      "title": "Bandwidth by RGW Instance",
       "tooltip": {
         "shared": true,
-        "sort": 2,
+        "sort": 0,
         "value_type": "individual"
       },
       "type": "graph",
@@ -593,22 +514,123 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:596",
-          "format": "short",
+          "$$hashKey": "object:4769",
+          "format": "bytes",
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
-          "$$hashKey": "object:597",
+          "$$hashKey": "object:4770",
           "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
           "min": null,
           "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "Latencies are shown stacked, without a yaxis to provide a visual indication of PUT latency imbalance across RGW hosts",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 7,
+        "x": 17,
+        "y": 7
+      },
+      "hiddenSeries": false,
+      "id": 32,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum by (rgw_host) (label_replace(rate(ceph_rgw_put_initial_lat_sum{kubernetes_cluster=~\"$cluster\",ceph_daemon=~\"$rgw_servers\"}[$interval]),\"rgw_host\",\"$1\",\"ceph_daemon\",\"rgw.(.*)\") / \nlabel_replace(rate(ceph_rgw_put_initial_lat_count{kubernetes_cluster=~\"$cluster\",ceph_daemon=~\"$rgw_servers\"}[$interval]),\"rgw_host\",\"$1\",\"ceph_daemon\",\"rgw.(.*)\"))",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{rgw_host}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "PUT Latencies by RGW Instance",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:4542",
+          "decimals": null,
+          "format": "s",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": false
+        },
+        {
+          "$$hashKey": "object:4543",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
         }
       ],
       "yaxis": {
@@ -617,28 +639,100 @@
       }
     }
   ],
+  "refresh": "1m",
   "schemaVersion": 25,
   "style": "dark",
   "tags": [
-    "ansible",
-    "kubernetes",
-    "operator"
+    "ceph",
+    "cluster",
+    "rgw"
   ],
   "templating": {
     "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(ceph_rgw_req,kubernetes_cluster)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Kubernetes Cluster",
+        "multi": true,
+        "name": "cluster",
+        "options": [],
+        "query": "label_values(ceph_rgw_req,kubernetes_cluster)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(ceph_rgw_req{kubernetes_cluster=~\"$cluster\"},ceph_daemon)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Rados Gateway",
+        "multi": true,
+        "name": "rgw_servers",
+        "options": [],
+        "query": "label_values(ceph_rgw_req{kubernetes_cluster=~\"$cluster\"},ceph_daemon)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
       {
         "auto": false,
         "auto_count": 30,
         "auto_min": "10s",
         "current": {
-          "selected": true,
-          "text": "6h",
-          "value": "6h"
+          "selected": false,
+          "text": "1m",
+          "value": "1m"
         },
         "hide": 0,
-        "label": "Interval",
+        "label": null,
         "name": "interval",
         "options": [
+          {
+            "selected": false,
+            "text": "30s",
+            "value": "30s"
+          },
+          {
+            "selected": true,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
+          },
           {
             "selected": false,
             "text": "30m",
@@ -650,7 +744,7 @@
             "value": "1h"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "6h",
             "value": "6h"
           },
@@ -680,123 +774,11 @@
             "value": "30d"
           }
         ],
-        "query": "30m,1h,3h,6h,12h,1d,7d,14d,30d",
+        "query": "30s,1m,10m,30m,1h,6h,12h,1d,7d,14d,30d",
         "queryValue": "",
         "refresh": 2,
         "skipUrlSync": false,
         "type": "interval"
-      },
-      {
-        "allValue": null,
-        "current": {
-          "selected": true,
-          "text": "All",
-          "value": [
-            "$__all"
-          ]
-        },
-        "datasource": "Prometheus",
-        "definition": "label_values(ansible_operator_reconciles_bucket,kubernetes_cluster)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Kubernetes Cluster",
-        "multi": true,
-        "name": "cluster",
-        "options": [],
-        "query": "label_values(ansible_operator_reconciles_bucket,kubernetes_cluster)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "selected": true,
-          "text": "All",
-          "value": [
-            "$__all"
-          ]
-        },
-        "datasource": "Prometheus",
-        "definition": "label_values(ansible_operator_reconciles_bucket{kubernetes_cluster=~\"$cluster\"},kubernetes_namespace)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Kubernetes Namespace",
-        "multi": true,
-        "name": "namespace",
-        "options": [],
-        "query": "label_values(ansible_operator_reconciles_bucket{kubernetes_cluster=~\"$cluster\"},kubernetes_namespace)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": ".*",
-        "current": {
-          "selected": true,
-          "text": "All",
-          "value": [
-            "$__all"
-          ]
-        },
-        "datasource": "Prometheus",
-        "definition": "label_values(ansible_operator_reconciles_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\"},GVK)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Resource Kind",
-        "multi": true,
-        "name": "crd",
-        "options": [],
-        "query": "label_values(ansible_operator_reconciles_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\"},GVK)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "selected": true,
-          "text": "All",
-          "value": [
-            "$__all"
-          ]
-        },
-        "datasource": "Prometheus",
-        "definition": "label_values(ansible_operator_reconciles_bucket{kubernetes_cluster=~\"$cluster\"},kubernetes_pod_name)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Kubernetes Pod Name",
-        "multi": true,
-        "name": "podname",
-        "options": [],
-        "query": "label_values(ansible_operator_reconciles_bucket{kubernetes_cluster=~\"$cluster\"},kubernetes_pod_name)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
       }
     ]
   },
@@ -807,6 +789,7 @@
   "timepicker": {
     "refresh_intervals": [
       "10s",
+      "15s",
       "30s",
       "1m",
       "5m",
@@ -815,10 +798,21 @@
       "1h",
       "2h",
       "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
     ]
   },
   "timezone": "browser",
-  "title": "Ansible Operator",
-  "uid": "ansibleoperator",
+  "title": "Ceph RGW",
+  "uid": "cephrgw",
   "version": 1
 }

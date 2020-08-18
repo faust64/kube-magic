@@ -110,7 +110,7 @@
           "calculatedInterval": "10m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum(mysql_global_status_uptime{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
+          "expr": "min(mysql_global_status_uptime{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
           "format": "time_series",
           "interval": "5m",
           "intervalFactor": 1,
@@ -121,7 +121,7 @@
         }
       ],
       "thresholds": "300,3600",
-      "title": "MySQL Uptime Sum",
+      "title": "MySQL Last Start",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [],
@@ -377,7 +377,6 @@
         },
         "showUnfilled": true
       },
-      "pluginVersion": "7.0.5",
       "repeat": null,
       "targets": [
         {
@@ -4223,7 +4222,7 @@
     ]
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {

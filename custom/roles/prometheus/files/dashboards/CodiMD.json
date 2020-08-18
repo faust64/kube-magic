@@ -91,7 +91,7 @@
       "tableColumn": "score",
       "targets": [
         {
-          "expr": "((sum(http_request_duration_seconds_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",le=\"$target\",code=~\"^2..$\"}) + (sum(http_request_duration_seconds_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",le=\"$tolerated\",code=~\"^2..$\"}) - sum(http_request_duration_seconds_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",le=\"$target\",code=~\"^2..$\"})) / 2) / sum(http_request_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",code=~\"^2..$\"})) * 100",
+          "expr": "((sum(http_request_duration_seconds_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",le=\"$target\",code=~\"^2..$\"}) + (sum(http_request_duration_seconds_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",le=\"$tolerated\",code=~\"^2..$\"}) - sum(http_request_duration_seconds_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",le=\"$target\",code=~\"^2..$\"})) / 2) / sum(http_request_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",code=~\"^2..$\"})) * 100",
           "interval": "",
           "legendFormat": "score",
           "refId": "A"
@@ -181,7 +181,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(rate(http_request_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}[$interval]))",
+          "expr": "sum(rate(http_request_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}[$interval]))",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -271,7 +271,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(http_request_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
+          "expr": "sum(http_request_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -362,7 +362,7 @@
       "tableColumn": "error %",
       "targets": [
         {
-          "expr": "(sum(http_request_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",code=~\"^[45]..$\"} OR on() vector(0)) / sum(http_request_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})) * 100",
+          "expr": "(sum(http_request_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",code=~\"^[45]..$\"} OR on() vector(0)) / sum(http_request_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})) * 100",
           "interval": "",
           "legendFormat": "error %",
           "refId": "A"
@@ -452,7 +452,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(http_response_size_bytes_sum{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}) + sum(http_request_size_bytes_sum{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
+          "expr": "sum(http_response_size_bytes_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}) + sum(http_request_size_bytes_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -542,7 +542,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(rate(http_response_size_bytes_sum{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}[$interval])) + sum(rate(http_request_size_bytes_sum{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}[$interval]))",
+          "expr": "sum(rate(http_response_size_bytes_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}[$interval])) + sum(rate(http_request_size_bytes_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}[$interval]))",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -632,7 +632,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(changes(process_start_time_seconds{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}[$restarts_interval]))",
+          "expr": "sum(changes(process_start_time_seconds{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}[$restarts_interval]))",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -722,7 +722,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(codimd_notes_count{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
+          "expr": "sum(codimd_notes_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -812,7 +812,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(codimd_registered_users{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
+          "expr": "sum(codimd_registered_users{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -902,7 +902,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(codimd_online_notes{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
+          "expr": "sum(codimd_online_notes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -992,7 +992,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(codimd_online_users{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
+          "expr": "sum(codimd_online_users{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1082,7 +1082,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(expressjs_number_of_open_connections{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
+          "expr": "sum(expressjs_number_of_open_connections{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1182,7 +1182,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(codimd_is_connection_busy{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"} + codimd_is_disconnect_busy{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
+          "expr": "sum(codimd_is_connection_busy{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"} + codimd_is_disconnect_busy{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1282,7 +1282,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(process_cpu_seconds_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
+          "expr": "sum(process_cpu_seconds_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1372,7 +1372,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(nodejs_gc_duration_seconds_sum{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
+          "expr": "sum(nodejs_gc_duration_seconds_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1453,19 +1453,19 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "nodejs_eventloop_lag_seconds{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+              "expr": "nodejs_eventloop_lag_seconds{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} last",
               "refId": "A"
             },
             {
-              "expr": "nodejs_eventloop_lag_p99_seconds{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+              "expr": "nodejs_eventloop_lag_p99_seconds{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} p99",
               "refId": "B"
             },
             {
-              "expr": "nodejs_eventloop_lag_p50_seconds{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+              "expr": "nodejs_eventloop_lag_p50_seconds{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} p50",
               "refId": "C"
@@ -1559,7 +1559,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "rate(process_cpu_seconds_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}[$interval])",
+              "expr": "rate(process_cpu_seconds_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}[$interval])",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -1653,13 +1653,13 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "process_virtual_memory_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+              "expr": "process_virtual_memory_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Virtual",
               "refId": "A"
             },
             {
-              "expr": "process_heap_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+              "expr": "process_heap_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Heap",
               "refId": "B"
@@ -1753,7 +1753,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "expressjs_number_of_open_connections{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+              "expr": "expressjs_number_of_open_connections{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -1848,7 +1848,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "(process_open_fds{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"} / process_max_fds{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
+              "expr": "(process_open_fds{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"} / process_max_fds{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
               "refId": "A"
@@ -1942,13 +1942,13 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "nodejs_active_handles_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+              "expr": "nodejs_active_handles_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Handlers",
               "refId": "A"
             },
             {
-              "expr": "nodejs_active_requests_total{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+              "expr": "nodejs_active_requests_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
               "interval": "",
               "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Requests",
               "refId": "B"
@@ -2060,7 +2060,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(nodejs_gc_duration_seconds_sum{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}[$interval])",
+          "expr": "rate(nodejs_gc_duration_seconds_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}[$interval])",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{kind}}",
           "refId": "A"
@@ -2155,7 +2155,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(nodejs_gc_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}[$interval])",
+          "expr": "rate(nodejs_gc_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}[$interval])",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{kind}}",
           "refId": "A"
@@ -2250,25 +2250,25 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "nodejs_heap_size_total_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+          "expr": "nodejs_heap_size_total_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
           "interval": "",
           "legendFormat": "{{ kubernetes_pod_name}} Total",
           "refId": "A"
         },
         {
-          "expr": "nodejs_heap_size_used_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+          "expr": "nodejs_heap_size_used_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} used",
           "refId": "B"
         },
         {
-          "expr": "process_resident_memory_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+          "expr": "process_resident_memory_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} resident",
           "refId": "C"
         },
         {
-          "expr": "process_external_memory_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+          "expr": "process_external_memory_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} external",
           "refId": "D"
@@ -2362,7 +2362,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "nodejs_heap_space_size_used_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+          "expr": "nodejs_heap_space_size_used_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{space}}",
           "refId": "A"
@@ -2473,7 +2473,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "((sum(http_request_duration_seconds_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",le=\"$target\",code=~\"^2..$\"}) + sum(http_request_duration_seconds_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",le=\"$tolerated\",code=~\"^2..$\"}) - sum(http_request_duration_seconds_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",le=\"$target\",code=~\"^2..$\"})) / 2) / sum(http_request_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",code=~\"^2..$\"}) * 100",
+          "expr": "((sum(http_request_duration_seconds_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",le=\"$target\",code=~\"^2..$\"}) + sum(http_request_duration_seconds_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",le=\"$tolerated\",code=~\"^2..$\"}) - sum(http_request_duration_seconds_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",le=\"$target\",code=~\"^2..$\"})) / 2) / sum(http_request_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",code=~\"^2..$\"}) * 100",
           "interval": "",
           "legendFormat": "score",
           "refId": "A"
@@ -2572,13 +2572,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.95,sum(rate(http_request_duration_seconds_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}[$interval])) by (code,le))",
+          "expr": "histogram_quantile(0.95,sum(rate(http_request_duration_seconds_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}[$interval])) by (code,le))",
           "interval": "",
           "legendFormat": "{{code}} {{le}} (95%)",
           "refId": "A"
         },
         {
-          "expr": "histogram_quantile(1,sum(rate(http_request_duration_seconds_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}[$interval])) by (code,le))",
+          "expr": "histogram_quantile(1,sum(rate(http_request_duration_seconds_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}[$interval])) by (code,le))",
           "interval": "",
           "legendFormat": "{{code}} {{le}}",
           "refId": "B"
@@ -2677,7 +2677,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(http_request_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}[$interval])) by (code)",
+          "expr": "sum(rate(http_request_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}[$interval])) by (code)",
           "interval": "",
           "legendFormat": "{{code}}",
           "refId": "A"
@@ -2771,7 +2771,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(http_response_size_bytes_sum{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}) by (route)",
+          "expr": "sum(http_response_size_bytes_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}) by (route)",
           "interval": "",
           "legendFormat": "{{route}}",
           "refId": "A"
@@ -2869,7 +2869,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(http_request_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}) by (code)",
+          "expr": "sum(http_request_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}) by (code)",
           "interval": "",
           "legendFormat": "{{code}}",
           "refId": "A"
@@ -2967,7 +2967,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(http_request_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}) by (route)",
+          "expr": "sum(http_request_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}) by (route)",
           "interval": "",
           "legendFormat": "{{route}}",
           "refId": "A"
@@ -3075,7 +3075,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "codimd_notes_count{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+          "expr": "codimd_notes_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Notes",
           "refId": "A"
@@ -3170,7 +3170,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "codimd_registered_users{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+          "expr": "codimd_registered_users{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
@@ -3265,13 +3265,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "codimd_online_users{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+          "expr": "codimd_online_users{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} global",
           "refId": "A"
         },
         {
-          "expr": "codimd_distinct_online_users{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+          "expr": "codimd_distinct_online_users{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} distinct",
           "refId": "B"
@@ -3366,13 +3366,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "codimd_online_registered_users{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+          "expr": "codimd_online_registered_users{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} global",
           "refId": "A"
         },
         {
-          "expr": "codimd_distinct_online_registered_users{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+          "expr": "codimd_distinct_online_registered_users{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} distinct",
           "refId": "B"
@@ -3467,7 +3467,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "codimd_online_notes{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+          "expr": "codimd_online_notes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
           "refId": "A"
@@ -3562,13 +3562,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "codimd_is_connection_busy{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+          "expr": "codimd_is_connection_busy{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} connect busy",
           "refId": "A"
         },
         {
-          "expr": "codimd_is_disconnect_busy{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+          "expr": "codimd_is_disconnect_busy{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} disconnect busy",
           "refId": "B"
@@ -3663,13 +3663,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "codimd_connection_socket_queue_length{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+          "expr": "codimd_connection_socket_queue_length{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} connection_socket_queue_length",
           "refId": "A"
         },
         {
-          "expr": "codimd_disconnect_socket_queue_length{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
+          "expr": "codimd_disconnect_socket_queue_length{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"}",
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} disconnect_socket_queue_length",
           "refId": "B"
@@ -3718,13 +3718,13 @@
       }
     }
   ],
-  "refresh": "5s",
+  "refresh": "1m",
   "schemaVersion": 25,
   "style": "dark",
   "tags": [
     "application",
-    "CodiMD",
-    "NodeJS"
+    "codimd",
+    "nodejs"
   ],
   "templating": {
     "list": [
@@ -3868,34 +3868,6 @@
           ]
         },
         "datasource": "Prometheus",
-        "definition": "label_values(codimd_online_users{kubernetes_cluster=~\"$cluster\"},kubernetes_node_name)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Kubernetes Host",
-        "multi": true,
-        "name": "node",
-        "options": [],
-        "query": "label_values(codimd_online_users{kubernetes_cluster=~\"$cluster\"},kubernetes_node_name)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "selected": true,
-          "text": "All",
-          "value": [
-            "$__all"
-          ]
-        },
-        "datasource": "Prometheus",
         "definition": "label_values(codimd_online_users{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\"},kubernetes_service_name)",
         "hide": 0,
         "includeAll": true,
@@ -3924,14 +3896,14 @@
           ]
         },
         "datasource": "Prometheus",
-        "definition": "label_values(codimd_online_users{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_pod_name)",
+        "definition": "label_values(codimd_online_users{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_pod_name)",
         "hide": 0,
         "includeAll": true,
         "label": "Pod Name",
         "multi": true,
         "name": "instance",
         "options": [],
-        "query": "label_values(codimd_online_users{kubernetes_cluster=~\"$cluster\",kubernetes_node_name=~\"$node\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_pod_name)",
+        "query": "label_values(codimd_online_users{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_pod_name)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,

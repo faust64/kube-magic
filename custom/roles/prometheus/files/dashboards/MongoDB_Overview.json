@@ -1580,34 +1580,6 @@
         "useTags": false
       },
       {
-        "allFormat": "glob",
-        "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": "Prometheus",
-        "definition": "label_values(mongodb_mongod_replset_date{set=~\"$cluster\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_node_name)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Kubernetes Host",
-        "multi": true,
-        "multiFormat": "glob",
-        "name": "host",
-        "options": [],
-        "query": "label_values(mongodb_mongod_replset_date{set=~\"$cluster\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_node_name)",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": null,
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
         "allValue": null,
         "current": {
           "selected": true,
@@ -1617,14 +1589,14 @@
           ]
         },
         "datasource": "Prometheus",
-        "definition": "label_values(mongodb_mongod_replset_date{set=~\"$cluster\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_node_name=~\"$host\"},kubernetes_pod_name)",
+        "definition": "label_values(mongodb_mongod_replset_date{set=~\"$cluster\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_pod_name)",
         "hide": 0,
         "includeAll": true,
         "label": "Pod Name",
         "multi": true,
         "name": "pod",
         "options": [],
-        "query": "label_values(mongodb_mongod_replset_date{set=~\"$cluster\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_node_name=~\"$host\"},kubernetes_pod_name)",
+        "query": "label_values(mongodb_mongod_replset_date{set=~\"$cluster\",kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_pod_name)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1638,7 +1610,7 @@
     ]
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {

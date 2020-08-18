@@ -3,3 +3,4 @@
 /custom/group_vars/private.yaml
 /kubespray
 /openshift-ansible
+*.[0-9]

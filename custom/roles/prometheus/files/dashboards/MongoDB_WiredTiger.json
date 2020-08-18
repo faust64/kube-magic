@@ -358,7 +358,6 @@
         "dataLinks": []
       },
       "percentage": false,
-      "pluginVersion": "7.0.5",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2427,7 +2426,7 @@
     ]
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {

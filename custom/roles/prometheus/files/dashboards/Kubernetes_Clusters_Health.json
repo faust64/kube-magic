@@ -755,7 +755,7 @@
       "valueName": "current"
     }
   ],
-  "refresh": "10s",
+  "refresh": "1m",
   "schemaVersion": 25,
   "style": "dark",
   "tags": [
@@ -795,7 +795,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {

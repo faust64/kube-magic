@@ -12,6 +12,7 @@
       }
     ]
   },
+  "description": "Rocket.Chat metrics overview.",
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
@@ -4506,8 +4507,8 @@
   "style": "dark",
   "tags": [
     "application",
-    "NodeJS",
-    "RocketChat"
+    "nodejs",
+    "rocketchat"
   ],
   "templating": {
     "list": [
@@ -4626,7 +4627,7 @@
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {

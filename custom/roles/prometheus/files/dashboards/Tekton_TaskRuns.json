@@ -63,7 +63,6 @@
           "values": false
         }
       },
-      "pluginVersion": "7.0.5",
       "targets": [
         {
           "expr": "sum(tekton_running_taskruns_count{kubernetes_cluster=~\"$cluster\"})",
@@ -133,7 +132,6 @@
           "values": false
         }
       },
-      "pluginVersion": "7.0.5",
       "targets": [
         {
           "expr": "topk(15, sum by (kubernetes_cluster,namespace,pipeline,pipelinerun,task,taskrun) (tekton_pipelinerun_taskrun_duration_seconds_sum{kubernetes_cluster=~\"$cluster\",namespace=~\"$namespace\",pipeline=~\"$pipeline\",pipelinerun=~\"$pipelinerun\"} / tekton_pipelinerun_taskrun_duration_seconds_count{kubernetes_cluster=~\"$cluster\",namespace=~\"$namespace\",pipeline=~\"$pipeline\",pipelinerun=~\"$pipelinerun\"}))",
@@ -193,7 +191,6 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "7.0.5",
       "targets": [
         {
           "expr": "100 * sum(tekton_taskrun_count{kubernetes_cluster=~\"$cluster\",status=~\"success\"}) / sum(tekton_taskrun_count{kubernetes_cluster=~\"$cluster\",status=~\".+\"})",
@@ -249,7 +246,6 @@
           "values": false
         }
       },
-      "pluginVersion": "7.0.5",
       "targets": [
         {
           "expr": "sum(tekton_taskrun_count{kubernetes_cluster=~\"$cluster\"})",
@@ -305,7 +301,6 @@
           "values": false
         }
       },
-      "pluginVersion": "7.0.5",
       "targets": [
         {
           "expr": "tekton_taskrun_count{kubernetes_cluster=~\"$cluster\",status=\"failed\"}",
@@ -442,7 +437,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {

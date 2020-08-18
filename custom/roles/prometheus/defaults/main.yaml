@@ -23,7 +23,7 @@ grafana_fqdn: kibana.demo.local
 grafana_memory_limit: 256Mi
 grafana_memory_request: 128Mi
 grafana_replicas: 1
-grafana_tag: 7.0.5
+grafana_tag: 7.1.2
 
 # Kube State Metrics
 kubestatemetrics_cpu_limit: 10m
@@ -61,4 +61,4 @@ prometheus_memory_request: 1Gi
 prometheus_replicas: 2
 prometheus_retention: 15d
 prometheus_scrape_interval: 15s
-prometheus_tag: v2.19.2
+prometheus_tag: v2.20.1
