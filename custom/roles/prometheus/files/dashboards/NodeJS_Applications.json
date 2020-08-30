@@ -89,7 +89,7 @@
       "title": "Process CPU Usage",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -186,7 +186,7 @@
       "title": "Event Loop Lag",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -284,7 +284,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "v12.18.2",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "bottomk(1,sum(nodejs_version_info{kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$podname\",kubernetes_namespace=~\"$namespace\",kubernetes_cluster=~\"$cluster\"}) by (version))",
@@ -372,7 +372,7 @@
         "lineColor": "#F2495C",
         "show": true
       },
-      "tableColumn": "/",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "sum(changes(process_start_time_seconds{kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$podname\",kubernetes_namespace=~\"$namespace\",kubernetes_cluster=~\"$cluster\"}[1m]))",
@@ -478,7 +478,7 @@
       "title": "Process Memory Usage",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -581,7 +581,7 @@
       "title": "Active Handlers/Requests Total",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -679,7 +679,7 @@
       "title": "Heap Total Detail",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -777,7 +777,7 @@
       "title": "Heap Used Detail",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -875,7 +875,7 @@
       "title": "Heap Available Detail",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",

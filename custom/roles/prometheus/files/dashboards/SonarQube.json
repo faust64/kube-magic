@@ -32,13 +32,6 @@
       "id": 9,
       "panels": [],
       "repeat": "project",
-      "scopedVars": {
-        "project": {
-          "selected": false,
-          "text": "demo",
-          "value": "demo"
-        }
-      },
       "title": "$project",
       "type": "row"
     },
@@ -104,20 +97,13 @@
       ],
       "repeat": null,
       "repeatDirection": "v",
-      "scopedVars": {
-        "project": {
-          "selected": false,
-          "text": "demo",
-          "value": "demo"
-        }
-      },
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "sonarqube_bugs{instance=\"10.233.106.147:9000\", job=\"kubeci\", key=\"demo\", kubernetes_cluster=\"k8s-prod\", kubernetes_namespace=\"ci\", kubernetes_node_name=\"compute3\", kubernetes_pod_name=\"sonarqube-kube-5d67dbf956-lsppt\", kubernetes_service_name=\"sonarqube-kube\", name=\"demo\"}",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "sonarqube_bugs{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",name=\"$project\"}",
@@ -205,20 +191,13 @@
       ],
       "repeat": null,
       "repeatDirection": "h",
-      "scopedVars": {
-        "project": {
-          "selected": false,
-          "text": "demo",
-          "value": "demo"
-        }
-      },
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "sonarqube_vulnerabilities{instance=\"10.233.106.147:9000\", job=\"kubeci\", key=\"demo\", kubernetes_cluster=\"k8s-prod\", kubernetes_namespace=\"ci\", kubernetes_node_name=\"compute3\", kubernetes_pod_name=\"sonarqube-kube-5d67dbf956-lsppt\", kubernetes_service_name=\"sonarqube-kube\", name=\"demo\"}",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "sonarqube_vulnerabilities{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",name=\"$project\"}",
@@ -304,20 +283,13 @@
         }
       ],
       "repeatDirection": "h",
-      "scopedVars": {
-        "project": {
-          "selected": false,
-          "text": "demo",
-          "value": "demo"
-        }
-      },
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "sonarqube_code_smells{instance=\"10.233.106.147:9000\", job=\"kubeci\", key=\"demo\", kubernetes_cluster=\"k8s-prod\", kubernetes_namespace=\"ci\", kubernetes_node_name=\"compute3\", kubernetes_pod_name=\"sonarqube-kube-5d67dbf956-lsppt\", kubernetes_service_name=\"sonarqube-kube\", name=\"demo\"}",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "sonarqube_code_smells{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",name=\"$project\"}",
@@ -405,20 +377,13 @@
         }
       ],
       "repeatDirection": "h",
-      "scopedVars": {
-        "project": {
-          "selected": false,
-          "text": "demo",
-          "value": "demo"
-        }
-      },
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "sonarqube_sqale_index{instance=\"10.233.106.147:9000\", job=\"kubeci\", key=\"demo\", kubernetes_cluster=\"k8s-prod\", kubernetes_namespace=\"ci\", kubernetes_node_name=\"compute3\", kubernetes_pod_name=\"sonarqube-kube-5d67dbf956-lsppt\", kubernetes_service_name=\"sonarqube-kube\", name=\"demo\"}",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "sonarqube_sqale_index{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",name=\"$project\"}",
@@ -507,20 +472,13 @@
         }
       ],
       "repeatDirection": "h",
-      "scopedVars": {
-        "project": {
-          "selected": false,
-          "text": "demo",
-          "value": "demo"
-        }
-      },
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "sonarqube_coverage{instance=\"10.233.106.147:9000\", job=\"kubeci\", key=\"demo\", kubernetes_cluster=\"k8s-prod\", kubernetes_namespace=\"ci\", kubernetes_node_name=\"compute3\", kubernetes_pod_name=\"sonarqube-kube-5d67dbf956-lsppt\", kubernetes_service_name=\"sonarqube-kube\", name=\"demo\"}",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "sonarqube_coverage{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",name=\"$project\"}",

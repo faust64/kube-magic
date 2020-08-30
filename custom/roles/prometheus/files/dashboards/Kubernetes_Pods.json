@@ -111,7 +111,7 @@
       "tooltip": {
         "msResolution": true,
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "cumulative"
       },
       "type": "graph",
@@ -206,7 +206,7 @@
           "step": 30
         },
         {
-          "expr": "rate(container_cpu_usage_seconds_total{kubernetes_cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\",container=~\"$container\",container=~\".+\"}[1m])",
+          "expr": "sum by (kubernetes_cluster,namespace,pod,container) (rate(container_cpu_usage_seconds_total{kubernetes_cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\",container=~\"$container\",container=~\".+\"}[1m]))",
           "interval": "",
           "legendFormat": "{{namespace}}/{{pod}}/{{container}} Consumed",
           "refId": "B"
@@ -226,7 +226,7 @@
       "tooltip": {
         "msResolution": true,
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "cumulative"
       },
       "type": "graph",
@@ -335,7 +335,7 @@
       "tooltip": {
         "msResolution": true,
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "cumulative"
       },
       "type": "graph",
@@ -451,7 +451,7 @@
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",

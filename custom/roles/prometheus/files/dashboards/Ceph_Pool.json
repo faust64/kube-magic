@@ -98,7 +98,7 @@
       "title": "Top $topk Client IOPS by Pool",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -212,7 +212,7 @@
       "title": "Top $topk Client Throughput by Pool",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",

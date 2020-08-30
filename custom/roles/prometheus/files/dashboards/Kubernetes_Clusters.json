@@ -397,7 +397,7 @@
       "title": "Cluster Pod Capacity",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -502,7 +502,7 @@
       "title": "Cluster CPU Capacity",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -608,7 +608,7 @@
       "title": "Cluster Mem Capacity",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -707,7 +707,7 @@
       "title": "Cluster Disk Capacity",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",

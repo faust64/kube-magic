@@ -85,7 +85,7 @@
         "lineColor": "rgb(255, 46, 0)",
         "show": true
       },
-      "tableColumn": "iowait",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "sum(rate(node_cpu_seconds_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\",mode=\"iowait\"}[$interval])) by (mode)* 100 / scalar(count(node_cpu_seconds_total{mode=\"user\",kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"})) or sum(irate(node_cpu_seconds_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\",mode=\"iowait\"}[5m])) by (mode) * 100 / scalar(count(node_cpu_seconds_total{mode=\"user\",kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"}))",
@@ -172,7 +172,7 @@
         "lineColor": "rgb(188, 0, 255)",
         "show": true
       },
-      "tableColumn": "user",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "sum(rate(node_cpu_seconds_total{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\",mode=\"user\"}[$interval])) by (mode) * 100 / scalar(count(node_cpu_seconds_total{mode=\"user\",kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"})) or sum(irate(node_cpu_seconds_total{kubernetes_host_name=~\"$host\",mode=\"user\"}[5m])) by (mode) * 100 / scalar(count(node_cpu_seconds_total{mode=\"user\",kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"}))",
@@ -259,7 +259,7 @@
         "lineColor": "rgb(255, 46, 0)",
         "show": false
       },
-      "tableColumn": "Memory Used",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "(sum((node_memory_MemTotal_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"} - (node_memory_MemFree_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"} + node_memory_Buffers_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"} + node_memory_Cached_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"}))) / sum(node_memory_MemTotal_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"})) * 100",
@@ -346,7 +346,7 @@
         "lineColor": "rgb(255, 46, 0)",
         "show": false
       },
-      "tableColumn": "Memory Cached",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "sum((node_memory_Cached_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"}) * 100) / sum(node_memory_MemTotal_bytes{kubernetes_cluster=~\"$kube\",kubernetes_node_name=~\"$host\"})",
@@ -693,7 +693,7 @@
       "title": "Fetch data (SELECT)",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -791,7 +791,7 @@
       "title": "Insert data",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -889,7 +889,7 @@
       "title": "Update data",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -987,7 +987,7 @@
       "title": "Active sessions",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1086,7 +1086,7 @@
       "title": "Idle sessions",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1184,7 +1184,7 @@
       "title": "Disk IO Utilization",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1282,7 +1282,7 @@
       "title": "Delete data",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1380,7 +1380,7 @@
       "title": "Return data",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1480,7 +1480,7 @@
       "title": "Lock tables",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1580,7 +1580,7 @@
       "title": "Disk Use",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1687,7 +1687,7 @@
       "title": "Disk Latency",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1813,7 +1813,7 @@
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",

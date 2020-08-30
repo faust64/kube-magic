@@ -112,7 +112,7 @@
       "title": "$osd Latency",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -226,7 +226,7 @@
       "title": "$osd R/W IOPS",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -340,7 +340,7 @@
       "title": "$osd R/W Bytes",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -466,7 +466,7 @@
       "title": "Physical Device Latency for $osd",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -578,7 +578,7 @@
       "title": "Physical Device R/W IOPS for $osd",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -690,7 +690,7 @@
       "title": "Physical Device R/W Bytes for $osd",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -789,7 +789,7 @@
       "title": "Physical Device Util% for $osd",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",

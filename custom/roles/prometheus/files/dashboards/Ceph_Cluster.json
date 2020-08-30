@@ -320,7 +320,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "Used",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "sum(ceph_osd_stat_bytes_used{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",instance=~\"$instance\"})/sum(ceph_osd_stat_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",instance=~\"$instance\"})",
@@ -490,7 +490,7 @@
       "title": "PG States",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -616,7 +616,7 @@
       "title": "OSD Latencies",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -898,7 +898,7 @@
       "title": "Cluster I/O",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -995,7 +995,7 @@
       "title": "Pools Objects In/Out",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1234,7 +1234,7 @@
       "title": "Recovery Rate",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",

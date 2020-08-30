@@ -68,7 +68,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
-      "pluginVersion": "6.3.2",
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -88,7 +87,7 @@
         "ymax": null,
         "ymin": null
       },
-      "tableColumn": "score",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "((sum(http_request_duration_seconds_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",le=\"$target\",code=~\"^2..$\"}) + (sum(http_request_duration_seconds_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",le=\"$tolerated\",code=~\"^2..$\"}) - sum(http_request_duration_seconds_bucket{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",le=\"$target\",code=~\"^2..$\"})) / 2) / sum(http_request_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",code=~\"^2..$\"})) * 100",
@@ -339,7 +338,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
-      "pluginVersion": "6.3.2",
       "postfix": " ",
       "postfixFontSize": "80%",
       "prefix": "",
@@ -359,7 +357,7 @@
         "ymax": null,
         "ymin": null
       },
-      "tableColumn": "error %",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "(sum(http_request_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\",code=~\"^[45]..$\"} OR on() vector(0)) / sum(http_request_duration_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$instance\"})) * 100",
@@ -1478,7 +1476,7 @@
           "title": "Eventloop Latency",
           "tooltip": {
             "shared": true,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -1572,7 +1570,7 @@
           "title": "Rate of CPU Time Spent",
           "tooltip": {
             "shared": true,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -1672,7 +1670,7 @@
           "title": "Process Memory",
           "tooltip": {
             "shared": true,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -1766,7 +1764,7 @@
           "title": "Number of Open Connections",
           "tooltip": {
             "shared": true,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -1861,7 +1859,7 @@
           "title": "Used File Descriptors",
           "tooltip": {
             "shared": true,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -1961,7 +1959,7 @@
           "title": "Active Handlers/Requests",
           "tooltip": {
             "shared": true,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -2073,7 +2071,7 @@
       "title": "Rate of Garbage Collection Duration",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -2168,7 +2166,7 @@
       "title": "Rate of Garbage Collection",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -2281,7 +2279,7 @@
       "title": "Heap Memory Usage",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -2375,7 +2373,7 @@
       "title": "Heap Space Used",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -2463,7 +2461,6 @@
         "dataLinks": []
       },
       "percentage": false,
-      "pluginVersion": "6.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2486,7 +2483,7 @@
       "title": "Apdex Score: target $target s, tolerated $tolerated s",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -2591,7 +2588,7 @@
       "title": "Response Latency",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -2690,7 +2687,7 @@
       "title": "Requests Per Seconds",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -2784,7 +2781,7 @@
       "title": "Response Size",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -2882,7 +2879,7 @@
       "title": "Code Count",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -2980,7 +2977,7 @@
       "title": "Request Count",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -3088,7 +3085,7 @@
       "title": "Notes Count",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -3183,7 +3180,7 @@
       "title": "Registered Users",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -3284,7 +3281,7 @@
       "title": "Online Users",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -3385,7 +3382,7 @@
       "title": "Online Registered Users",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -3480,7 +3477,7 @@
       "title": "Online Notes",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -3581,7 +3578,7 @@
       "title": "Process Queue Lock Status",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -3682,7 +3679,7 @@
       "title": "Socket Queue Length",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",

@@ -91,7 +91,7 @@
       "title": "$rgw_servers GET/PUT Latencies",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -281,7 +281,7 @@
       "title": "Bandwidth by HTTP Operation",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -411,7 +411,7 @@
       "title": "HTTP Request Breakdown",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",

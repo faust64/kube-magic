@@ -261,7 +261,7 @@
       "title": "Open File Descriptors",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -572,7 +572,7 @@
       "title": "Grafana Accesses in $interval",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -675,7 +675,7 @@
       "title": "HTTP Req/Resp by $interval",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -784,7 +784,7 @@
       "title": "Logins by $interval",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -916,7 +916,7 @@
       "title": "Dataproxy Request Quantiles",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1017,7 +1017,7 @@
       "title": "Dataproxy Request Duration by $interval",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1149,7 +1149,7 @@
       "title": "Dashboard Get Duration Quantiles",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1250,7 +1250,7 @@
       "title": "Average Dashboard Get Duration",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1382,7 +1382,7 @@
       "title": "Dashboard Save Duration Quantiles",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1483,7 +1483,7 @@
       "title": "Average Dashboard Save Duration",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1615,7 +1615,7 @@
       "title": "Dashboard Search Duration Quantiles",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1716,7 +1716,7 @@
       "title": "Average Dashboard Search Duration",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",

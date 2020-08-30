@@ -82,7 +82,7 @@
       "title": "Gitea HTTP Accesses",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -185,7 +185,7 @@
       "title": "Gitea Repository & Mirrors",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -304,7 +304,7 @@
       "title": "Gitea Auth Sources",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -400,7 +400,7 @@
       "title": "Gitea Releases",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -519,7 +519,7 @@
       "title": "Gitea Organizations & Teams",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -613,7 +613,7 @@
       "title": "CPU Usage",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -709,7 +709,7 @@
       "title": "Gitea Actions",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -817,7 +817,7 @@
       "title": "Gitea Issues, Labels & Milestones",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -919,7 +919,7 @@
       "title": "Gitea Users & Public Keys",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1019,7 +1019,7 @@
       "title": "Go Threads & File Descriptors",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1133,7 +1133,7 @@
       "title": "Gitea Hooks & Tasks",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1235,7 +1235,7 @@
       "title": "Gitea Comments & Attachments",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1338,7 +1338,7 @@
       "title": "Gitea Vanity Metrics",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",

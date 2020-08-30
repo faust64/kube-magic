@@ -71,7 +71,7 @@
           "title": "Query Operations",
           "tooltip": {
             "shared": true,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -153,7 +153,7 @@
           "title": "Document Operations",
           "tooltip": {
             "shared": true,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -230,7 +230,7 @@
           "title": "Document Query Executor",
           "tooltip": {
             "shared": true,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -328,7 +328,7 @@
           "title": "Member Health",
           "tooltip": {
             "shared": false,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -409,7 +409,7 @@
           "title": "Member State",
           "tooltip": {
             "shared": true,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -488,7 +488,7 @@
           "title": "Replica Query Operations",
           "tooltip": {
             "shared": true,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -825,7 +825,7 @@
           "title": "Oplog Size",
           "tooltip": {
             "shared": true,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -906,7 +906,7 @@
           "title": "Memory",
           "tooltip": {
             "shared": false,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -986,7 +986,7 @@
           "title": "Network I/O",
           "tooltip": {
             "shared": true,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -1122,7 +1122,7 @@
           "title": "Oplog Lag",
           "tooltip": {
             "shared": true,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -1247,7 +1247,7 @@
           "title": "Disk IO Utilization",
           "tooltip": {
             "shared": false,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -1335,7 +1335,7 @@
           "title": "Disk Reads Completed",
           "tooltip": {
             "shared": false,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",
@@ -1411,7 +1411,7 @@
           "title": "Disk Writes Completed",
           "tooltip": {
             "shared": false,
-            "sort": 0,
+            "sort": 2,
             "value_type": "individual"
           },
           "type": "graph",

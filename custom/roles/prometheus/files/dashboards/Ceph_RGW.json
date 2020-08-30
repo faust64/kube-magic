@@ -91,7 +91,7 @@
       "title": "Average Latencies",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -191,7 +191,7 @@
       "title": "Requests/$interval by RGW client",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -292,7 +292,7 @@
       "title": "GET Latencies by RGW client",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -401,7 +401,7 @@
       "title": "Bandwidth Consumed",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -501,7 +501,7 @@
       "title": "Bandwidth by RGW Instance",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -601,7 +601,7 @@
       "title": "PUT Latencies by RGW Instance",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",

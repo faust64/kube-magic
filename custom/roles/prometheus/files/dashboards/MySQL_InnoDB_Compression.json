@@ -514,7 +514,7 @@
       "tooltip": {
         "msResolution": false,
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -633,7 +633,7 @@
       "tooltip": {
         "msResolution": false,
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -751,7 +751,7 @@
       "tooltip": {
         "msResolution": false,
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -872,7 +872,7 @@
       "title": "Total Used Pages",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -981,7 +981,7 @@
       "title": "Total Free Pages",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1028,13 +1028,6 @@
       "id": 80,
       "panels": [],
       "repeat": "buffer",
-      "scopedVars": {
-        "buffer": {
-          "selected": false,
-          "text": "0",
-          "value": "0"
-        }
-      },
       "title": "Buffer Pool  $buffer",
       "type": "row"
     },
@@ -1091,13 +1084,6 @@
       "points": false,
       "renderer": "flot",
       "repeat": null,
-      "scopedVars": {
-        "buffer": {
-          "selected": false,
-          "text": "0",
-          "value": "0"
-        }
-      },
       "seriesOverrides": [],
       "spaceLength": 10,
       "stack": false,
@@ -1119,7 +1105,7 @@
       "title": "Used Pages (Buffer Pull $buffer)",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1205,13 +1191,6 @@
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "scopedVars": {
-        "buffer": {
-          "selected": false,
-          "text": "0",
-          "value": "0"
-        }
-      },
       "seriesOverrides": [],
       "spaceLength": 10,
       "stack": false,
@@ -1233,7 +1212,7 @@
       "title": "Pages Free (Buffer Pull $buffer)",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",

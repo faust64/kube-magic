@@ -1,6 +1,8 @@
 grafana_dashboards:
 - Apache
 - Ansible_Operator
+- BlueMind
+- BlueMind_Full
 - Cassandra
 - Ceph_Cluster
 - Ceph_Cluster_Details
@@ -14,6 +16,7 @@ grafana_dashboards:
 - Ceph_RGW_Buckets
 - Ceph_RGW_Details
 - CodiMD
+- Docker_Registry
 - ElasticSearch
 - Gitea
 - Go_Applications
@@ -28,6 +31,7 @@ grafana_dashboards:
 - Kubernetes_Networking_Details
 - Kubernetes_Nodes
 - Kubernetes_Pods
+- MinIO
 - MongoDB
 - MongoDB_Overview
 - MongoDB_ReplSet
@@ -39,6 +43,7 @@ grafana_dashboards:
 - MySQL_Performance_Schema
 - MySQL_Table_Statistics
 - MySQL_Wait_Event_Analyses
+- Nexus
 - NodeJS_Applications
 - NodeJS_Metrics
 - OpenLDAP
@@ -49,6 +54,14 @@ grafana_dashboards:
 - SonarQube
 - Tekton_PipelineRuns
 - Tekton_TaskRuns
+- Thanos
+- Thanos_Compact
+- Thanos_Query
+- Thanos_Query_Frontend
+- Thanos_Receive
+- Thanos_Rule
+- Thanos_Sidecar
+- Thanos_Store
 prometheus_rules:
 - apache
 - blackbox
@@ -67,6 +80,7 @@ prometheus_rules:
 - minio
 - mongodb
 - mysql
+- nexus
 - nginx
 - nodes
 - openldap

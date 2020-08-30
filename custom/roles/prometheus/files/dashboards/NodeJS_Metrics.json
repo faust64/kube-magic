@@ -68,7 +68,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
-      "pluginVersion": "6.5.0",
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -90,7 +89,7 @@
         "ymax": null,
         "ymin": null
       },
-      "tableColumn": "Version",
+      "tableColumn": "",
       "targets": [
         {
           "expr": "bottomk(1,sum(nodejs_version_info{kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$podname\",kubernetes_namespace=~\"$namespace\",kubernetes_cluster=~\"$cluster\"}) by (version))",
@@ -180,7 +179,7 @@
       "title": "Active Requests",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -367,7 +366,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
-      "pluginVersion": "6.5.0",
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -425,10 +423,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
@@ -458,7 +452,7 @@
       },
       "targets": [
         {
-          "expr": "time() - min(process_start_time_seconds{kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$podname\",kubernetes_cluster=~\"$cluster\"})",
+          "expr": "time() - max(process_start_time_seconds{kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$podname\",kubernetes_cluster=~\"$cluster\"})",
           "instant": false,
           "interval": "",
           "legendFormat": "",
@@ -1341,7 +1335,7 @@
       "title": "Total",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1436,7 +1430,7 @@
       "title": "Available",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1531,7 +1525,7 @@
       "title": "Used",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",

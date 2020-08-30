@@ -242,7 +242,7 @@
       "title": "$pool_name Object In-/Egress",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -345,7 +345,7 @@
       "title": "Max Available by Pool",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -461,7 +461,7 @@
       "title": "$pool_name Client IOPS",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -575,7 +575,7 @@
       "title": "$pool_name Client Throughput",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -678,7 +678,7 @@
       "title": "$pool_name Objects Activity",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -783,7 +783,7 @@
       "title": "$pool_name Objects",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
