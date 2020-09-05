@@ -13,3 +13,4 @@
 - include_tasks: fluentd.yaml
 - include_tasks: kibana.yaml
 - include_tasks: ingress.yaml
+- include_tasks: curator.yaml
