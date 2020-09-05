@@ -1,0 +1,118 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: thanos-receive
+  namespace: {{ prometheus_ns }}
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: {{ thanos_receive_replicas }}
+  selector:
+    matchLabels:
+      name: thanos-receive
+  serviceName: thanos-receive
+  template:
+    metadata:
+      labels:
+        name: thanos-receive
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: name
+                operator: In
+                values: [ thanos-receive ]
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - args:
+        - receive
+        - --grpc-address=0.0.0.0:10901
+        - --http-address=0.0.0.0:10902
+{% if do_debugs | default(False) %}
+        - --log.level=debug
+{% else %}
+        - --log.level=info
+{% endif %}
+        - --objstore.config=$(OBJSTORE_CONFIG)
+        - --receive.replication-factor=1
+        - --remote-write.address=0.0.0.0:19291
+        - --tsdb.path=/var/thanos/receive
+        - --receive.local-endpoint=$(NAME).thanos-receive.{{ prometheus_ns }}.svc.{{ cluster_domain }}:10901
+        env:
+        - name: OBJSTORE_CONFIG
+          valueFrom:
+            secretKeyRef:
+              key: thanos.yaml
+              name: thanos-store
+        image: quay.io/thanos/thanos:{{ thanos_tag }}
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 8
+          httpGet:
+            path: /-/healthy
+            port: 10902
+          periodSeconds: 30
+        name: thanos
+        ports:
+        - containerPort: 10901
+          name: grpc
+        - containerPort: 10902
+          name: http
+        - containerPort: 19291
+          name: remote-write
+        readinessProbe:
+          failureThreshold: 20
+          httpGet:
+            path: /-/ready
+            port: 10902
+          periodSeconds: 5
+        resources:
+          limits:
+            cpu: "{{ thanos_receive_cpu_limit }}"
+            memory: "{{ thanos_receive_memory_limit }}"
+          requests:
+            cpu: "{{ thanos_receive_cpu_request }}"
+            memory: "{{ thanos_receive_memory_request }}"
+        terminationMessagePolicy: FallbackToLogsOnError
+        volumeMounts:
+        - mountPath: /var/thanos/receive
+          name: data
+{% if k8s_resource_nodes_selectors | length > 0 %}
+      nodeSelectors:
+{% for sel in k8s_resource_nodes_selectors %}
+        {{ sel.split('=')[0] }}: "{{ sel.split('=')[1] if (sel.split('=') | length > 1) else '' }}"
+{% endfor %}
+{% endif %}
+      securityContext:
+{% if rwo_needs_fsgroup | default(False) %}
+        fsGroup: {{ rwo_needs_fsgroup }}
+{% endif %}
+        runAsUser: 1001
+      terminationGracePeriodSeconds: 120
+  updateStrategy:
+    type: RollingUpdate
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ ReadWriteOnce ]
+      resources:
+        requests:
+          storage: "{{ thanos_receive_data_capacity }}"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: scrape-me
+  name: thanos-receive
+  namespace: {{ prometheus_ns }}
+spec:
+  ports:
+  - name: grpc
+    port: 10901
+  - name: exporter
+    port: 10902
+  selector:
+    name: thanos-receive

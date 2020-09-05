@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thanos-query
+  namespace: {{ prometheus_ns }}
+spec:
+  replicas: {{ thanos_query_replicas }}
+  selector:
+    matchLabels:
+      name: thanos-query
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name: thanos-query
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: name
+                operator: In
+                values: [ thanos-query ]
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - args:
+        - query
+        - --grpc-address=0.0.0.0:10901
+        - --http-address=0.0.0.0:9090
+{% if do_debugs | default(False) %}
+        - --log.level=debug
+{% else %}
+        - --log.level=info
+{% endif %}
+        - --query.replica-label=scrape_by
+        - --query.timeout={{ thanos_query_timeout }}
+{% if do_thanos_receive | default(False) %}
+        - --store=dns+thanos-receive.{{ prometheus_ns }}.svc.{{ cluster_domain }}:10901
+{% endif %}
+        - --store=dns+thanos-store.{{ prometheus_ns }}.svc.{{ cluster_domain }}:10901
+        - --store=dns+prometheus-thanos.{{ prometheus_ns }}.svc.{{ cluster_domain }}:10901
+        image: quay.io/thanos/thanos:{{ thanos_tag }}
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 4
+          httpGet:
+            path: /-/healthy
+            port: 9090
+          periodSeconds: 30
+        name: thanos
+        ports:
+        - containerPort: 9090
+          name: http
+        - containerPort: 10901
+          name: grpc
+        readinessProbe:
+          failureThreshold: 20
+          httpGet:
+            path: /-/ready
+            port: 9090
+          periodSeconds: 5
+        resources:
+          limits:
+            cpu: "{{ thanos_query_cpu_limit }}"
+            memory: "{{ thanos_query_memory_limit }}"
+          requests:
+            cpu: "{{ thanos_query_cpu_request }}"
+            memory: "{{ thanos_query_memory_request }}"
+        terminationMessagePolicy: FallbackToLogsOnError
+{% if k8s_resource_nodes_selectors | length > 0 %}
+      nodeSelectors:
+{% for sel in k8s_resource_nodes_selectors %}
+        {{ sel.split('=')[0] }}: "{{ sel.split('=')[1] if (sel.split('=') | length > 1) else '' }}"
+{% endfor %}
+{% endif %}
+      securityContext:
+        runAsUser: 1001
+      terminationGracePeriodSeconds: 120
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: scrape-me
+  name: thanos-query
+  namespace: {{ prometheus_ns }}
+spec:
+  ports:
+  - name: grpc
+    port: 10901
+  - name: exporter
+    port: 9090
+  selector:
+    name: thanos-query

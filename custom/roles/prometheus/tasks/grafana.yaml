@@ -3,6 +3,13 @@
     dashboard_name: "{{ item }}"
   with_items: "{{ grafana_dashboards }}"
 - name: Generates Grafana Configuration
+  vars:
+    grafana_upstream: "http://{{ ('prometheus.' ~ prometheus_ns ~ '.svc.' ~ cluster_domain)
+                                   if (not (do_thanos | default(False)))
+                                   else (('thanos-queryfrontend.' ~ prometheus_ns ~ '.svc.' ~ cluster_domain)
+                                        if (do_thanos_queryfrontend | default(False))
+                                        else ('thanos-query.' ~ prometheus_ns ~ '.svc.' ~ cluster_domain))
+                              }}:9090"
   template:
     dest: /tmp/grafana.yaml
     group: root

@@ -1,0 +1,140 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: thanos-rule
+  namespace: {{ prometheus_ns }}
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: {{ thanos_rule_replicas }}
+  selector:
+    matchLabels:
+      name: thanos-rule
+  serviceName: thanos-rule
+  template:
+    metadata:
+      labels:
+        name: thanos-rule
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: name
+                operator: In
+                values: [ thanos-rule ]
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - args:
+        - rule
+        - --alert.label-drop=rule_by
+        - --alert.label-drop=scrape_by
+        - --alert.query-url={{ 'https' if alertmanager_do_tls else 'http' }}://{{ alertmanager_fqdn }}
+        - --alertmanagers.url=dns+http://{{ alertmanager_name }}.{{ prometheus_ns }}.svc.{{ cluster_domain }}:9093
+        - --alertmanagers.send-timeout=3s
+        - --data-dir=/var/thanos/rule
+        - --eval-interval={{ thanos_rule_eval_interval }}
+        - --grpc-address=0.0.0.0:10901
+        - --http-address=0.0.0.0:10902
+        - --label=rule_by="$(POD_NAME)"
+{% if do_debugs | default(False) %}
+        - --log.level=debug
+{% else %}
+        - --log.level=info
+{% endif %}
+        - --objstore.config=$(OBJSTORE_CONFIG)
+        - --query=thanos-query.{{ prometheus_ns }}.svc.{{ cluster_domain }}
+        - --rule-file=/rules.d/*.yaml
+        - --tsdb.block-duration=2h
+        - --tsdb.retention=48h
+        env:
+        - name: OBJSTORE_CONFIG
+          valueFrom:
+            secretKeyRef:
+              key: thanos.yaml
+              name: thanos-store
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        image: quay.io/thanos/thanos:{{ thanos_tag }}
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 30
+          httpGet:
+            path: /-/healthy
+            port: 10902
+          periodSeconds: 30
+        name: thanos
+        ports:
+        - containerPort: 10901
+          name: grpc
+        - containerPort: 10902
+          name: http
+        readinessProbe:
+          failureThreshold: 20
+          httpGet:
+            path: /-/ready
+            port: 10902
+          periodSeconds: 5
+        resources:
+          limits:
+            cpu: "{{ thanos_rule_cpu_limit }}"
+            memory: "{{ thanos_rule_memory_limit }}"
+          requests:
+            cpu: "{{ thanos_rule_cpu_request }}"
+            memory: "{{ thanos_rule_memory_request }}"
+        terminationMessagePolicy: FallbackToLogsOnError
+        volumeMounts:
+        - mountPath: /var/thanos/rule
+          name: data
+        - mountPath: /rules.d
+          name: rules
+{% if k8s_resource_nodes_selectors | length > 0 %}
+      nodeSelectors:
+{% for sel in k8s_resource_nodes_selectors %}
+        {{ sel.split('=')[0] }}: "{{ sel.split('=')[1] if (sel.split('=') | length > 1) else '' }}"
+{% endfor %}
+{% endif %}
+      securityContext:
+{% if rwo_needs_fsgroup | default(False) %}
+        fsGroup: {{ rwo_needs_fsgroup }}
+{% endif %}
+        runAsUser: 1001
+      volumes:
+      - name: rules
+        projected:
+          sources:
+{% for rule_file in prometheus_rules %}
+          - configMap:
+              items:
+              - key: {{ rule_file }}.yaml
+                path: {{ rule_file }}.yaml
+              name: prometheus-rule-{{ rule_file | lower | regex_replace('[\\.-_ ]', '') }}
+{% endfor %}
+  updateStrategy:
+    type: RollingUpdate
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ ReadWriteOnce ]
+      resources:
+        requests:
+          storage: "{{ thanos_rule_data_capacity }}"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: scrape-me
+  name: thanos-rule
+  namespace: {{ prometheus_ns }}
+spec:
+  ports:
+  - name: grpc
+    port: 10901
+  - name: exporter
+    port: 10902
+  selector:
+    name: thanos-rule

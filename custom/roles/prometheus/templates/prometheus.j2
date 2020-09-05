@@ -8,8 +8,9 @@ data:
   prometheus.yml: |
     global:
       scrape_interval: {{ prometheus_scrape_interval }}
+      evaluation_interval: {{ prometheus_eval_interval }}
       external_labels:
-        monitor: 'opsperator-monitor'
+        monitor: opsperator-monitor
 
     rule_files:
     - /etc/prometheus/rules.d/*.yaml
@@ -17,7 +18,12 @@ data:
     scrape_configs:
     - job_name: prometheus
       static_configs:
-      - targets: ['localhost:9090']
+      - labels:
+          kubernetes_cluster: {{ prometheus_local_cluster }}
+          kubernetes_namespace: {{ prometheus_ns }}
+          kubernetes_service_name: prometheus
+          kubernetes_pod_name: prometheus
+        targets: ['localhost:9090']
 
     - job_name: cluster
       kubernetes_sd_configs:
@@ -26,10 +32,13 @@ data:
         - role: endpoints
           label: k8s-cluster=scrape-me
       relabel_configs:
-      - source_labels: [__meta_kubernetes_endpoint_address_target_kind]
-        action: replace
-        target_label: kubernetes_cluster
+      - action: replace
         replacement: {{ prometheus_local_cluster }}
+        source_labels: [__meta_kubernetes_endpoint_address_target_kind]
+        target_label: kubernetes_cluster
+      - action: replace
+        source_labels: [__meta_kubernetes_namespace]
+        target_label: kubernetes_namespace
       scheme: http
 
     - job_name: cadvisor
@@ -38,12 +47,12 @@ data:
       - role: node
       metrics_path: /metrics/cadvisor
       relabel_configs:
-      - source_labels: [__meta_kubernetes_endpoint_address_target_kind]
-        action: replace
-        target_label: kubernetes_cluster
+      - action: replace
         replacement: {{ prometheus_local_cluster }}
-      - source_labels: [__meta_kubernetes_node_name]
-        action: replace
+        source_labels: [__meta_kubernetes_endpoint_address_target_kind]
+        target_label: kubernetes_cluster
+      - action: replace
+        source_labels: [__meta_kubernetes_node_name]
         target_label: kubernetes_node_name
       scheme: https
       tls_config:
@@ -55,12 +64,12 @@ data:
       kubernetes_sd_configs:
       - role: node
       relabel_configs:
-      - source_labels: [__meta_kubernetes_endpoint_address_target_kind]
-        action: replace
-        target_label: kubernetes_cluster
+      - action: replace
         replacement: {{ prometheus_local_cluster }}
-      - source_labels: [__meta_kubernetes_node_name]
-        action: replace
+        source_labels: [__meta_kubernetes_endpoint_address_target_kind]
+        target_label: kubernetes_cluster
+      - action: replace
+        source_labels: [__meta_kubernetes_node_name]
         target_label: kubernetes_node_name
       scheme: https
       tls_config:
@@ -71,15 +80,15 @@ data:
       kubernetes_sd_configs:
       - role: endpoints
         selectors:
-        - role: endpoints
-          label: k8s-nodes=scrape-me
+        - label: k8s-nodes=scrape-me
+          role: endpoints
       relabel_configs:
-      - source_labels: [__meta_kubernetes_endpoint_address_target_kind]
-        action: replace
-        target_label: kubernetes_cluster
+      - action: replace
         replacement: {{ prometheus_local_cluster }}
-      - source_labels: [__meta_kubernetes_pod_node_name]
-        action: replace
+        source_labels: [__meta_kubernetes_endpoint_address_target_kind]
+        target_label: kubernetes_cluster
+      - action: replace
+        source_labels: [__meta_kubernetes_pod_node_name]
         target_label: kubernetes_node_name
       scheme: http
 
@@ -87,31 +96,41 @@ data:
       kubernetes_sd_configs:
       - role: endpoints
         selectors:
-        - role: endpoints
-          label: k8s-app=scrape-me
+        - label: k8s-app=scrape-me
+          role: endpoints
       relabel_configs:
-      - source_labels: [__meta_kubernetes_endpoint_address_target_kind]
-        action: replace
-        target_label: kubernetes_cluster
+      - action: replace
         replacement: {{ prometheus_local_cluster }}
-      - source_labels: [__meta_kubernetes_endpoint_port_name]
-        action: keep
+        source_labels: [__meta_kubernetes_endpoint_address_target_kind]
+        target_label: kubernetes_cluster
+      - action: replace
+        regex: (.+)
+        source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+        target_label: __metrics_path__
+      - action: keep
         regex: '(exporter-[0-9]*|tcp-9113)'
-      - source_labels: [__meta_kubernetes_namespace]
-        action: replace
+        source_labels: [__meta_kubernetes_endpoint_port_name]
+      - action: replace
+        source_labels: [__meta_kubernetes_namespace]
         target_label: kubernetes_namespace
-      - source_labels: [__meta_kubernetes_pod_node_name]
-        action: replace
+      - action: replace
+        source_labels: [__meta_kubernetes_pod_node_name]
         target_label: kubernetes_node_name
-      - source_labels: [__meta_kubernetes_pod_name]
-        action: replace
+      - action: replace
+        source_labels: [__meta_kubernetes_pod_name]
         target_label: kubernetes_pod_name
-      - source_labels: [__meta_kubernetes_pod_label_name]
-        action: replace
+      - action: replace
+        source_labels: [__meta_kubernetes_pod_label_name]
         target_label: kubernetes_service_name
       scheme: http
 
     alerting:
+      alert_relabel_configs:
+      - action: replace
+        regex: (.+)
+        replacement: prometheus
+        source_labels: [scrape_by]
+        target_label: scrape_by
       alertmanagers:
       - scheme: http
         static_configs:
@@ -144,13 +163,43 @@ spec:
                 operator: In
                 values: [ prometheus ]
             topologyKey: kubernetes.io/hostname
+      initContainers:
+      - args:
+        -c
+        - |
+             sed "/external_labels:.*/ascrape_by: $REPLICA/" /etc/prometheus.yml.tpl | \
+                 sed "s|^scrape_by:|    scrape_by:|" >/etc/prometheus/prometheus.yml;
+        command: [ /bin/sh ]
+        env:
+        - name: REPLICA
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        image: docker.io/prom/prometheus:{{ prometheus_tag }}
+        imagePullPolicy: IfNotPresent
+        name: configure
+        volumeMounts:
+        - mountPath: /etc/prometheus
+          name: temp
+          subPath: prometheus
+        - mountPath: /etc/prometheus.yml.tpl
+          name: config
+          subPath: prometheus.yml
       containers:
       - args:
         - --config.file=/etc/prometheus/prometheus.yml
+{% if do_thanos | default(False) %}
+        - --storage.tsdb.max-block-duration=2h
+        - --storage.tsdb.min-block-duration=2h
+{% endif %}
         - --storage.tsdb.path=/prometheus
         - --storage.tsdb.retention.time={{ prometheus_retention }}
         - --web.console.libraries=/usr/share/prometheus/console_libraries
         - --web.console.templates=/usr/share/prometheus/consoles
+{% if do_thanos | default(False) %}
+        - --web.enable-admin-api
+        - --web.enable-lifecycle
+{% endif %}
         image: docker.io/prom/prometheus:{{ prometheus_tag }}
         imagePullPolicy: IfNotPresent
         livenessProbe:
@@ -177,16 +226,68 @@ spec:
             cpu: "{{ prometheus_cpu_request }}"
             memory: "{{ prometheus_memory_request }}"
         volumeMounts:
-        - mountPath: /etc/prometheus/prometheus.yml
-          name: config
-          subPath: prometheus.yml
+        - mountPath: /etc/prometheus
+          name: temp
+          subPath: prometheus
         - mountPath: /prometheus
           name: data
         - mountPath: /etc/prometheus/rules.d
           name: rules
-{% if k8s_ressource_nodes_selectors | length > 0 %}
+{% if do_thanos | default(False) %}
+      - args:
+        - sidecar
+        - --grpc-address=0.0.0.0:10901
+        - --http-address=0.0.0.0:10902
+{% if do_debugs | default(False) %}
+        - --log.level=debug
+{% else %}
+        - --log.level=info
+{% endif %}
+        - --objstore.config=$(OBJSTORE_CONFIG)
+        - --prometheus.ready_timeout=10m
+        - --prometheus.url=http://127.0.0.1:9090
+        - --tsdb.path=/prometheus
+        env:
+        - name: OBJSTORE_CONFIG
+          valueFrom:
+            secretKeyRef:
+              key: thanos.yaml
+              name: thanos-store
+        image: quay.io/thanos/thanos:{{ thanos_tag }}
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 30
+          httpGet:
+            path: /-/healthy
+            port: 10902
+          periodSeconds: 30
+        name: thanos
+        ports:
+        - containerPort: 10901
+          name: grpc
+        - containerPort: 10902
+          name: http
+        readinessProbe:
+          failureThreshold: 20
+          httpGet:
+            path: /-/ready
+            port: 10902
+          periodSeconds: 5
+        resources:
+          limits:
+            cpu: "{{ thanos_sidecar_cpu_limit }}"
+            memory: "{{ thanos_sidecar_memory_limit }}"
+          requests:
+            cpu: "{{ thanos_sidecar_cpu_request }}"
+            memory: "{{ thanos_sidecar_memory_request }}"
+        terminationMessagePolicy: FallbackToLogsOnError
+        volumeMounts:
+        - mountPath: /prometheus
+          name: data
+{% endif %}
+{% if k8s_resource_nodes_selectors | length > 0 %}
       nodeSelectors:
-{% for sel in k8s_ressource_nodes_selectors %}
+{% for sel in k8s_resource_nodes_selectors %}
         {{ sel.split('=')[0] }}: "{{ sel.split('=')[1] if (sel.split('=') | length > 1) else '' }}"
 {% endfor %}
 {% endif %}
@@ -197,6 +298,7 @@ spec:
         runAsUser: 1001
       serviceAccount: prometheus
       serviceAccountName: prometheus
+      terminationGracePeriodSeconds: 120
       volumes:
       - configMap:
           name: prometheus
@@ -205,12 +307,16 @@ spec:
         projected:
           sources:
 {% for rule_file in prometheus_rules %}
+{% if (do_thanos | default(False) and do_thanos_rule | default(False) and rule_file is match('thanos')) or not (do_thanos_rule | default(False)) %}
           - configMap:
-              name: prometheus-rule-{{ rule_file | lower | regex_replace('[\\.-_ ]', '') }}
               items:
               - key: {{ rule_file }}.yaml
                 path: {{ rule_file }}.yaml
+              name: prometheus-rule-{{ rule_file | lower | regex_replace('[\\.-_ ]', '') }}
+{% endif %}
 {% endfor %}
+      - emptyDir: {}
+        name: temp
   updateStrategy:
     type: RollingUpdate
   volumeClaimTemplates:
@@ -221,3 +327,33 @@ spec:
       resources:
         requests:
           storage: "{{ prometheus_data_capacity }}"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus
+  namespace: {{ prometheus_ns }}
+spec:
+  ports:
+  - name: http
+    port: 9090
+  selector:
+    name: prometheus
+{% if do_thanos | default(False) %}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: scrape-me
+  name: prometheus-thanos
+  namespace: {{ prometheus_ns }}
+spec:
+  ports:
+  - name: grpc
+    port: 10901
+  - name: exporter
+    port: 10902
+  selector:
+    name: prometheus
+{% endif %}

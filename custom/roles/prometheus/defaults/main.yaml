@@ -1,5 +1,5 @@
 cluster_domain: cluster.local
-k8s_ressource_nodes_selectors:
+k8s_resource_nodes_selectors:
 - kubernetes.io/arch=amd64
 
 # AlertManager
@@ -7,7 +7,7 @@ alertmanager_cpu_limit: 10m
 alertmanager_cpu_request: 10m
 alertmanager_data_capacity: 2Gi
 alertmanager_do_tls: True
-alertmanager_fqdn: kibana.demo.local
+alertmanager_fqdn: alertmanager.demo.local
 alertmanager_memory_limit: 50Mi
 alertmanager_memory_request: 50Mi
 alertmanager_replicas: 2
@@ -19,22 +19,22 @@ grafana_admin_user: admin
 grafana_cpu_limit: 100m
 grafana_cpu_request: 50m
 grafana_do_tls: True
-grafana_fqdn: kibana.demo.local
-grafana_memory_limit: 256Mi
-grafana_memory_request: 128Mi
+grafana_fqdn: grafana.demo.local
+grafana_memory_limit: 128Mi
+grafana_memory_request: 64Mi
 grafana_replicas: 1
 grafana_tag: 7.1.2
 
 # Kube State Metrics
-kubestatemetrics_cpu_limit: 10m
-kubestatemetrics_cpu_request: 10m
+kubestatemetrics_cpu_limit: 30m
+kubestatemetrics_cpu_request: 30m
 kubestatemetrics_memory_limit: 50Mi
 kubestatemetrics_memory_request: 50Mi
 kubestatemetrics_tag: v1.9.7
 
 # Node Exporter
-nodeexporter_cpu_limit: 200m
-nodeexporter_cpu_request: 100m
+nodeexporter_cpu_limit: 60m
+nodeexporter_cpu_request: 60m
 nodeexporter_memory_limit: 50Mi
 nodeexporter_memory_request: 50Mi
 nodeexporter_tag: v1.0.0
@@ -50,15 +50,76 @@ smtp_port: 25
 #smtp_relay: smtp.example.com
 
 # Prometheus
-prometheus_cpu_limit: 250m
-prometheus_cpu_request: 100m
+prometheus_cpu_limit: 100m
+prometheus_cpu_request: 50m
 prometheus_data_capacity: 360Gi
 prometheus_do_tls: True
+prometheus_eval_interval: 30s
 prometheus_federation: []
-prometheus_fqdn: kibana.demo.local
+prometheus_fqdn: prometheus.demo.local
+prometheus_local_cluster: demo
 prometheus_memory_limit: 2Gi
 prometheus_memory_request: 1Gi
 prometheus_replicas: 2
 prometheus_retention: 15d
 prometheus_scrape_interval: 15s
 prometheus_tag: v2.20.1
+
+# Thanos
+do_thanos: False
+do_thanos_queryfrontend: False
+do_thanos_receive: False
+do_thanos_rule: False
+expose_thanos_query: False
+expose_thanos_receive: False
+thanos_compact_cpu_limit: 100m
+thanos_compact_cpu_request: 10m
+thanos_compact_data_capacity: 32Gi
+thanos_compact_interval: 30m
+thanos_compact_memory_limit: 3Gi
+thanos_compact_memory_request: 1Gi
+thanos_compact_replicas: 1
+thanos_image_source: quay.io/thanos/thanos
+thanos_query_cpu_limit: 100m
+thanos_query_cpu_request: 10m
+thanos_query_memory_limit: 128Mi
+thanos_query_memory_request: 64Mi
+thanos_query_replicas: 1
+thanos_query_timeout: 5m
+thanos_queryfrontend_cpu_limit: 50m
+thanos_queryfrontend_cpu_request: 10m
+thanos_queryfrontend_memory_limit: 128Mi
+thanos_queryfrontend_memory_request: 64Mi
+thanos_queryfrontend_replicas: 1
+thanos_receive_cpu_limit: 100m
+thanos_receive_cpu_request: 10m
+thanos_receive_data_capacity: 8Gi
+thanos_receive_memory_limit: 128Mi
+thanos_receive_memory_request: 64Mi
+thanos_receive_replicas: 1
+thanos_retention_resolution_1h: 90d
+thanos_retention_resolution_5m: 90d
+thanos_retention_resolution_raw: 90d
+thanos_rule_cpu_limit: 50m
+thanos_rule_cpu_request: 10m
+thanos_rule_data_capacity: 8Gi
+thanos_rule_eval_interval: 30s
+thanos_rule_memory_limit: 128Mi
+thanos_rule_memory_request: 64Mi
+thanos_rule_replicas: 1
+#thanos_s3_access_key: ABCD
+thanos_s3_bucket: thanos
+#thanos_s3_endpoint: http://minio.example.local:9000
+thanos_s3_region: us-east-1
+#thanos_s3_secret_key: EFGH
+thanos_sidecar_cpu_limit: 100m
+thanos_sidecar_cpu_request: 10m
+thanos_sidecar_memory_limit: 128Mi
+thanos_sidecar_memory_request: 64Mi
+thanos_store_cpu_limit: 50m
+thanos_store_cpu_request: 10m
+thanos_store_data_capacity: 8Gi
+thanos_store_memory_limit: 128Mi
+thanos_store_memory_request: 64Mi
+thanos_store_replicas: 1
+thanos_tag: master-2020-08-11-2ea2c2b7

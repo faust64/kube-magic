@@ -6,52 +6,52 @@ metadata:
   namespace: {{ prometheus_ns }}
 stringData:
   alertmanager.yml: |
-    "global":
-      "resolve_timeout": "5m"
+    global:
+      resolve_timeout: 5m
 {% if smtp_relay | default(False) %}
-      "smtp_smarthost": "{{ smtp_relay }}:{{ smtp_port | default(25) }}"
-      "smtp_from": "prometheus@{{ smtp_domain | default('example.com') }}"
-      "smtp_require_tls": {{ 'False' if ((smtp_port | default(25) | int) != 465) lse 'True' }}
+      smtp_smarthost: {{ smtp_relay }}:{{ smtp_port | default(25) }}
+      smtp_from: prometheus@{{ smtp_domain | default('example.com') }}
+      smtp_require_tls: {{ 'False' if ((smtp_port | default(25) | int) != 465) lse 'True' }}
 {% endif %}
-    "route":
-      "group_by":
-      - "job"
-      "group_interval": "5m"
-      "group_wait": "30s"
-      "receiver": "default"
-      "repeat_interval": "12h"
-      "routes":
-      - "match":
-          "alertname": "DeadMansSwitch"
-        "receiver": "deadmansswitch"
-        "repeat_interval": "5m"
-      - "match":
-          "severity": "warning"
-        "receiver": "default"
-        "repeat_interval": "6h"
-      - "match":
-          "severity": "critical"
-        "receiver": "default"
-        "repeat_interval": "3h"
-    "receivers":
-    - "name": "deadmansswitch"
-    - "name": "default"
+    route:
+      group_by:
+      - job
+      group_interval: 5m
+      group_wait: 30s
+      receiver: default
+      repeat_interval: 12h
+      routes:
+      - match:
+          alertname: DeadMansSwitch
+        receiver: deadmansswitch
+        repeat_interval: 5m
+      - match:
+          severity: warning
+        receiver: default
+        repeat_interval: 6h
+      - match:
+          severity: critical
+        receiver: default
+        repeat_interval: 3h
+    receivers:
+    - name: deadmansswitch
+    - name: default
 {% if notify_slack_address | default(False) %}
-      "slack_configs":
-      - "api_url": "{{ notify_slack_address }}"
-        "channel": "#{{ notify_slack_channel }}"
-        "send_resolved": {{ notify_send_resolved }}
+      slack_configs:
+      - api_url: {{ notify_slack_address }}
+        channel: #{{ notify_slack_channel }}
+        send_resolved: {{ notify_send_resolved }}
 {% endif %}
 {% if notify_email_address | default(False) %}
-      "email_configs":
-      - "from": "prometheus@{{ root_domain }}"
-        "send_resolved": {{ notify_send_resolved }}
-        "to": "{{ notify_email_address }}"
+      email_configs:
+      - from: prometheus@{{ prometheus_fqdn }}
+        send_resolved: {{ notify_send_resolved }}
+        to: {{ notify_email_address }}
 {% endif %}
 {% if notify_http_address | default(False) %}
-      "webhook_configs":
-      - "url": "{{ notify_http_address }}"
-        "send_resolved": {{ notify_send_resolved }}
+      webhook_configs:
+      - url: {{ notify_http_address }}
+        send_resolved: {{ notify_send_resolved }}
 {% endif %}
 ---
 apiVersion: apps/v1
@@ -87,6 +87,9 @@ spec:
 {% for n in range(alertmanager_replicas | int) %}
         - --cluster.peer=alertmanager-{{ loop.index0 }}.alertmanager.{{ prometheus_ns }}.svc.{{ cluster_domain }}:6783
 {% endfor %}
+{% if do_debugs | default(False) %}
+        - --log.level=debug
+{% endif %}
         - --storage.path=/data
         - --web.listen-address=:9093
         - --web.route-prefix=/
@@ -122,14 +125,14 @@ spec:
             cpu: "{{ alertmanager_cpu_request }}"
             memory: "{{ alertmanager_memory_request }}"
         volumeMounts:
-        - name: config
-          mountPath: /etc/config/alertmanager.yml
+        - mountPath: /etc/config/alertmanager.yml
+          name: config
           subPath: alertmanager.yml
-        - name: data
-          mountPath: /data
-{% if k8s_ressource_nodes_selectors | length > 0 %}
+        - mountPath: /data
+          name: data
+{% if k8s_resource_nodes_selectors | length > 0 %}
       nodeSelectors:
-{% for sel in k8s_ressource_nodes_selectors %}
+{% for sel in k8s_resource_nodes_selectors %}
         {{ sel.split('=')[0] }}: "{{ sel.split('=')[1] if (sel.split('=') | length > 1) else '' }}"
 {% endfor %}
 {% endif %}
@@ -152,3 +155,15 @@ spec:
       resources:
         requests:
           storage: "{{ alertmanager_data_capacity }}"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alertmanager
+  namespace: {{ prometheus_ns }}
+spec:
+  ports:
+  - name: http
+    port: 9093
+  selector:
+    name: alertmanager

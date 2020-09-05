@@ -1,0 +1,113 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: thanos-compact
+  namespace: {{ prometheus_ns }}
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: {{ thanos_compact_replicas }}
+  selector:
+    matchLabels:
+      name: thanos-compact
+  serviceName: thanos-compact
+  template:
+    metadata:
+      labels:
+        name: thanos-compact
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: name
+                operator: In
+                values: [ thanos-compact ]
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - args:
+        - compact
+        - --data-dir=/var/thanos/compact
+        - --debug.accept-malformed-index
+{% if do_debugs | default(False) %}
+        - --log.level=debug
+{% else %}
+        - --log.level=info
+{% endif %}
+        - --objstore.config=$(OBJSTORE_CONFIG)
+        - --retention.resolution-raw={{ thanos_retention_resolution_raw }}
+        - --retention.resolution-5m={{ thanos_retention_resolution_5m }}
+        - --retention.resolution-1h={{ thanos_retention_resolution_1h }}
+        - --wait
+        - --wait-interval={{ thanos_compact_interval }}
+        env:
+        - name: OBJSTORE_CONFIG
+          valueFrom:
+            secretKeyRef:
+              key: thanos.yaml
+              name: thanos-store
+        image: quay.io/thanos/thanos:{{ thanos_tag }}
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 8
+          httpGet:
+            path: /-/healthy
+            port: 10902
+          periodSeconds: 30
+        name: thanos
+        ports:
+        - containerPort: 10902
+          name: http
+        readinessProbe:
+          failureThreshold: 20
+          httpGet:
+            path: /-/ready
+            port: 10902
+          periodSeconds: 5
+        resources:
+          limits:
+            cpu: "{{ thanos_compact_cpu_limit }}"
+            memory: "{{ thanos_compact_memory_limit }}"
+          requests:
+            cpu: "{{ thanos_compact_cpu_request }}"
+            memory: "{{ thanos_compact_memory_request }}"
+        terminationMessagePolicy: FallbackToLogsOnError
+        volumeMounts:
+        - mountPath: /var/thanos/compact
+          name: data
+{% if k8s_resource_nodes_selectors | length > 0 %}
+      nodeSelectors:
+{% for sel in k8s_resource_nodes_selectors %}
+        {{ sel.split('=')[0] }}: "{{ sel.split('=')[1] if (sel.split('=') | length > 1) else '' }}"
+{% endfor %}
+{% endif %}
+      securityContext:
+{% if rwo_needs_fsgroup | default(False) %}
+        fsGroup: {{ rwo_needs_fsgroup }}
+{% endif %}
+        runAsUser: 1001
+      terminationGracePeriodSeconds: 120
+  updateStrategy:
+    type: RollingUpdate
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ ReadWriteOnce ]
+      resources:
+        requests:
+          storage: "{{ thanos_compact_data_capacity }}"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: scrape-me
+  name: thanos-compact
+  namespace: {{ prometheus_ns }}
+spec:
+  ports:
+  - name: exporter
+    port: 10902
+  selector:
+    name: thanos-compact

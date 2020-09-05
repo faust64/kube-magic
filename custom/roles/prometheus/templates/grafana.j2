@@ -12,18 +12,25 @@ stringData:
     [log]
     mode = console
 
+    [log.console]
+{% if do_debugs | default(False) %}
+    level = debug
+{% else %}
+    level = info
+{% endif %}
+    format = console
+
     [security]
     admin_user = {{ grafana_admin_user }}
     admin_password = {{ grafana_admin_password }}
 
     [auth.anonymous]
     enabled = true
-    org_name = Kubernetes
     org_role = Viewer
 
     [server]
-    domain = {{ root_domain }}
-    root_url = https://grafana.{{ root_domain }}
+    domain = {{ grafana_fqdn }}
+    root_url = {{ 'https' if grafana_do_tls else 'http' }}://{{ grafana_fqdn }}
 {% if smtp_relay | default(False) %}
 
     [smtp]
@@ -63,7 +70,7 @@ stringData:
       isDefault: true
       name: Prometheus
       type: prometheus
-      url: http://prometheus.{{ prometheus_ns }}.svc.{{ cluster_domain }}:9090
+      url: {{ grafana_upstream }}
     deleteDatasources: []
 ---
 apiVersion: apps/v1
@@ -74,6 +81,9 @@ metadata:
 spec:
   replicas: 1
   selector:
+    matchLabels:
+      name: grafana
+  strategy:
     type: RollingUpdate
   template:
     metadata:
@@ -130,9 +140,9 @@ spec:
         - mountPath: /var/lib/grafana/plugins
           name: run
           subPath: plugins
-{% if k8s_ressource_nodes_selectors | length > 0 %}
+{% if k8s_resource_nodes_selectors | length > 0 %}
       nodeSelectors:
-{% for sel in k8s_ressource_nodes_selectors %}
+{% for sel in k8s_resource_nodes_selectors %}
         {{ sel.split('=')[0] }}: "{{ sel.split('=')[1] if (sel.split('=') | length > 1) else '' }}"
 {% endfor %}
 {% endif %}
@@ -154,3 +164,15 @@ spec:
 {% endfor %}
       - emptyDir: {}
         name: run
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  namespace: {{ prometheus_ns }}
+spec:
+  ports:
+  - name: exporter
+    port: 3000
+  selector:
+    name: grafana
