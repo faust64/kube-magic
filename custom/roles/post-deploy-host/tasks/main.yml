@@ -4,7 +4,7 @@
       name: etcd
       state: present
     when:
-    - 'masters' in group_names
+    - "'masters' in group_names"
   - name: Installs OpenShift Backup Script
     copy:
       dest: /usr/local/sbin/openshift-backup
@@ -25,7 +25,7 @@
       owner: root
       src: profile-oc
   when:
-  - 'OSEv3' in group_names
+  - "'OSEv3' in group_names"
 - block:
   - name: Installs Kubernetes Backup Script
     copy:
@@ -40,4 +40,4 @@
       src: /usr/local/sbin/k8s-backup
       state: link
   when:
-  - 'kube-cluster' in group_names
+  - "'kube-cluster' in group_names"

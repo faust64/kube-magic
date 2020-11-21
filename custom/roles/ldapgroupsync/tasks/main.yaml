@@ -50,8 +50,8 @@
       owner: root
       src: ldap-sync-job.j2
   - name: Creates Sync Job
-     args:
-       chdir: /root
+    args:
+      chdir: /root
     shell: |
         oc process -f ldap-sync-job.yml -p "JOB_NAME={{ ldap_groupsync_jobname }}" \
            -p "NAMESPACE={{ ldap_groupsync_project }}" \

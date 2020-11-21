@@ -1,6 +1,12 @@
 ## Ansible >=2.8
 ansible_python_interpreter: auto_silent
 
+deb_dist_match:
+- Debian
+- Devuan
+- Raspbian
+- Ubuntu
+
 ## Custom / EFK
 elasticsearch_tag: 7.7.0
 fluentd_tag: v1.10-debian-elasticsearch7-1

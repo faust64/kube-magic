@@ -1,10 +1,4 @@
 - hosts: lbs:k8s-cluster
-  vars:
-    deb_dist_match:
-    - Debian
-    - Devuan
-    - Raspbian
-    - Ubuntu
   tasks:
   - block:
     - name: Installs python-apt
@@ -15,8 +9,10 @@
       apt:
         name:
         - ca-certificates
+        - mdadm
         - net-tools
         - openssl
+        - python-netaddr
         - strace
         - sudo
         - tcpdump
@@ -29,6 +25,13 @@
           dest: /usr/bin/python
           src: /usr/bin/python3
           state: link
+      - name: Ensures libexec exists
+        file:
+          dest: /usr/libexec
+          group: root
+          mode: 0755
+          owner: root
+          state: directory
       - name: Fix delegate-to
         file:
           dest: /usr/libexec/platform-python
