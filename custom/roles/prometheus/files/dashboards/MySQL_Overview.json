@@ -640,7 +640,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (max_over_time(mysql_global_status_threads_connected{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or\nmax_over_time(mysql_global_status_threads_connected{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (max_over_time(mysql_global_status_threads_connected{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or max_over_time(mysql_global_status_threads_connected{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "interval": "$interval",
@@ -654,7 +654,7 @@
           "calculatedInterval": "2m",
           "datasourceErrors": {},
           "errors": {},
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (max_over_time(mysql_global_status_threads_running{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or\nmax_over_time(mysql_global_status_threads_running{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (max_over_time(mysql_global_status_threads_running{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or max_over_time(mysql_global_status_threads_running{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -664,7 +664,7 @@
           "step": 20
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (avg_over_time(mysql_global_status_threads_running{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or \navg_over_time(mysql_global_status_threads_running{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
+          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (avg_over_time(mysql_global_status_threads_running{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[$interval]) or avg_over_time(mysql_global_status_threads_running{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"}[5m]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,

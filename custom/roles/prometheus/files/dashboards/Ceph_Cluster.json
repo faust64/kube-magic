@@ -1276,7 +1276,8 @@
   "style": "dark",
   "tags": [
     "ceph",
-    "cluster"
+    "cluster",
+    "storage"
   ],
   "templating": {
     "list": [

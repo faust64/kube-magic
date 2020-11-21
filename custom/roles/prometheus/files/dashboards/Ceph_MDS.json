@@ -253,7 +253,8 @@
   "tags": [
     "ceph",
     "cluster",
-    "mds"
+    "mds",
+    "storage"
   ],
   "templating": {
     "list": [

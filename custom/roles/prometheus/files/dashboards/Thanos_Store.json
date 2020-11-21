@@ -671,7 +671,7 @@
           "step": 10
         },
         {
-          "expr": "sum(rate(grpc_server_handling_seconds_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_pod_name=~\"$pod\",grpc_type=\"server_stream\"}[$interval])) by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) * 1 / sum(rate(grpc_server_handling_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_pod_name=~\"$pod\",grpc_type=\"server_stream\"}[$interval])) by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name)\n",
+          "expr": "sum(rate(grpc_server_handling_seconds_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_pod_name=~\"$pod\",grpc_type=\"server_stream\"}[$interval])) by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) * 1 / sum(rate(grpc_server_handling_seconds_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_pod_name=~\"$pod\",grpc_type=\"server_stream\"}[$interval])) by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,

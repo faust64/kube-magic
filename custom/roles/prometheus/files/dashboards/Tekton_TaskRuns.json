@@ -315,6 +315,7 @@
       "type": "stat"
     }
   ],
+  "refresh": "1m",
   "schemaVersion": 25,
   "style": "dark",
   "tags": [

@@ -720,7 +720,8 @@
   "tags": [
     "ceph",
     "cluster",
-    "pool"
+    "pool",
+    "storage"
   ],
   "templating": {
     "list": [

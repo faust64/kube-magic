@@ -826,12 +826,14 @@
       }
     }
   ],
+  "refresh": "1m",
   "schemaVersion": 25,
   "style": "dark",
   "tags": [
     "ceph",
     "cluster",
-    "osd"
+    "osd",
+    "storage"
   ],
   "templating": {
     "list": [

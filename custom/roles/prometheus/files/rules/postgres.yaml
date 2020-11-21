@@ -101,22 +101,22 @@ groups:
   #  annotations:
   #    summary: "Postgresql commit rate low (instance {{ $labels.instance }})"
   #    description: "Postgres seems to be processing very few transactions\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
-  - alert: PostgresqlLowXidConsumption
-    expr: rate(pg_txid_current[1m]) < 5
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "Postgresql low XID consumption (instance {{ $labels.instance }})"
-      description: "Postgresql seems to be consuming transaction IDs very slowly\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
-  - alert: PostgresqllowXlogConsumption
-    expr: rate(pg_xlog_position_bytes[1m]) < 100
-    for: 5m
-    labels:
-      severity: warning
-    annotations:
-      summary: "Postgresqllow XLOG consumption (instance {{ $labels.instance }})"
-      description: "Postgres seems to be consuming XLOG very slowly\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  #- alert: PostgresqlLowXidConsumption
+  #  expr: rate(pg_txid_current[1m]) < 5
+  #  for: 5m
+  #  labels:
+  #    severity: warning
+  #  annotations:
+  #    summary: "Postgresql low XID consumption (instance {{ $labels.instance }})"
+  #    description: "Postgresql seems to be consuming transaction IDs very slowly\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  #- alert: PostgresqllowXlogConsumption
+  #  expr: rate(pg_xlog_position_bytes[1m]) < 100
+  #  for: 5m
+  #  labels:
+  #    severity: warning
+  #  annotations:
+  #    summary: "Postgresql low XLOG consumption (instance {{ $labels.instance }})"
+  #    description: "Postgres seems to be consuming XLOG very slowly\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
   - alert: PostgresqlWaleReplicationStopped
     expr: rate(pg_xlog_position_bytes[1m]) == 0
     for: 5m

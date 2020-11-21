@@ -17,8 +17,24 @@ groups:
     annotations:
       summary: "Elasticsearch Heap Usage warning (instance {{ $labels.instance }})"
       description: "The heap usage is over 80% for 5m\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  - alert: ElasticsearchMemoryCritical
+    expr: 100 * (sum by (kubernetes_cluster,kubernetes_pod_name) (elasticsearch_jvm_memory_used_bytes)) / on (kubernetes_cluster,kubernetes_pod_name) group_left() sum by (kubernetes_cluster,kubernetes_pod_name) (label_replace(container_spec_memory_limit_bytes{pod=~"elasticsearch.+",container=""},"kubernetes_pod_name","$1","pod","(.+)")) > 90
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Elasticsearch Memory Usage Too High (instance {{ $labels.instance }})"
+      description: "Memory usage is over 90% for 5m\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  - alert: ElasticsearchMemoryWarning
+    expr: 100 * (sum by (kubernetes_cluster,kubernetes_pod_name) (elasticsearch_jvm_memory_used_bytes)) / on (kubernetes_cluster,kubernetes_pod_name) group_left() sum by (kubernetes_cluster,kubernetes_pod_name) (label_replace(container_spec_memory_limit_bytes{pod=~"elasticsearch.+",container=""},"kubernetes_pod_name","$1","pod","(.+)")) > 80
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Elasticsearch Memory Usage warning (instance {{ $labels.instance }})"
+      description: "Memory usage is over 80% for 5m\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
   - alert: ElasticsearchDiskSpaceLow
-    expr: elasticsearch_filesystem_data_available_bytes / elasticsearch_filesystem_data_size_bytes * 100 < 20
+    expr: elasticsearch_filesystem_data_available_bytes / elasticsearch_filesystem_data_size_bytes * 100 < 35
     for: 5m
     labels:
       severity: warning
@@ -26,7 +42,7 @@ groups:
       summary: "Elasticsearch disk space low (instance {{ $labels.instance }})"
       description: "The disk usage is over 80%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
   - alert: ElasticsearchDiskOutOfSpace
-    expr: elasticsearch_filesystem_data_available_bytes / elasticsearch_filesystem_data_size_bytes * 100 < 10
+    expr: elasticsearch_filesystem_data_available_bytes / elasticsearch_filesystem_data_size_bytes * 100 < 21
     for: 5m
     labels:
       severity: critical

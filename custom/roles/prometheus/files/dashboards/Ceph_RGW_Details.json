@@ -454,7 +454,8 @@
   "tags": [
     "ceph",
     "cluster",
-    "rgw"
+    "rgw",
+    "storage"
   ],
   "templating": {
     "list": [

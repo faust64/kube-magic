@@ -370,7 +370,7 @@
       "valueName": "current"
     },
     {
-      "content": "<img src=\"https://images.techhive.com/images/article/2014/06/cassandra-logo-fxd-100310326-primary.idge.jpg\" width=\"170\" height=\"120\" />\n<span style=\"font-family:verdana,geneva,sans-serif;\"><span style=\"font-size:28px;\"><span style=\"color:#ffffff;\">&nbsp;&nbsp;Cassandra cluster monitoring</span></span></span>\n",
+      "content": "<img src=\"https://images.techhive.com/images/article/2014/06/cassandra-logo-fxd-100310326-primary.idge.jpg\" width=\"170\" height=\"120\" /><span style=\"font-family:verdana,geneva,sans-serif;\"><span style=\"font-size:28px;\"><span style=\"color:#ffffff;\">&nbsp;&nbsp;Cassandra cluster monitoring</span></span></span>",
       "datasource": null,
       "description": "",
       "fieldConfig": {

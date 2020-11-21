@@ -1,6 +1,14 @@
 groups:
 - name: KubernetesNginx
   rules:
+  - alert: NginxDown
+    expr: nginx_up == 0
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Nginx down (instance {{ $labels.instance }})"
+      description: "Nginx down\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
   - alert: NginxHighHttp4xxErrorRate
     expr: sum(rate(nginx_http_requests_total{status=~"^4.."}[1m])) / sum(rate(nginx_http_requests_total[1m])) * 100 > 5
     for: 5m

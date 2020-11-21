@@ -1057,7 +1057,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb_mongod_replset_member_uptime{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",set=~\"$replset\"}\n* on (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,kubernetes_pod_name,name) group_right(state) (max_over_time(mongodb_mongod_replset_my_name{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",set=~\"$replset\"}[$interval]) or max_over_time(mongodb_mongod_replset_my_name{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",set=~\"$replset\"}[5m]))",
+          "expr": "mongodb_mongod_replset_member_uptime{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",set=~\"$replset\"} * on (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,kubernetes_pod_name,name) group_right(state) (max_over_time(mongodb_mongod_replset_my_name{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",set=~\"$replset\"}[$interval]) or max_over_time(mongodb_mongod_replset_my_name{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",set=~\"$replset\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "interval": "$interval",
@@ -1298,7 +1298,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mongodb_mongod_replset_member_ping_ms{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",set=~\"$replset\"}\n* on (name) group_right(state) (max_over_time(mongodb_mongod_replset_my_name{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",set=~\"$replset\"}[$interval]) or max_over_time(mongodb_mongod_replset_my_name{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",set=~\"$replset\"}[5m]))",
+          "expr": "mongodb_mongod_replset_member_ping_ms{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",set=~\"$replset\"} * on (name) group_right(state) (max_over_time(mongodb_mongod_replset_my_name{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",set=~\"$replset\"}[$interval]) or max_over_time(mongodb_mongod_replset_my_name{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",set=~\"$replset\"}[5m]))",
           "format": "time_series",
           "hide": false,
           "interval": "$interval",

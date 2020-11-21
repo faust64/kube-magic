@@ -7665,6 +7665,7 @@
       "type": "row"
     }
   ],
+  "refresh": "1m",
   "schemaVersion": 25,
   "style": "dark",
   "tags": [

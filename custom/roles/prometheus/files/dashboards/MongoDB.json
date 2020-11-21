@@ -60,7 +60,7 @@
               "format": "time_series",
               "interval": "",
               "intervalFactor": 2,
-              "legendFormat": "{{type}}",
+              "legendFormat": "{{kubernetes_pod_name}}/{{type}}",
               "refId": "A",
               "step": 240
             }
@@ -142,7 +142,7 @@
               "format": "time_series",
               "interval": "",
               "intervalFactor": 2,
-              "legendFormat": "{{state}}",
+              "legendFormat": "{{kubernetes_pod_name}}/{{state}}",
               "refId": "A",
               "step": 240
             }
@@ -219,7 +219,7 @@
               "format": "time_series",
               "interval": "",
               "intervalFactor": 2,
-              "legendFormat": "{{state}}",
+              "legendFormat": "{{kubernetes_pod_name}}/{{state}}",
               "refId": "A",
               "step": 600
             }
@@ -1029,44 +1029,6 @@
       "height": 250,
       "panels": [
         {
-          "alert": {
-            "conditions": [
-              {
-                "evaluator": {
-                  "params": [
-                    300
-                  ],
-                  "type": "gt"
-                },
-                "operator": {
-                  "type": "and"
-                },
-                "query": {
-                  "params": [
-                    "A",
-                    "15m",
-                    "now"
-                  ]
-                },
-                "reducer": {
-                  "params": [],
-                  "type": "avg"
-                },
-                "type": "query"
-              }
-            ],
-            "executionErrorState": "keep_state",
-            "frequency": "60s",
-            "handler": 1,
-            "message": "A MongoDB oplog replication has been 5 minutes behind in its replication for more than 15 minutes.\nBeing able to fail over to a replica of your data is only useful if the data is up to date, so you need to know when that’s no longer the case!",
-            "name": "MongoDB Oplog lag alert",
-            "noDataState": "no_data",
-            "notifications": [
-              {
-                "id": 2
-              }
-            ]
-          },
           "aliasColors": {},
           "bars": false,
           "dashLength": 10,
@@ -1153,44 +1115,6 @@
           ]
         },
         {
-          "alert": {
-            "conditions": [
-              {
-                "evaluator": {
-                  "params": [
-                    0.98
-                  ],
-                  "type": "gt"
-                },
-                "operator": {
-                  "type": "and"
-                },
-                "query": {
-                  "params": [
-                    "A",
-                    "5m",
-                    "now"
-                  ]
-                },
-                "reducer": {
-                  "params": [],
-                  "type": "avg"
-                },
-                "type": "query"
-              }
-            ],
-            "executionErrorState": "keep_state",
-            "frequency": "60s",
-            "handler": 1,
-            "message": "MongoDB's average disk i/o utilization has been above 98% for 5 minutes",
-            "name": "MongoDB's Disk IO Utilization alert",
-            "noDataState": "no_data",
-            "notifications": [
-              {
-                "id": 2
-              }
-            ]
-          },
           "aliasColors": {},
           "bars": false,
           "dashLength": 10,
@@ -1450,6 +1374,7 @@
       "titleSize": "h6"
     }
   ],
+  "refresh": "1m",
   "schemaVersion": 14,
   "style": "dark",
   "tags": [

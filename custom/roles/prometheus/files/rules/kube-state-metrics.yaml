@@ -193,14 +193,14 @@ groups:
     annotations:
       summary: "Kubernetes DaemonSet misscheduled (instance {{ $labels.instance }})"
       description: "Some DaemonSet Pods are running where they are not supposed to run\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
-  - alert: KubernetesCronjobTooLong
-    expr: time() - kube_cronjob_next_schedule_time > 3600
+  - alert: KubernetesJobTooLong
+    expr: (kube_job_status_completion_time - kube_job_status_start_time) > 3600
     for: 5m
     labels:
       severity: warning
     annotations:
-      summary: "Kubernetes CronJob too long (instance {{ $labels.instance }})"
-      description: "CronJob {{ $labels.namespace }}/{{ $labels.cronjob }} is taking more than 1h to complete.\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      summary: "Kubernetes Job too long (instance {{ $labels.instance }})"
+      description: "Job {{ $labels.namespace }}/{{ $labels.cronjob }} took more than 1h to complete.\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
   - alert: KubernetesJobCompletion
     expr: kube_job_spec_completions - kube_job_status_succeeded > 0 or kube_job_status_failed > 0
     for: 5m

@@ -1218,7 +1218,8 @@
   "style": "dark",
   "tags": [
     "cluster",
-    "minio"
+    "minio",
+    "storage"
   ],
   "templating": {
     "list": [

@@ -277,7 +277,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (rgw_host) (label_replace(rate(ceph_rgw_get_initial_lat_sum{kubernetes_cluster=~\"$cluster\",ceph_daemon=~\"$rgw_servers\"}[$interval]),\"rgw_host\",\"$1\",\"ceph_daemon\",\"rgw.(.*)\") / \nlabel_replace(rate(ceph_rgw_get_initial_lat_count{kubernetes_cluster=~\"$cluster\",ceph_daemon=~\"$rgw_servers\"}[$interval]),\"rgw_host\",\"$1\",\"ceph_daemon\",\"rgw.(.*)\"))",
+          "expr": "sum by (rgw_host) (label_replace(rate(ceph_rgw_get_initial_lat_sum{kubernetes_cluster=~\"$cluster\",ceph_daemon=~\"$rgw_servers\"}[$interval]),\"rgw_host\",\"$1\",\"ceph_daemon\",\"rgw.(.*)\") / label_replace(rate(ceph_rgw_get_initial_lat_count{kubernetes_cluster=~\"$cluster\",ceph_daemon=~\"$rgw_servers\"}[$interval]),\"rgw_host\",\"$1\",\"ceph_daemon\",\"rgw.(.*)\"))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -586,7 +586,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (rgw_host) (label_replace(rate(ceph_rgw_put_initial_lat_sum{kubernetes_cluster=~\"$cluster\",ceph_daemon=~\"$rgw_servers\"}[$interval]),\"rgw_host\",\"$1\",\"ceph_daemon\",\"rgw.(.*)\") / \nlabel_replace(rate(ceph_rgw_put_initial_lat_count{kubernetes_cluster=~\"$cluster\",ceph_daemon=~\"$rgw_servers\"}[$interval]),\"rgw_host\",\"$1\",\"ceph_daemon\",\"rgw.(.*)\"))",
+          "expr": "sum by (rgw_host) (label_replace(rate(ceph_rgw_put_initial_lat_sum{kubernetes_cluster=~\"$cluster\",ceph_daemon=~\"$rgw_servers\"}[$interval]),\"rgw_host\",\"$1\",\"ceph_daemon\",\"rgw.(.*)\") / label_replace(rate(ceph_rgw_put_initial_lat_count{kubernetes_cluster=~\"$cluster\",ceph_daemon=~\"$rgw_servers\"}[$interval]),\"rgw_host\",\"$1\",\"ceph_daemon\",\"rgw.(.*)\"))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -645,7 +645,8 @@
   "tags": [
     "ceph",
     "cluster",
-    "rgw"
+    "rgw",
+    "storage"
   ],
   "templating": {
     "list": [

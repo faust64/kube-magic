@@ -9,30 +9,6 @@
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
         "type": "dashboard"
-      },
-      {
-        "datasource": "Prometheus",
-        "enable": true,
-        "expr": "sum(changes(prometheus_config_last_reload_success_timestamp_seconds{instance=~\"$instance\"}[10m])) by (instance)",
-        "hide": false,
-        "iconColor": "rgb(0, 96, 19)",
-        "limit": 100,
-        "name": "reloads",
-        "showIn": 0,
-        "step": "5m",
-        "type": "alert"
-      },
-      {
-        "datasource": "Prometheus",
-        "enable": true,
-        "expr": "count(sum(up{instance=\"$instance\"}) by (instance) < 1)",
-        "hide": false,
-        "iconColor": "rgba(255, 96, 96, 1)",
-        "limit": 100,
-        "name": "down",
-        "showIn": 0,
-        "step": "5m",
-        "type": "alert"
       }
     ]
   },
@@ -887,7 +863,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(sum_over_time(prometheus_target_scrapes_exceeded_sample_limit_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_pod_name=~\"$instance\",job=~\"$job\"}[$interval])) + \nsum(sum_over_time(prometheus_target_scrapes_sample_duplicate_timestamp_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_pod_name=~\"$instance\",job=~\"$job\"}[$interval])) + \nsum(sum_over_time(prometheus_target_scrapes_sample_out_of_bounds_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_pod_name=~\"$instance\",job=~\"$job\"}[$interval])) + \nsum(sum_over_time(prometheus_target_scrapes_sample_out_of_order_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_pod_name=~\"$instance\",job=~\"$job\"}[$interval])) ",
+          "expr": "sum(sum_over_time(prometheus_target_scrapes_exceeded_sample_limit_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_pod_name=~\"$instance\",job=~\"$job\"}[$interval])) + sum(sum_over_time(prometheus_target_scrapes_sample_duplicate_timestamp_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_pod_name=~\"$instance\",job=~\"$job\"}[$interval])) + sum(sum_over_time(prometheus_target_scrapes_sample_out_of_bounds_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_pod_name=~\"$instance\",job=~\"$job\"}[$interval])) + sum(sum_over_time(prometheus_target_scrapes_sample_out_of_order_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_pod_name=~\"$instance\",job=~\"$job\"}[$interval])) ",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,

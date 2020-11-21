@@ -1,6 +1,7 @@
 grafana_dashboards:
 - Apache
 - Ansible_Operator
+- BigBlueButton
 - BlueMind
 - BlueMind_Full
 - Cassandra
@@ -18,9 +19,11 @@ grafana_dashboards:
 - CodiMD
 - Docker_Registry
 - ElasticSearch
+- FreeSwitch
 - Gitea
 - Go_Applications
 - Grafana
+- HAProxy
 - Kubernetes_Backups
 - Kubernetes_Capacity_Planning
 - Kubernetes_Clusters
@@ -31,6 +34,10 @@ grafana_dashboards:
 - Kubernetes_Networking_Details
 - Kubernetes_Nodes
 - Kubernetes_Pods
+- Mattermost
+- Mattermost_Bonus
+- Mattermost_Performance
+- Memcached
 - MinIO
 - MongoDB
 - MongoDB_Overview
@@ -43,6 +50,8 @@ grafana_dashboards:
 - MySQL_Performance_Schema
 - MySQL_Table_Statistics
 - MySQL_Wait_Event_Analyses
+- Nginx
+- NextCloud
 - Nexus
 - NodeJS_Applications
 - NodeJS_Metrics
@@ -51,7 +60,9 @@ grafana_dashboards:
 - Prometheus
 - Redis
 - RocketChat
+- S3_Bucket
 - SonarQube
+- Squid
 - Tekton_PipelineRuns
 - Tekton_TaskRuns
 - Thanos
@@ -65,12 +76,14 @@ grafana_dashboards:
 prometheus_rules:
 - apache
 - blackbox
+- bigbluebutton
 - cadvisor
 - cassandra
 - ceph
 - consul
 - elasticsearch
 - etcd
+- freeswitch
 - haproxy
 - java
 - jobs
@@ -80,9 +93,11 @@ prometheus_rules:
 - minio
 - mongodb
 - mysql
+- nextcloud
 - nexus
 - nginx
 - nodes
+- onlyoffice
 - openldap
 - pgbouncer
 - pods
@@ -90,6 +105,7 @@ prometheus_rules:
 - prometheus
 - rabbitmq
 - redis
+- s3
 - sidekick
 - speedtest
 - thanos

@@ -10,7 +10,7 @@ groups:
       summary: "SpeedTest Slow Internet Download (instance {{ $labels.instance }})"
       description: "Internet download speed is currently {{humanize $value}} Mbps.\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
   - alert: SpeedtestSlowInternetUpload
-    expr: avg_over_time(speedtest_upload[30m]) < 20 
+    expr: avg_over_time(speedtest_upload[30m]) < 20
     for: 5m
     labels:
       severity: warning

@@ -2,7 +2,7 @@ groups:
 - name: KubernetescAdvisor
   rules:
   - alert: ContainerKilled
-    expr: time() - container_last_seen > 60
+    expr: (time() - container_last_seen{container!="POD",container=~".+"}) > 60
     for: 5m
     labels:
       severity: warning

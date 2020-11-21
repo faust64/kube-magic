@@ -12,12 +12,12 @@
       }
     ]
   },
-  "description": "Ceph RadosGW Buckets details.",
+  "description": "NextCloud metrics overview.",
   "editable": true,
-  "gnetId": null,
+  "gnetId": 9632,
   "graphTooltip": 0,
-  "id": 43,
-  "iteration": 1597673169589,
+  "id": 69,
+  "iteration": 1600864811914,
   "links": [],
   "panels": [
     {
@@ -26,7 +26,6 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -36,29 +35,26 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
+        "h": 4,
         "w": 12,
         "x": 0,
         "y": 0
       },
       "hiddenSeries": false,
-      "id": 29,
+      "id": 4,
       "legend": {
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": false,
-        "total": false,
-        "values": false
+        "show": true,
+        "total": true,
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -69,11 +65,11 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "avg by (kubernetes_namespace,kubernetes_service_name,kubernetes_cluster,bucket) (increase(radosgw_usage_bucket_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",bucket=~\"$bkt\"}[$interval]))",
+          "expr": "sum (nextcloud_auth_errors_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$podname\"})",
           "format": "time_series",
-          "interval": "",
+          "instant": false,
           "intervalFactor": 1,
-          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_service_name}} {{bucket}}",
+          "legendFormat": "Auth Errors Total",
           "refId": "A"
         }
       ],
@@ -81,7 +77,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "S3 bytes written in $interval",
+      "title": "Auth Errors",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -97,8 +93,7 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:3943",
-          "format": "bytes",
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -106,13 +101,13 @@
           "show": true
         },
         {
-          "$$hashKey": "object:3944",
+          "decimals": null,
           "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
           "min": null,
-          "show": false
+          "show": true
         }
       ],
       "yaxis": {
@@ -121,34 +116,111 @@
       }
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
+      "cacheTimeout": null,
       "datasource": "Prometheus",
-      "description": "",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "mappings": [
+            {
+              "$$hashKey": "object:473",
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "max": 100,
+          "min": 0,
+          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#d44a3a",
+                "value": null
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 0.95
+              },
+              {
+                "color": "#299c46",
+                "value": 0.99
+              }
+            ]
+          },
+          "unit": "percent"
         },
         "overrides": []
       },
-      "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
-        "h": 7,
+        "h": 4,
         "w": 12,
         "x": 12,
         "y": 0
       },
+      "id": 10,
+      "interval": null,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "targets": [
+        {
+          "expr": "100 * sum(nextcloud_up{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$podname\"}) / count(nextcloud_up{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$podname\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": " ",
+          "refId": "A"
+        }
+      ],
+      "title": "Nextcloud Up ?",
+      "type": "stat"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 4
+      },
       "hiddenSeries": false,
-      "id": 30,
+      "id": 8,
       "legend": {
+        "alignAsTable": false,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "show": false,
+        "show": true,
         "total": false,
         "values": false
       },
@@ -156,9 +228,6 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -166,22 +235,29 @@
       "seriesOverrides": [],
       "spaceLength": 10,
       "stack": false,
-      "steppedLine": false,
+      "steppedLine": true,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,bucket) (radosgw_usage_bucket_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",bucket=~\"$bkt\"}/radosgw_usage_bucket_objects{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",bucket=~\"$bkt\"})",
+          "expr": "sum(nextcloud_shares_federated_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$podname\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_service_name}} {{bucket}}",
+          "legendFormat": "Federated Total",
           "refId": "A"
+        },
+        {
+          "expr": "sum(nextcloud_shares_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$podname\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Total Shares",
+          "refId": "B"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Average Objects Sizes",
+      "title": "Shares",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -197,8 +273,8 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:3943",
-          "format": "bytes",
+          "$$hashKey": "object:155",
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -206,13 +282,13 @@
           "show": true
         },
         {
-          "$$hashKey": "object:3944",
+          "$$hashKey": "object:156",
           "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
           "min": null,
-          "show": false
+          "show": true
         }
       ],
       "yaxis": {
@@ -226,7 +302,6 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -236,31 +311,121 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
-        "w": 7,
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      },
+      "hiddenSeries": false,
+      "id": 6,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum (nextcloud_files_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$podname\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Files Total",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Files Count",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:236",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:237",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
         "x": 0,
-        "y": 7
+        "y": 13
       },
       "hiddenSeries": false,
-      "id": 31,
+      "id": 2,
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
+        "avg": false,
+        "current": false,
+        "max": false,
         "min": false,
-        "rightSide": false,
-        "show": false,
+        "show": true,
         "total": false,
-        "values": true
+        "values": false
       },
       "lines": true,
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -271,31 +436,25 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (increase(radosgw_usage_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",bucket=~\"$bkt\"}[$interval]))",
+          "expr": "sum (nextcloud_users_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$podname\"})",
           "format": "time_series",
-          "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Total",
+          "legendFormat": "Users Total",
           "refId": "A"
         },
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (increase(radosgw_usage_successful_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",bucket=~\"$bkt\"}[$interval]))",
-          "interval": "",
-          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Successful",
+          "expr": "sum (nextcloud_active_users_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$podname\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Users Active",
           "refId": "B"
-        },
-        {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (increase(radosgw_usage_successful_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",bucket=~\"$bkt\"}[$interval]) - increase(radosgw_usage_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",bucket=~\"$bkt\"}[$interval]))",
-          "interval": "",
-          "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} Failed",
-          "refId": "C"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "S3 Operations by Pod $interval",
+      "title": "User Count",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -311,8 +470,8 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:3943",
-          "format": "none",
+          "$$hashKey": "object:398",
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -320,13 +479,13 @@
           "show": true
         },
         {
-          "$$hashKey": "object:3944",
+          "$$hashKey": "object:399",
           "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
           "min": null,
-          "show": false
+          "show": true
         }
       ],
       "yaxis": {
@@ -340,7 +499,6 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -350,31 +508,26 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
-        "w": 17,
-        "x": 7,
-        "y": 7
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 13
       },
       "hiddenSeries": false,
-      "id": 34,
+      "id": 12,
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
+        "avg": false,
+        "current": false,
+        "max": false,
         "min": false,
-        "rightSide": true,
         "show": true,
         "total": false,
-        "values": true
+        "values": false
       },
       "lines": true,
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -385,31 +538,18 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,bucket,owner,category) (increase(radosgw_usage_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",bucket=~\"$bkt\"}[$interval]))",
+          "expr": "sum (nextcloud_scrape_errors_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$podname\"})",
           "format": "time_series",
-          "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "Total {{owner}}@{{bucket}} {{category}}",
+          "legendFormat": "Scrape Errors Total",
           "refId": "A"
-        },
-        {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,bucket,owner,category) (increase(radosgw_usage_successful_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",bucket=~\"$bkt\"}[$interval]))",
-          "interval": "",
-          "legendFormat": "Successfull {{owner}}@{{bucket}} {{category}}",
-          "refId": "B"
-        },
-        {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,bucket,owner,category) (increase(radosgw_usage_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",bucket=~\"$bkt\"}[$interval]) - increase(radosgw_usage_successful_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",bucket=~\"$bkt\"}[$interval]))",
-          "interval": "",
-          "legendFormat": "Failed {{owner}}@{{bucket}} {{category}}",
-          "refId": "C"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "S3 Operations breakdown per $interval",
+      "title": "Scrape Errors",
       "tooltip": {
         "shared": true,
         "sort": 2,
@@ -425,8 +565,8 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:3943",
-          "format": "none",
+          "$$hashKey": "object:317",
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -434,229 +574,13 @@
           "show": true
         },
         {
-          "$$hashKey": "object:3944",
+          "$$hashKey": "object:318",
           "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
           "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "Prometheus",
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 7,
-        "w": 7,
-        "x": 0,
-        "y": 14
-      },
-      "hiddenSeries": false,
-      "id": 32,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": false,
-        "rightSide": false,
-        "show": false,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (increase(radosgw_usage_received_bytes_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",bucket=~\"$bkt\"}[$interval]))",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "RX {{kubernetes_namespace}}/{{kubernetes_pod_name}}",
-          "refId": "A"
-        },
-        {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) (increase(radosgw_usage_sent_bytes_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",bucket=~\"$bkt\"}[$interval]))",
-          "interval": "",
-          "legendFormat": "TX {{kubernetes_namespace}}/{{kubernetes_pod_name}}",
-          "refId": "B"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "S3 TX/RX by Pod in $interval",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:3943",
-          "format": "bytes",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
           "show": true
-        },
-        {
-          "$$hashKey": "object:3944",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "Prometheus",
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 7,
-        "w": 17,
-        "x": 7,
-        "y": 14
-      },
-      "hiddenSeries": false,
-      "id": 33,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,bucket,owner,category) (increase(radosgw_usage_received_bytes_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",bucket=~\"$bkt\"}[$interval]))",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "RX {{kubernetes_namespace}}/{{kubernetes_service_name}} {{owner}}@{{bucket}} {{category}}",
-          "refId": "A"
-        },
-        {
-          "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name,bucket,owner,category) (increase(radosgw_usage_sent_bytes_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",bucket=~\"$bkt\"}[$interval]))",
-          "interval": "",
-          "legendFormat": "TX {{kubernetes_namespace}}/{{kubernetes_service_name}} {{owner}}@{{bucket}} {{category}}",
-          "refId": "B"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "S3 TX/RX breakdown in $interval",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:3943",
-          "format": "bytes",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "$$hashKey": "object:3944",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
         }
       ],
       "yaxis": {
@@ -666,14 +590,12 @@
     }
   ],
   "refresh": "1m",
-  "schemaVersion": 25,
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [
-    "ceph",
-    "cluster",
-    "rgw",
-    "s3",
-    "storage"
+    "applications",
+    "php",
+    "nextcloud"
   ],
   "templating": {
     "list": [
@@ -683,28 +605,13 @@
         "auto_min": "10s",
         "current": {
           "selected": false,
-          "text": "1m",
-          "value": "1m"
+          "text": "6h",
+          "value": "6h"
         },
         "hide": 0,
-        "label": null,
+        "label": "Interval",
         "name": "interval",
         "options": [
-          {
-            "selected": false,
-            "text": "30s",
-            "value": "30s"
-          },
-          {
-            "selected": true,
-            "text": "1m",
-            "value": "1m"
-          },
-          {
-            "selected": false,
-            "text": "10m",
-            "value": "10m"
-          },
           {
             "selected": false,
             "text": "30m",
@@ -717,6 +624,11 @@
           },
           {
             "selected": false,
+            "text": "3h",
+            "value": "3h"
+          },
+          {
+            "selected": true,
             "text": "6h",
             "value": "6h"
           },
@@ -746,7 +658,7 @@
             "value": "30d"
           }
         ],
-        "query": "30s,1m,10m,30m,1h,6h,12h,1d,7d,14d,30d",
+        "query": "30m,1h,3h,6h,12h,1d,7d,14d,30d",
         "queryValue": "",
         "refresh": 2,
         "skipUrlSync": false,
@@ -756,20 +668,22 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "text": "All",
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "Prometheus",
-        "definition": "label_values(radosgw_usage_bucket_bytes,kubernetes_cluster)",
+        "definition": "label_values(nextcloud_users_total,kubernetes_cluster)",
         "hide": 0,
         "includeAll": true,
         "label": "Kubernetes Cluster",
         "multi": true,
         "name": "cluster",
         "options": [],
-        "query": "label_values(radosgw_usage_bucket_bytes,kubernetes_cluster)",
+        "query": "label_values(nextcloud_users_total,kubernetes_cluster)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -784,20 +698,22 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "text": "All",
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "Prometheus",
-        "definition": "label_values(radosgw_usage_bucket_bytes{kubernetes_cluster=~\"$cluster\"},kubernetes_namespace)",
+        "definition": "label_values(nextcloud_users_total{kubernetes_cluster=~\"$cluster\"},kubernetes_namespace)",
         "hide": 0,
         "includeAll": true,
         "label": "Kubernetes Namespace",
         "multi": true,
         "name": "namespace",
         "options": [],
-        "query": "label_values(radosgw_usage_bucket_bytes{kubernetes_cluster=~\"$cluster\"},kubernetes_namespace)",
+        "query": "label_values(nextcloud_users_total{kubernetes_cluster=~\"$cluster\"},kubernetes_namespace)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -818,14 +734,14 @@
           ]
         },
         "datasource": "Prometheus",
-        "definition": "label_values(radosgw_usage_bucket_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\"},kubernetes_service_name)",
+        "definition": "label_values(nextcloud_users_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\"},kubernetes_service_name)",
         "hide": 0,
         "includeAll": true,
         "label": "Kubernetes Deployment",
         "multi": true,
         "name": "deployment",
         "options": [],
-        "query": "label_values(radosgw_usage_bucket_bytes{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\"},kubernetes_service_name)",
+        "query": "label_values(nextcloud_users_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\"},kubernetes_service_name)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -840,21 +756,22 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "tags": [],
-          "text": "All",
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "Prometheus",
-        "definition": "label_values(radosgw_usage_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},bucket)",
+        "definition": "label_values(nextcloud_users_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_pod_name)",
         "hide": 0,
         "includeAll": true,
-        "label": "S3 Bucket",
+        "label": "Pod Name",
         "multi": true,
-        "name": "bkt",
+        "name": "podname",
         "options": [],
-        "query": "label_values(radosgw_usage_ops_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},bucket)",
+        "query": "label_values(nextcloud_users_total{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},kubernetes_pod_name)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -874,7 +791,6 @@
   "timepicker": {
     "refresh_intervals": [
       "10s",
-      "15s",
       "30s",
       "1m",
       "5m",
@@ -897,7 +813,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "Ceph RGW Buckets",
-  "uid": "cephrgwbuckets",
+  "title": "Nextcloud",
+  "uid": "nextcloud",
   "version": 1
 }

@@ -692,7 +692,8 @@
   "tags": [
     "ceph",
     "cluster",
-    "rbd"
+    "rbd",
+    "storage"
   ],
   "templating": {
     "list": [

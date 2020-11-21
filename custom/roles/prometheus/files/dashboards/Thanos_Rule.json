@@ -82,7 +82,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (strategy) (rate(prometheus_rule_evaluations_total{kubernetes_namespace=~\"$namespace\",kubernetes_cluster=~\"$cluster\",kubernetes_pod_name=~\"$pod\"}[$interval]))\n",
+          "expr": "sum by (strategy) (rate(prometheus_rule_evaluations_total{kubernetes_namespace=~\"$namespace\",kubernetes_cluster=~\"$cluster\",kubernetes_pod_name=~\"$pod\"}[$interval]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1281,7 +1281,7 @@
           "step": 10
         },
         {
-          "expr": "sum(rate(grpc_server_handling_seconds_sum{kubernetes_namespace=~\"$namespace\",kubernetes_cluster=~\"$cluster\",kubernetes_pod_name=~\"$pod\",grpc_type=\"unary\"}[$interval])) by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) * 1 / sum(rate(grpc_server_handling_seconds_count{kubernetes_namespace=~\"$namespace\",kubernetes_cluster=~\"$cluster\",kubernetes_pod_name=~\"$pod\",grpc_type=\"unary\"}[$interval])) by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name)\n",
+          "expr": "sum(rate(grpc_server_handling_seconds_sum{kubernetes_namespace=~\"$namespace\",kubernetes_cluster=~\"$cluster\",kubernetes_pod_name=~\"$pod\",grpc_type=\"unary\"}[$interval])) by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) * 1 / sum(rate(grpc_server_handling_seconds_count{kubernetes_namespace=~\"$namespace\",kubernetes_cluster=~\"$cluster\",kubernetes_pod_name=~\"$pod\",grpc_type=\"unary\"}[$interval])) by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1636,7 +1636,7 @@
           "step": 10
         },
         {
-          "expr": "sum(rate(grpc_server_handling_seconds_sum{kubernetes_namespace=~\"$namespace\",kubernetes_cluster=~\"$cluster\",kubernetes_pod_name=~\"$pod\",grpc_type=\"server_stream\"}[$interval])) by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) * 1 /\nsum(rate(grpc_server_handling_seconds_count{kubernetes_namespace=~\"$namespace\",kubernetes_cluster=~\"$cluster\",kubernetes_pod_name=~\"$pod\",grpc_type=\"server_stream\"}[$interval])) by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name)\n",
+          "expr": "sum(rate(grpc_server_handling_seconds_sum{kubernetes_namespace=~\"$namespace\",kubernetes_cluster=~\"$cluster\",kubernetes_pod_name=~\"$pod\",grpc_type=\"server_stream\"}[$interval])) by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name) * 1 / sum(rate(grpc_server_handling_seconds_count{kubernetes_namespace=~\"$namespace\",kubernetes_cluster=~\"$cluster\",kubernetes_pod_name=~\"$pod\",grpc_type=\"server_stream\"}[$interval])) by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,

@@ -218,7 +218,7 @@
       ],
       "targets": [
         {
-          "expr": "topk(10, (irate(ceph_osd_op_r_latency_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\"}[1m]) / on (ceph_daemon) irate(ceph_osd_op_r_latency_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\"}[1m]) * 1000))\n\n",
+          "expr": "topk(10, (irate(ceph_osd_op_r_latency_sum{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\"}[1m]) / on (ceph_daemon) irate(ceph_osd_op_r_latency_count{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\"}[1m]) * 1000))",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -968,7 +968,8 @@
   "tags": [
     "ceph",
     "cluster",
-    "osd"
+    "osd",
+    "storage"
   ],
   "templating": {
     "list": [
