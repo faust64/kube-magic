@@ -1,0 +1,133 @@
+all:
+  hosts:
+    pandore.friends.intra.unetresgrossebite.com:
+      access_ip: 10.42.253.40
+      ansible_host: 10.42.253.40
+      etcd_member_name: pandore
+      ip: 10.42.253.40
+      node_labels:
+        infra.utgb/rack: rpi-rack1
+        infra.utgb/row: rpi-row2
+    hellenes.friends.intra.unetresgrossebite.com:
+      access_ip: 10.42.253.41
+      ansible_host: 10.42.253.41
+      etcd_member_name: hellenes
+      ip: 10.42.253.41
+      node_labels:
+        infra.utgb/rack: rpi-rack2
+        infra.utgb/row: rpi-row2
+    epimethee.friends.intra.unetresgrossebite.com:
+      access_ip: 10.42.253.42
+      ansible_host: 10.42.253.42
+      etcd_member_name: epimethee
+      ip: 10.42.253.42
+      node_labels:
+        infra.utgb/rack: rpi-rack3
+        infra.utgb/row: rpi-row2
+    pyrrha.friends.intra.unetresgrossebite.com:
+      access_ip: 10.42.253.43
+      ansible_host: 10.42.253.43
+      ip: 10.42.253.43
+      node_labels:
+        infra.utgb/rack: rpi-rack1
+        infra.utgb/row: rpi-row3
+        node-role.kubernetes.io/infra: "true"
+    calliope.friends.intra.unetresgrossebite.com:
+      access_ip: 10.42.253.44
+      ansible_host: 10.42.253.44
+      ip: 10.42.253.44
+      node_labels:
+        infra.utgb/rack: rpi-rack2
+        infra.utgb/row: rpi-row3
+        node-role.kubernetes.io/infra: "true"
+    clio.friends.intra.unetresgrossebite.com:
+      access_ip: 10.42.253.45
+      ansible_host: 10.42.253.45
+      ip: 10.42.253.45
+      node_labels:
+        infra.utgb/rack: rpi-rack3
+        infra.utgb/row: rpi-row3
+        node-role.kubernetes.io/infra: "true"
+    erato.friends.intra.unetresgrossebite.com:
+      access_ip: 10.42.253.46
+      ansible_host: 10.42.253.46
+      ip: 10.42.253.46
+      node_labels:
+        infra.utgb/rack: rpi-rack1
+        infra.utgb/row: rpi-row4
+        node-role.kubernetes.io/worker: "true"
+    euterpe.friends.intra.unetresgrossebite.com:
+      access_ip: 10.42.253.47
+      ansible_host: 10.42.253.47
+      ip: 10.42.253.47
+      node_labels:
+        infra.utgb/rack: rpi-rack2
+        infra.utgb/row: rpi-row4
+        node-role.kubernetes.io/worker: "true"
+    melpomene.friends.intra.unetresgrossebite.com:
+      access_ip: 10.42.253.48
+      ansible_host: 10.42.253.48
+      ip: 10.42.253.48
+      node_labels:
+        infra.utgb/rack: rpi-rack3
+        infra.utgb/row: rpi-row4
+        node-role.kubernetes.io/worker: "true"
+    #polyhymnia.friends.intra.unetresgrossebite.com:
+    #  access_ip: 10.42.253.49
+    #  ansible_host: 10.42.253.49
+    #  ip: 10.42.253.49
+    #  node_labels:
+    #    infra.utgb/rack: rpi-rack3
+    #    infra.utgb/row: rpi-row1
+    #    node-role.kubernetes.io/worker: "true"
+    terpsichore.friends.intra.unetresgrossebite.com:
+      access_ip: 10.42.253.50
+      ansible_host: 10.42.253.50
+      ip: 10.42.253.50
+      node_labels:
+        infra.utgb/rack: rpi-rack2
+        infra.utgb/row: rpi-row1
+        node-role.kubernetes.io/worker: "true"
+    thalia.friends.intra.unetresgrossebite.com:
+      access_ip: 10.42.253.51
+      ansible_host: 10.42.253.51
+      ip: 10.42.253.51
+      node_labels:
+        infra.utgb/rack: rpi-rack1
+        infra.utgb/row: rpi-row1
+        node-role.kubernetes.io/worker: "true"
+  children:
+    calico-rr:
+      hosts: {}
+    etcd:
+      hosts:
+        pandore.friends.intra.unetresgrossebite.com:
+        hellenes.friends.intra.unetresgrossebite.com:
+        epimethee.friends.intra.unetresgrossebite.com:
+    kube-infra:
+      hosts:
+        pyrrha.friends.intra.unetresgrossebite.com:
+        calliope.friends.intra.unetresgrossebite.com:
+        clio.friends.intra.unetresgrossebite.com:
+    kube-master:
+      hosts:
+        pandore.friends.intra.unetresgrossebite.com:
+        hellenes.friends.intra.unetresgrossebite.com:
+        epimethee.friends.intra.unetresgrossebite.com:
+    kube-workers:
+      hosts:
+        erato.friends.intra.unetresgrossebite.com:
+        euterpe.friends.intra.unetresgrossebite.com:
+        melpomene.friends.intra.unetresgrossebite.com:
+        #polyhymnia.friends.intra.unetresgrossebite.com:
+        terpsichore.friends.intra.unetresgrossebite.com:
+        thalia.friends.intra.unetresgrossebite.com:
+    kube-node:
+      children:
+        kube-master:
+        kube-infra:
+        kube-workers:
+    k8s-cluster:
+      children:
+        calico-rr:
+        kube-node:

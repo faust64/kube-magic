@@ -1,0 +1,30 @@
+---
+ansible_user: root
+etcd_data_dir: /var/lib/etcd
+etcd_kubeadm_enabled: false
+bin_dir: /usr/local/bin
+
+## External LB example config
+apiserver_loadbalancer_domain_name: "api-k8s-arm.intra.unetresgrossebite.com"
+loadbalancer_apiserver:
+  address: 10.42.253.52
+  port: 6443
+loadbalancer_apiserver_localhost: false
+loadbalancer_apiserver_port: 6443
+
+## Upstream dns servers
+upstream_dns_servers:
+- 10.255.255.255
+
+# http_proxy: ""
+# https_proxy: ""
+# no_proxy: ""
+# download_validate_certs: False
+# additional_no_proxy: ""
+# skip_http_proxy_on_os_packages: false
+no_proxy_exclude_workers: false
+
+cert_management: script
+# ignore_assert_errors: false
+download_container: true
+deploy_container_engine: true

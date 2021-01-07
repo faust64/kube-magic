@@ -38,6 +38,10 @@ variables setting the specifics for our cluster, such as domain names,
 proxies, DNS, NTP configuration, ... Or in the case of OpenShift: LDAP
 authentication.
 
+Note: the `kubespray.rpi` folder includes inventories deploying
+Kubernetes on Raspberry 3 & 4 (armv7). Requires 64b on masters, raspbian
+works perfectly.
+
 ## Usage
 
 ### Ceph
@@ -49,6 +53,11 @@ Having customized your inventories, we would run:
 ```
 $ make deploy-ceph
 ```
+
+Note: running on ARM, we should pull different images, ... see
+`examples/ceph-csi-arm` for a sample working on Raspberry PI. Also note that
+arm64 is mandatory for rbdplugin mapper to work. And that Raspbian does not
+provide with rbd kernel modules: rbd-nbd should be used instead.
 
 ### KubeSpray
 
@@ -89,6 +98,11 @@ Eventually, we may deploy additional components, such as:
  * Monitoring stack: `make deploy-prometheus` (kubespray/openshift)
  * Tekton: `make deploy-tekton` (kubespray -- WARNING: some manual fix required afterwards)
 
+Alternatively, deploying Prometheus on Kubernetes can be done using:
+https://github.com/Worteks/k8s-prometheus - which includes ARM support,
+missing from kube-state-metrics, as shipped by roles in the playbooks we
+have here.
+
 #### EFK on Kubernetes
 
 Note that deploying the logging stack on Kubernetes, you will then have to
@@ -100,8 +114,6 @@ before doing so, the more fields we would discover. A few to look for would
 be `kuberenetes.container.*`, `kubernetes.labels.*` or `SYSLOG_FACILITY`.
 
 ## Feedback
-
-As of June 2020.
 
 ### Buildah
 
@@ -241,3 +253,48 @@ with 1.2.13-2 on Debian buster.
 In the meantime, when self-signing certificates without a CA, or no way to
 easily trust new CAs into Kubernetes hosts (eg: operator), then http registries
 could still be used.
+
+### Containerd Snapshots
+
+Seen disk usage grow over time on a given node. After 9 months,
+`/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs` was using >30G.
+To clean it up:
+
+```
+# systemctl stop kubelet
+# crictl pods | awk 'NR>1{print $1}' | xargs crictl stopp
+# crictl pods | awk 'NR>1{print $1}' | xargs crictl rmp
+# crictl ps -a | awk 'NR>1{print $1}' | xargs crictl rm -f
+# systemctl stop containerd
+# rm -fr /var/lib/containerd/io.containerd.metadata.v1.bolt/*
+# rm -fr /var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/*
+# reboot
+```
+
+### Re-Deploying Nodes
+
+After suffering a disk loss, I had to redeploy a master node. This can be done
+with the following playbook, having edited your inventory, such as the faulty
+nodes are part of some `broken_xxx` hostgroup:
+
+```
+$ ansible-playbook -i inventory/my/hosts.yml -l etcd,kube-master \
+    -e etcd_retries=300 recover-control-plane.yml
+```
+
+Playbook crashed, while dealing with add-ons. I decided to comment them all out
+from Ansible group vars, then re-applied the cluster deployment playbook:
+
+```
+$ ansible-playbook -i inventory/my/hosts.yml -l etcd,kube-master cluster.yml
+```
+
+Everything went fine, though I still had a regular worker to re-deploy, and
+decided to use the scale-out playbook, while re-using the same node name:
+
+```
+$ ansible-playbook -i inventory/my/hosts.yml scale.yml
+```
+
+Outage dit not affect API services and cluster in general, the rest of the nodes
+kept running perfectly fine.

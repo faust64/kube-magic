@@ -1,0 +1,163 @@
+---
+kind: DaemonSet
+apiVersion: apps/v1
+metadata:
+  name: csi-rbdplugin
+  namespace: rbd-provisioner
+spec:
+  selector:
+    matchLabels:
+      app: csi-rbdplugin
+  template:
+    metadata:
+      labels:
+        app: csi-rbdplugin
+    spec:
+      serviceAccount: rbd-csi-nodeplugin
+      hostNetwork: true
+      hostPID: true
+      nodeSelector:
+        kubernetes.io/arch: arm64
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+        - name: driver-registrar
+          securityContext:
+            privileged: true
+          #image: docker.io/colek42/csi-node-driver-registrar:latest
+          image: docker.io/jamesorlakin/multiarch-csi-node-registrar:2.0.0
+          args:
+          - "--v=5"
+          - "--csi-address=/csi/csi.sock"
+          - "--kubelet-registration-path=/var/lib/kubelet/plugins/rbd.csi.ceph.com/csi.sock"
+          env:
+          - name: KUBE_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          volumeMounts:
+          - name: socket-dir
+            mountPath: /csi
+          - name: registration-dir
+            mountPath: /registration
+        - name: csi-rbdplugin
+          securityContext:
+            privileged: true
+            capabilities:
+              add: ["SYS_ADMIN"]
+            allowPrivilegeEscalation: true
+          image: quay.io/cephcsi/cephcsi:v3.2.1-arm64
+          args:
+          - "--nodeid=$(NODE_ID)"
+          - "--type=rbd"
+          - "--nodeserver=true"
+          - "--endpoint=$(CSI_ENDPOINT)"
+          - "--v=5"
+          - "--drivername=rbd.csi.ceph.com"
+          env:
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          - name: NODE_ID
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: CSI_ENDPOINT
+            value: unix:///csi/csi.sock
+          imagePullPolicy: "IfNotPresent"
+          volumeMounts:
+          - name: socket-dir
+            mountPath: /csi
+          - mountPath: /dev
+            name: host-dev
+          - mountPath: /sys
+            name: host-sys
+          - mountPath: /run/mount
+            name: host-mount
+          - mountPath: /lib/modules
+            name: lib-modules
+            readOnly: true
+          - name: ceph-csi-config
+            mountPath: /etc/ceph-csi-config/
+          - name: plugin-dir
+            mountPath: /var/lib/kubelet/plugins
+            mountPropagation: "Bidirectional"
+          - name: mountpoint-dir
+            mountPath: /var/lib/kubelet/pods
+            mountPropagation: "Bidirectional"
+          - name: keys-tmp-dir
+            mountPath: /tmp/csi/keys
+        - name: liveness-prometheus
+          securityContext:
+            privileged: true
+          image: quay.io/cephcsi/cephcsi:v3.2.1-arm64
+          args:
+          - "--type=liveness"
+          - "--endpoint=$(CSI_ENDPOINT)"
+          - "--metricsport=8680"
+          - "--metricspath=/metrics"
+          - "--polltime=60s"
+          - "--timeout=3s"
+          env:
+          - name: CSI_ENDPOINT
+            value: unix:///csi/csi.sock
+          - name: POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          volumeMounts:
+          - name: socket-dir
+            mountPath: /csi
+          imagePullPolicy: "IfNotPresent"
+      volumes:
+      - name: socket-dir
+        hostPath:
+          path: /var/lib/kubelet/plugins/rbd.csi.ceph.com
+          type: DirectoryOrCreate
+      - name: plugin-dir
+        hostPath:
+          path: /var/lib/kubelet/plugins
+          type: Directory
+      - name: mountpoint-dir
+        hostPath:
+          path: /var/lib/kubelet/pods
+          type: DirectoryOrCreate
+      - name: registration-dir
+        hostPath:
+          path: /var/lib/kubelet/plugins_registry/
+          type: Directory
+      - name: host-dev
+        hostPath:
+          path: /dev
+      - name: host-sys
+        hostPath:
+          path: /sys
+      - name: host-mount
+        hostPath:
+          path: /run/mount
+      - name: lib-modules
+        hostPath:
+          path: /lib/modules
+      - name: ceph-csi-config
+        configMap:
+          name: ceph-csi-config
+      - name: keys-tmp-dir
+        emptyDir: {
+          medium: "Memory"
+        }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: csi-metrics-rbdplugin
+  namespace: rbd-provisioner
+  labels:
+    app: csi-metrics
+spec:
+  ports:
+  - name: http-metrics
+    port: 8080
+    protocol: TCP
+    targetPort: 8680
+  selector:
+    app: csi-rbdplugin

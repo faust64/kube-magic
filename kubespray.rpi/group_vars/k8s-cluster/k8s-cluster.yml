@@ -1,0 +1,109 @@
+---
+kube_config_dir: /etc/kubernetes
+kube_script_dir: "{{ bin_dir }}/kubernetes-scripts"
+kube_manifest_dir: "{{ kube_config_dir }}/manifests"
+kube_cert_dir: "{{ kube_config_dir }}/ssl"
+kube_token_dir: "{{ kube_config_dir }}/tokens"
+kube_api_anonymous_auth: true
+kube_version: v1.19.5
+local_release_dir: "/tmp/releases"
+retry_stagger: 5
+kube_cert_group: kube-cert
+kube_log_level: 2
+credentials_dir: "{{ inventory_dir }}/credentials"
+kube_oidc_auth: false
+kube_token_auth: true
+
+## Variables for OpenID Connect Configuration https://kubernetes.io/docs/admin/authentication/
+## To use OpenID you have to deploy additional an OpenID Provider (e.g Dex, Keycloak, ...)
+
+# kube_oidc_url: https:// ...
+# kube_oidc_client_id: kubernetes
+# kube_oidc_ca_file: "{{ kube_cert_dir }}/ca.pem"
+# kube_oidc_username_claim: sub
+# kube_oidc_username_prefix: oidc:
+# kube_oidc_groups_claim: groups
+# kube_oidc_groups_prefix: oidc:
+
+# would usually pick calico / kubespray default
+# may not be suited on arm, see:
+# https://github.com/projectcalico/cni-plugin/issues/869
+# https://github.com/projectcalico/calico/issues/1865 (would require arm64?)
+#
+# as an alternative, I've previously deployed cluster on rpis using weave, which used to work, and implements networkpolicies:
+# https://kubernetes.io/docs/tasks/administer-cluster/network-policy-provider/weave-network-policy/#install-the-weave-net-addon
+#
+# kubespray may also deploy cilium, which *should work*, on arm64 at least, see:
+# https://github.com/cilium/cilium/issues/9898
+#
+# current lab includes a mix of arm & arm64 (armhf & aarch64), let's stick to flannel. though that one does not implement networkpolicies:
+kube_network_plugin: flannel
+
+# Setting multi_networking to true will install Multus: https://github.com/intel/multus-cni
+kube_network_plugin_multus: false
+
+kube_service_addresses: 10.233.128.0/18
+kube_pods_subnet: 10.233.192.0/18
+kube_network_node_prefix: 24
+
+kube_apiserver_ip: "{{ kube_service_addresses|ipaddr('net')|ipaddr(1)|ipaddr('address') }}"
+kube_apiserver_port: 6443
+
+kube_apiserver_insecure_port: 0  # (disabled)
+kube_proxy_mode: ipvs
+authorization_modes: ['Node', 'RBAC']
+kube_proxy_strict_arp: false
+
+kube_proxy_nodeport_addresses: >-
+  {%- if kube_proxy_nodeport_addresses_cidr is defined -%}
+  [{{ kube_proxy_nodeport_addresses_cidr }}]
+  {%- else -%}
+  []
+  {%- endif -%}
+
+kube_encrypt_secret_data: false
+
+# DNS configuration.
+cluster_name: cluster.local
+ndots: 2
+dns_mode: coredns
+enable_nodelocaldns: true
+nodelocaldns_ip: 169.254.25.10
+nodelocaldns_health_port: 9254
+enable_coredns_k8s_external: false
+enable_coredns_k8s_endpoint_pod_names: false
+
+# Can be docker_dns, host_resolvconf or none
+#resolvconf_mode: docker_dns
+resolvconf_mode: none
+deploy_netchecker: false
+skydns_server: "{{ kube_service_addresses|ipaddr('net')|ipaddr(3)|ipaddr('address') }}"
+skydns_server_secondary: "{{ kube_service_addresses|ipaddr('net')|ipaddr(4)|ipaddr('address') }}"
+dns_domain: "{{ cluster_name }}"
+
+## Container runtime
+## docker for docker, crio for cri-o and containerd for containerd.
+container_manager: containerd
+#container_manager: docker
+kata_containers_enabled: false
+kubeadm_certificate_key: "{{ lookup('password', credentials_dir + '/kubeadm_certificate_key.creds length=64 chars=hexdigits') | lower }}"
+k8s_image_pull_policy: IfNotPresent
+kubernetes_audit: false
+dynamic_kubelet_configuration: false
+default_kubelet_config_dir: "{{ kube_config_dir }}/dynamic_kubelet_dir"
+dynamic_kubelet_configuration_dir: "{{ kubelet_config_dir | default(default_kubelet_config_dir) }}"
+podsecuritypolicy_enabled: true
+kubeconfig_localhost: true
+kubectl_localhost: false
+system_reserved: true
+system_memory_reserved: 128Mi
+system_cpu_reserved: 250m
+system_master_memory_reserved: 256Mi
+system_master_cpu_reserved: 250m
+volume_cross_zone_attachment: false
+persistent_volumes_enabled: false
+event_ttl_duration: "1h0m0s"
+force_certificate_regeneration: false
+
+minimal_node_memory_mb: 896
+#^ required runnig with RPI3 / 924MB seen / default would require at least 1024MB
