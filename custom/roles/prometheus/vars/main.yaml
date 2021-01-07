@@ -19,6 +19,7 @@ grafana_dashboards:
 - CodiMD
 - Docker_Registry
 - ElasticSearch
+- Fluentd
 - FreeSwitch
 - Gitea
 - Go_Applications
@@ -56,6 +57,7 @@ grafana_dashboards:
 - NodeJS_Applications
 - NodeJS_Metrics
 - OpenLDAP
+- Postfix
 - Postgres
 - Prometheus
 - Redis
@@ -73,6 +75,7 @@ grafana_dashboards:
 - Thanos_Rule
 - Thanos_Sidecar
 - Thanos_Store
+- Traefik2
 prometheus_rules:
 - apache
 - blackbox
@@ -81,8 +84,10 @@ prometheus_rules:
 - cassandra
 - ceph
 - consul
+- coredns
 - elasticsearch
 - etcd
+- fluentd
 - freeswitch
 - haproxy
 - java
@@ -101,6 +106,7 @@ prometheus_rules:
 - openldap
 - pgbouncer
 - pods
+- postfix
 - postgres
 - prometheus
 - rabbitmq
@@ -109,4 +115,5 @@ prometheus_rules:
 - sidekick
 - speedtest
 - thanos
-- traefik
+- traefik-v1
+- traefik-v2

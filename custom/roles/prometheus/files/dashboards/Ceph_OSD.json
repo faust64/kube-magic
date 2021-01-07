@@ -493,7 +493,7 @@
       },
       "targets": [
         {
-          "expr": "count (ceph_osd_metadata{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\",device_class=\"hdd\"})",
+          "expr": "count (ceph_osd_metadata{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\",device_class=\"hdd\"}) OR on () vector(0)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -501,7 +501,7 @@
           "refId": "A"
         },
         {
-          "expr": "count (ceph_osd_metadata{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\",device_class=\"hdd\"})",
+          "expr": "count (ceph_osd_metadata{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\",ceph_daemon=~\"$osd\",device_class=\"ssd\"}) OR on () vector(0)",
           "interval": "",
           "legendFormat": "ssd",
           "refId": "B"
@@ -902,7 +902,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "round(sum(irate(ceph_pool_rd{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\"}[30s])))",
+          "expr": "round(sum(irate(ceph_pool_rd{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\"}[60s])))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -910,7 +910,7 @@
           "refId": "A"
         },
         {
-          "expr": "round(sum(irate(ceph_pool_wr{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\"}[30s])))",
+          "expr": "round(sum(irate(ceph_pool_wr{kubernetes_cluster=~\"$cluster\",kubernetes_namespace=~\"$namespace\"}[60s])))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,

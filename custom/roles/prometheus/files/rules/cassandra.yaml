@@ -26,7 +26,7 @@ groups:
       summary: "Cassandra viewwrite latency (instance {{ $labels.instance }})"
       description: "High viewwrite latency on {{ $labels.instance }} cassandra node\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
   - alert: CassandraCoolHacker
-    expr: irate(cassandra_stats{name="org:apache:cassandra:metrics:client:authfailure:count"}[1m]) > 5
+    expr: rate(cassandra_stats{name="org:apache:cassandra:metrics:client:authfailure:count"}[1m]) > 5
     for: 5m
     labels:
       severity: warning
@@ -97,3 +97,51 @@ groups:
     annotations:
       summary: "Cassandra storage exceptions (instance {{ $labels.instance }})"
       description: "Something is going wrong with cassandra storage\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  - alert: CassandraTombstoneDump
+    expr: cassandra_stats{name="org:apache:cassandra:metrics:table:tombstonescannedhistogram:99thpercentile"} > 1000
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Cassandra tombstone dump (instance {{ $labels.instance }})"
+      description: "Too much tombstones scanned in queries\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  - alert: CassandraClientRequestUnvailableWrite
+    expr: changes(cassandra_stats{name="org:apache:cassandra:metrics:clientrequest:write:unavailables:count"}[1m]) > 0
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Cassandra client request unvailable write (instance {{ $labels.instance }})"
+      description: "Write failures have occurred because too many nodes are unavailable\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  - alert: CassandraClientRequestUnvailableRead
+    expr: changes(cassandra_stats{name="org:apache:cassandra:metrics:clientrequest:read:unavailables:count"}[1m]) > 0
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Cassandra client request unvailable read (instance {{ $labels.instance }})"
+      description: "Read failures have occurred because too many nodes are unavailable\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  - alert: CassandraClientRequestWriteFailure
+    expr: increase(cassandra_stats{name="org:apache:cassandra:metrics:clientrequest:write:failures:oneminuterate"}[1m]) > 0
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Cassandra client request write failure (instance {{ $labels.instance }})"
+      description: "A lot of write failures encountered. A write failure is a non-timeout exception encountered during a write request. Examine the reason map to find to the root cause. The most common cause for this type of error is when batch sizes are too large.\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  - alert: CassandraClientRequestReadFailure
+    expr: increase(cassandra_stats{name="org:apache:cassandra:metrics:clientrequest:read:failures:oneminuterate"}[1m]) > 0
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Cassandra client request read failure (instance {{ $labels.instance }})"
+      description: "A lot of read failures encountered. A read failure is a non-timeout exception encountered during a read request. Examine the reason map to find to the root cause. The most common cause for this type of error is when batch sizes are too large.\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  - alert: CassandraCacheHitRateKeyCache
+    expr: cassandra_stats{name="org:apache:cassandra:metrics:cache:keycache:hitrate:value"} < .85
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Cassandra cache hit rate key cache (instance {{ $labels.instance }})"
+      description: "Key cache hit rate is below 85%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"

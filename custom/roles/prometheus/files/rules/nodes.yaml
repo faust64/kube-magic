@@ -18,7 +18,7 @@ groups:
       summary: "Host memory under memory pressure (instance {{ $labels.instance }})"
       description: "The node is under heavy memory pressure. High rate of major page faults\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
   - alert: HostUnusualNetworkThroughputIn
-    expr: sum by (instance) (irate(node_network_receive_bytes_total[2m])) / 1024 / 1024 > 100
+    expr: sum by (instance) (rate(node_network_receive_bytes_total[2m])) / 1024 / 1024 > 100
     for: 5m
     labels:
       severity: warning
@@ -26,7 +26,7 @@ groups:
       summary: "Host unusual network throughput in (instance {{ $labels.instance }})"
       description: "Host network interfaces are probably receiving too much data (> 100 MB/s)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
   - alert: HostUnusualNetworkThroughputOut
-    expr: sum by (instance) (irate(node_network_transmit_bytes_total[2m])) / 1024 / 1024 > 100
+    expr: sum by (instance) (rate(node_network_transmit_bytes_total[2m])) / 1024 / 1024 > 100
     for: 5m
     labels:
       severity: warning
@@ -34,7 +34,7 @@ groups:
       summary: "Host unusual network throughput out (instance {{ $labels.instance }})"
       description: "Host network interfaces are probably sending too much data (> 100 MB/s)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
   - alert: HostUnusualDiskReadRate
-    expr: sum by (instance) (irate(node_disk_read_bytes_total[2m])) / 1024 / 1024 > 50
+    expr: sum by (instance) (rate(node_disk_read_bytes_total[2m])) / 1024 / 1024 > 50
     for: 5m
     labels:
       severity: warning
@@ -42,7 +42,7 @@ groups:
       summary: "Host unusual disk read rate (instance {{ $labels.instance }})"
       description: "Disk is probably reading too much data (> 50 MB/s)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
   - alert: HostUnusualDiskWriteRate
-    expr: sum by (instance) (irate(node_disk_written_bytes_total[2m])) / 1024 / 1024 > 50
+    expr: sum by (instance) (rate(node_disk_written_bytes_total[2m])) / 1024 / 1024 > 50
     for: 5m
     labels:
       severity: warning
@@ -50,13 +50,13 @@ groups:
       summary: "Host unusual disk write rate (instance {{ $labels.instance }})"
       description: "Disk is probably writing too much data (> 50 MB/s)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
   - alert: HostOutOfDiskSpace
-    expr: (node_filesystem_avail_bytes{mountpoint="/rootfs"}  * 100) / node_filesystem_size_bytes{mountpoint="/rootfs"} < 10
+    expr: (node_filesystem_avail_bytes{mountpoint="/rootfs"}  * 100) / node_filesystem_size_bytes{mountpoint="/rootfs"} < 25
     for: 5m
     labels:
       severity: warning
     annotations:
       summary: "Host out of disk space (instance {{ $labels.instance }})"
-      description: "Disk is almost full (< 10% left)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      description: "Disk is almost full (< 25% left)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
   - alert: HostDiskWillFillIn4Hours
     expr: predict_linear(node_filesystem_free_bytes{fstype!~"tmpfs"}[1h], 4 * 3600) < 0
     for: 5m
@@ -90,7 +90,7 @@ groups:
       summary: "Host unusual disk write latency (instance {{ $labels.instance }})"
       description: "Disk latency is growing (write operations > 100ms)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
   - alert: HostHighCpuLoad
-    expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+    expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
     for: 5m
     labels:
       severity: warning
@@ -198,6 +198,14 @@ groups:
       description: "{{ $labels.instance }} interface {{ $labels.device }} has encountered {{ printf \"%.0f\" $value }} receive errors in the last five minutes.\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
   - alert: HostNetworkTransmitErrors
     expr: increase(node_network_transmit_errs_total[5m]) > 0
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Host Network Transmit Errors (instance {{ $labels.instance }})"
+      description: "{{ $labels.instance }} interface {{ $labels.device }} has encountered {{ printf \"%.0f\" $value }} transmit errors in the last five minutes.\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  - alert: HostNetworkSaturated
+    expr: (rate(node_network_receive_bytes_total{device!~"^tap.*"}[1m]) + rate(node_network_transmit_bytes_total{device!~"^tap.*"}[1m])) / node_network_speed_bytes{device!~"^tap.*"} > 0.8
     for: 5m
     labels:
       severity: warning

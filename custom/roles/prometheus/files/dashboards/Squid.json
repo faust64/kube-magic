@@ -375,7 +375,7 @@
       "title": "Client Requests",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",

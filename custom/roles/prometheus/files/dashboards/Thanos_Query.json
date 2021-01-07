@@ -1483,7 +1483,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(thanos_querier_store_apis_dns_lookups_total{kubernetes_namespace=~\"$namespace\",kubernetes_cluster=~\"$cluster\",kubernetes_pod_name=~\"$pod\"}[$interval])) by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name)",
+          "expr": "sum(rate(thanos_query_store_apis_dns_lookups_total{kubernetes_namespace=~\"$namespace\",kubernetes_cluster=~\"$cluster\",kubernetes_pod_name=~\"$pod\"}[$interval])) by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1586,7 +1586,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(thanos_querier_store_apis_dns_failures_total{kubernetes_namespace=~\"$namespace\",kubernetes_cluster=~\"$cluster\",kubernetes_pod_name=~\"$pod\"}[$interval])) / sum(rate(thanos_querier_store_apis_dns_lookups_total{kubernetes_namespace=~\"$namespace\",kubernetes_cluster=~\"$cluster\",kubernetes_pod_name=~\"$pod\"}[$interval]))",
+          "expr": "sum(rate(thanos_query_store_apis_dns_failures_total{kubernetes_namespace=~\"$namespace\",kubernetes_cluster=~\"$cluster\",kubernetes_pod_name=~\"$pod\"}[$interval])) / sum(rate(thanos_query_store_apis_dns_lookups_total{kubernetes_namespace=~\"$namespace\",kubernetes_cluster=~\"$cluster\",kubernetes_pod_name=~\"$pod\"}[$interval]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,

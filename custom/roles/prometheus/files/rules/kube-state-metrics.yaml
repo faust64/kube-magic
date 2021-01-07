@@ -33,6 +33,14 @@ groups:
     annotations:
       summary: "Kubernetes out of disk (instance {{ $labels.instance }})"
       description: "{{ $labels.node }} has OutOfDisk condition\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  - alert: KubernetesOutOfCapacity
+    expr: sum(kube_pod_info) by (node) / sum(kube_node_status_allocatable_pods) by (node) * 100 > 90
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Kubernetes Node reaching Pods capacity (instance {{ $labels.node }})"
+      description: "Node {{$labels.node}} reaching Pods-per-Node limit\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
   - alert: KubernetesJobFailed
     expr: kube_job_status_failed > 0
     for: 5m

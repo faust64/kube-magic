@@ -17,7 +17,7 @@
   "gnetId": 2322,
   "graphTooltip": 1,
   "id": 8,
-  "iteration": 1594821837888,
+  "iteration": 1607184027796,
   "links": [],
   "panels": [
     {
@@ -37,105 +37,183 @@
     },
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": true,
-      "colors": [
-        "#d44a3a",
-        "rgba(237, 129, 40, 0.89)",
-        "#299c46"
-      ],
       "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "mappings": [],
+          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
         },
         "overrides": []
       },
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
       "gridPos": {
         "h": 3,
-        "w": 4,
+        "w": 2,
         "x": 0,
         "y": 1
       },
-      "height": "50",
       "id": 53,
       "interval": null,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": true,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
       },
-      "tableColumn": "",
       "targets": [
         {
-          "expr": "min(elasticsearch_cluster_health_status{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",color=\"red\"}) == 1 or (min(elasticsearch_cluster_health_status{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",color=\"green\"}) == 1) + 4 or (min(elasticsearch_cluster_health_status{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",color=\"yellow\"} == 1)) + 22",
+          "expr": "sum(count by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name) (elasticsearch_cluster_health_status{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",color=\"green\"} == 1) or on() vector(0))",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "thresholds": "2,4",
-      "title": "Cluster health",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
+      "title": "Green",
+      "type": "stat"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
         },
-        {
-          "op": "=",
-          "text": "Green",
-          "value": "5"
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 2,
+        "y": 1
+      },
+      "id": 114,
+      "interval": null,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
         },
+        "textMode": "auto"
+      },
+      "targets": [
         {
-          "op": "=",
-          "text": "Yellow",
-          "value": "3"
-        },
-        {
-          "op": "=",
-          "text": "Red",
-          "value": "1"
+          "expr": "sum(count by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name) (elasticsearch_cluster_health_status{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",color=\"yellow\"} == 1) or on() vector(0))",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
         }
       ],
-      "valueName": "avg"
+      "title": "Yellow",
+      "type": "stat"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 4,
+        "y": 1
+      },
+      "id": 115,
+      "interval": null,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "targets": [
+        {
+          "expr": "sum(count by (kubernetes_cluster,kubernetes_namespace,kubernetes_service_name) (elasticsearch_cluster_health_status{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",color=\"red\"} == 1) or on() vector(0))",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Red",
+      "type": "stat"
     },
     {
       "cacheTimeout": null,
@@ -165,7 +243,7 @@
       "gridPos": {
         "h": 3,
         "w": 2,
-        "x": 4,
+        "x": 6,
         "y": 1
       },
       "height": "50",
@@ -263,8 +341,8 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
-        "x": 6,
+        "w": 3,
+        "x": 8,
         "y": 1
       },
       "height": "50",
@@ -352,8 +430,8 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
-        "x": 10,
+        "w": 3,
+        "x": 11,
         "y": 1
       },
       "height": "50",
@@ -484,7 +562,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "avg(elasticsearch_cluster_health_number_of_nodes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+          "expr": "sum(elasticsearch_cluster_health_number_of_nodes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -574,7 +652,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "avg(elasticsearch_cluster_health_number_of_data_nodes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
+          "expr": "sum(elasticsearch_cluster_health_number_of_data_nodes{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\",cluster=~\"$cluster\",name=~\"$name\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1354,7 +1432,8 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -1390,7 +1469,7 @@
       "links": [],
       "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
       "pointradius": 5,
@@ -1460,7 +1539,8 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -1496,7 +1576,7 @@
       "links": [],
       "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
       "pointradius": 5,
@@ -6229,7 +6309,7 @@
             {
               "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_doc_values_memory_bytes_primary{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
-              "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
+              "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
             }
           ],
@@ -6756,7 +6836,7 @@
             {
               "expr": "sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,index) (elasticsearch_indices_segment_fixed_bit_set_memory_bytes_total{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",kubernetes_pod_name=~\"$host\"})",
               "interval": "",
-              "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}}",
+              "legendFormat": "{{kubernetes_namespace}}/{{kubernetes_pod_name}} {{index}}",
               "refId": "A"
             }
           ],
@@ -7666,7 +7746,7 @@
     }
   ],
   "refresh": "1m",
-  "schemaVersion": 25,
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [
     "cluster",
@@ -7685,6 +7765,7 @@
           "text": "auto",
           "value": "$__auto_interval_interval"
         },
+        "error": null,
         "hide": 0,
         "label": "Interval",
         "name": "interval",
@@ -7754,13 +7835,16 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "text": "All",
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "Prometheus",
         "definition": "label_values(elasticsearch_indices_docs,kubernetes_cluster)",
+        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "Kubernetes Сluster",
@@ -7782,13 +7866,17 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "text": "All",
+          "tags": [],
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "Prometheus",
         "definition": "label_values(elasticsearch_indices_docs{kubernetes_cluster=~\"$kube\"},kubernetes_namespace)",
+        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "Kubernetes Namespace",
@@ -7810,13 +7898,16 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "text": "All",
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "Prometheus",
         "definition": "label_values(elasticsearch_indices_docs{kubernetes_cluster=~\"$kube\"},kubernetes_service_name)",
+        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "Kubernetes Deployment",
@@ -7838,13 +7929,16 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "text": "All",
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "Prometheus",
         "definition": "label_values(elasticsearch_indices_docs{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\"},cluster)",
+        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "ElasticSearch Сluster",
@@ -7866,13 +7960,16 @@
         "allValue": ".*",
         "current": {
           "selected": true,
-          "text": "All",
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "Prometheus",
         "definition": "label_values(elasticsearch_indices_docs{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",cluster=~\"$cluster\"},name)",
+        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "ElasticSearch Node Name",
@@ -7894,13 +7991,16 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "text": "All",
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "Prometheus",
         "definition": "label_values(elasticsearch_indices_docs{kubernetes_cluster=~\"$kube\",kubernetes_namespace=~\"$namespace\",kubernetes_service_name=~\"$deployment\",cluster=~\"$cluster\"},kubernetes_pod_name)",
+        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "Pod Name",

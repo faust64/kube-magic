@@ -113,14 +113,11 @@ groups:
     annotations:
       summary: "Elasticsearch pending tasks (instance {{ $labels.instance }})"
       description: "Number of pending tasks for 10 min. Cluster works slowly.\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
-  # NOTE: while this could make sense (eg: optimizing resources usage)
-  #       there is nothing fundamentally wrong with no new documents being comitted to ElasticSearch
-  #- alert: ElasticsearchNoNewDocuments
-  #  expr: rate(elasticsearch_indices_docs{es_data_node="true"}[10m]) < 1
-  #  expr: sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,cluster) (rate(elasticsearch_indices_docs{es_data_node="true"}[10m])) < 1
-  #  for: 5m
-  #  labels:
-  #    severity: warning
-  #  annotations:
-  #    summary: "Elasticsearch no new documents (instance {{ $labels.kubernetes_namespace }}/{{ $labels.kubernetes_pod_name }})"
-  #    description: "No new documents for 10 min!\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+  - alert: ElasticsearchNoNewDocuments
+    expr: sum by (kubernetes_cluster,kubernetes_namespace,kubernetes_pod_name,cluster) (rate(elasticsearch_indices_docs{es_data_node="true"}[1h])) < 1
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Elasticsearch no new documents (instance {{ $labels.kubernetes_namespace }}/{{ $labels.kubernetes_pod_name }})"
+      description: "No new documents for 60 min!\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"

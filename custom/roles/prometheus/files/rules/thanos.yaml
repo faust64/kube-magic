@@ -2,7 +2,7 @@ groups:
 - name: KubernetesThanos
   rules:
   - alert: ThanosCompactionHalted
-    expr: thanos_compactor_halted == 1
+    expr: thanos_compact_halted == 1
     for: 5m
     labels:
       severity: critical
