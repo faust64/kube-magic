@@ -4,3 +4,4 @@
 /kubespray
 /openshift-ansible
 *.[0-9]
+!examples/traefik/v[0-9]*\.[0-9]*/

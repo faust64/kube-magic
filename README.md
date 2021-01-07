@@ -96,12 +96,16 @@ Eventually, we may deploy additional components, such as:
 
  * Logging stack: `make deploy-logging` (kubespray/openshift)
  * Monitoring stack: `make deploy-prometheus` (kubespray/openshift)
- * Tekton: `make deploy-tekton` (kubespray -- WARNING: some manual fix required afterwards)
+ * Tekton: `make deploy-tekton` (kubespray -- WARNING: some manual fix required
+   afterwards)
 
 Alternatively, deploying Prometheus on Kubernetes can be done using:
 https://github.com/Worteks/k8s-prometheus - which includes ARM support,
 missing from kube-state-metrics, as shipped by roles in the playbooks we
 have here.
+
+Deploying Kubespray, if you choosed not to deploy one of their supported
+ingress controller, you may go with Traefik - see samples in `examples/traefik`.
 
 #### EFK on Kubernetes
 

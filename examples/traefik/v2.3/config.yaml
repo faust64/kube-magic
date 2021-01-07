@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik
+  namespace: traefik
+data:
+  dash.toml: |
+    [http.routers]
+      [http.routers.traefik-dashboard]
+        rule = "Host(`traefik-dashboard.ROUTERS_DOMAIN`)"
+        service = "api@internal"
+  tls.toml: |
+    [[tls.certificates]]
+      certFile = "/data/tls/tls.crt"
+      keyFile = "/data/tls/tls.key"
+      stores = ["default"]
+    [tls.stores]
+      [tls.stores.default]
+        [tls.stores.default.defaultCertificate]
+          certFile = "/data/tls/tls.crt"
+          keyFile = "/data/tls/tls.key"
+  traefik.toml: |
+    [accessLog]
+    [api]
+      dashboard = true
+    [entryPoints.metrics]
+      address = ":9113"
+    [entryPoints.traefik]
+      address = ":8100"
+    [entryPoints.web]
+      address = ":80"
+      [entryPoints.web.http.redirections.entryPoint]
+        scheme = "https"
+        to = "websecure"
+    [entryPoints.websecure]
+      address = ":443"
+      [entryPoints.websecure.http.tls]
+    [log]
+      level = "INFO"
+    [metrics]
+      [metrics.prometheus]
+        entryPoint = "metrics"
+        buckets = [0.1,0.3,1.2,5.0]
+    [providers.kubernetesIngress]
+    [providers]
+      [providers.file]
+        directory = "/data/static/"
+        watch = false
