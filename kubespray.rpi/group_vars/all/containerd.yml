@@ -8,7 +8,7 @@ containerd_config:
   registries:
     docker.io: "https://registry-1.docker.io"
     katello: "https://katello.vms.intra.unetresgrossebite.com:5000"
-    "registry.registry.svc.{{ cluster_name }}:5000": "http://registry.registry.svc.{{ cluster_name }}:5000"
+    "registry.registry.svc.cluster.local:5000": "http://registry.registry.svc.cluster.local:5000"
   max_container_log_line_size: -1
   metrics:
     address: ""
