@@ -65,6 +65,7 @@ kubernetes_audit: false
 dynamic_kubelet_configuration: false
 default_kubelet_config_dir: "{{ kube_config_dir }}/dynamic_kubelet_dir"
 dynamic_kubelet_configuration_dir: "{{ kubelet_config_dir | default(default_kubelet_config_dir) }}"
+kubelet_custom_flags: "--allowed-unsafe-sysctls 'net.core.somaxconn'"
 authorization_modes:
 - Node
 - RBAC

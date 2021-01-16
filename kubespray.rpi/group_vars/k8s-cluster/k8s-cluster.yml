@@ -76,6 +76,7 @@ enable_coredns_k8s_endpoint_pod_names: false
 # Can be docker_dns, host_resolvconf or none
 #resolvconf_mode: docker_dns
 resolvconf_mode: none
+# for host_resolvconf: resolvconf should be installed / not by default on RPI, nor checked by playbooks
 deploy_netchecker: false
 skydns_server: "{{ kube_service_addresses|ipaddr('net')|ipaddr(3)|ipaddr('address') }}"
 skydns_server_secondary: "{{ kube_service_addresses|ipaddr('net')|ipaddr(4)|ipaddr('address') }}"
@@ -92,6 +93,7 @@ kubernetes_audit: false
 dynamic_kubelet_configuration: false
 default_kubelet_config_dir: "{{ kube_config_dir }}/dynamic_kubelet_dir"
 dynamic_kubelet_configuration_dir: "{{ kubelet_config_dir | default(default_kubelet_config_dir) }}"
+kubelet_custom_flags: "--allowed-unsafe-sysctls 'net.core.somaxconn'"
 podsecuritypolicy_enabled: true
 kubeconfig_localhost: true
 kubectl_localhost: false
