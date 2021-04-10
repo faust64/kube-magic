@@ -7,7 +7,7 @@ kube_token_dir: "{{ kube_config_dir }}/tokens"
 kube_users_dir: "{{ kube_config_dir }}/users"
 kube_api_anonymous_auth: true
 kube_image_repo: "k8s.gcr.io"
-kube_version: v1.18.9
+kube_version: v1.18.10
 local_release_dir: "/tmp/releases"
 retry_stagger: 5
 kube_cert_group: kube-cert
