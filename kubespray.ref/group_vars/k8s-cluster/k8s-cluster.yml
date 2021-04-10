@@ -6,8 +6,8 @@ kube_cert_dir: "{{ kube_config_dir }}/ssl"
 kube_token_dir: "{{ kube_config_dir }}/tokens"
 kube_users_dir: "{{ kube_config_dir }}/users"
 kube_api_anonymous_auth: true
-kube_version: v1.18.8
 kube_image_repo: "k8s.gcr.io"
+kube_version: v1.18.9
 local_release_dir: "/tmp/releases"
 retry_stagger: 5
 kube_cert_group: kube-cert
@@ -50,10 +50,14 @@ enable_coredns_k8s_external: false
 coredns_k8s_external_zone: k8s_external.local
 enable_coredns_k8s_endpoint_pod_names: false
 system_reserved: true
-system_memory_reserved: 512M
+system_memory_reserved: 512Mi
 system_cpu_reserved: 500m
-system_master_memory_reserved: 256M
+system_master_memory_reserved: 256Mi
 system_master_cpu_reserved: 250m
+volume_cross_zone_attachment: false
+persistent_volumes_enabled: false
+event_ttl_duration: "1h0m0s"
+force_certificate_regeneration: false
 deploy_netchecker: false
 skydns_server: "{{ kube_service_addresses|ipaddr('net')|ipaddr(3)|ipaddr('address') }}"
 skydns_server_secondary: "{{ kube_service_addresses|ipaddr('net')|ipaddr(4)|ipaddr('address') }}"
