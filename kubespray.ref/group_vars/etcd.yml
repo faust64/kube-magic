@@ -2,7 +2,7 @@
 etcd_compaction_retention: "8"
 etcd_metrics: basic
 etcd_memory_limit: 5GB
-#etcd_quota_backend_bytes: 2147483648
+etcd_quota_backend_bytes: 2147483648
 etcd_peer_client_auth: true
 #etcd_deployment_type: docker
 etcd_deployment_type: host

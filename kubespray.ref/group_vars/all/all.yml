@@ -1,7 +1,7 @@
 ---
+ansible_user: root
 etcd_data_dir: /var/lib/etcd
 bin_dir: /usr/local/bin
-kubelet_load_modules: true
 upstream_dns_servers:
 - 10.255.255.255
 searchdomains:
@@ -9,7 +9,7 @@ searchdomains:
 - unetresgrossebite.com
 #additional_no_proxy: "*.intra.unetresgrossebite.com,10.42.0.0/15"
 #http_proxy: "http://netserv.vms.intra.unetresgrossebite.com:3128/"
-#https_proxy: "http://netserv.vms.intra.unetresgrossebite.com:3128/"
+#https_proxy: "{{ http_proxy }}"
 download_validate_certs: False
 cert_management: script
 #ignore_assert_errors: false

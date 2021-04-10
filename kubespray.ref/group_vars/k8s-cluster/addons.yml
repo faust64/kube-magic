@@ -2,6 +2,7 @@
 dashboard_enabled: true
 helm_enabled: false
 
+# Registry deployment
 registry_enabled: true
 registry_namespace: registry
 registry_storage_class: rwx-storage
@@ -36,6 +37,8 @@ rbd_provisioner_image_features: layering
 rbd_provisioner_storage_class: rwo-storage
 rbd_provisioner_reclaim_policy: Delete
 
+ingress_ambassador_enabled: false
+
 ingress_nginx_enabled: true
 ingress_nginx_host_network: true
 ingress_publish_status_address: ""
@@ -49,3 +52,5 @@ ingress_nginx_configmap:
 
 cert_manager_enabled: true
 cert_manager_namespace: cert-manager
+
+metallb_enabled: false

@@ -1,0 +1,14 @@
+- hosts: k8s-cluster
+  serial: 1
+  tasks:
+  - name: "Resets Containerd Runtime the Reboot in 10 minutes"
+    shell: |
+      sleep 600;
+      systemctl stop kubelet;
+      crictl pods | awk 'NR>1{print $1}' | xargs crictl stopp;
+      crictl pods | awk 'NR>1{print $1}' | xargs crictl rmp;
+      crictl ps -a | awk 'NR>1{print $1}' | xargs crictl rm -f;
+      systemctl stop containerd;
+      rm -fr /var/lib/containerd/io.containerd.metadata.v1.bolt/*;
+      rm -fr /var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/*;
+      reboot

@@ -4,7 +4,7 @@ KUBESPRAY_IV = kubespray/inventory/utgb/hosts.yml
 OPENSHIFT_IV = openshift-ansible/hosts
 
 CEPH_STABLE_REL      = stable-5.0
-KUBESPRAY_STABLE_REL = 6bc60e021e39b049ec7135bd4cfb4adfce44d1f7
+KUBESPRAY_STABLE_REL = v2.14.0
 OPENSHIFT_STABLE_REL = release-3.11
 
 CLUSTER_IS = Kubernetes

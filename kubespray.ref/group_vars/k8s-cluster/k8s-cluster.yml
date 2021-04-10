@@ -6,7 +6,7 @@ kube_cert_dir: "{{ kube_config_dir }}/ssl"
 kube_token_dir: "{{ kube_config_dir }}/tokens"
 kube_users_dir: "{{ kube_config_dir }}/users"
 kube_api_anonymous_auth: true
-kube_version: v1.18.3
+kube_version: v1.18.8
 kube_image_repo: "k8s.gcr.io"
 local_release_dir: "/tmp/releases"
 retry_stagger: 5
@@ -31,6 +31,8 @@ kube_network_node_prefix: 24
 kube_apiserver_ip: "{{ kube_service_addresses|ipaddr('net')|ipaddr(1)|ipaddr('address') }}"
 kube_apiserver_port: 6443
 kube_apiserver_insecure_port: 0
+kube_apiserver_enable_admission_plugins:
+- PodNodeSelector
 kube_proxy_mode: ipvs
 # using metallb, set to true
 kube_proxy_strict_arp: false
@@ -78,6 +80,7 @@ podsecuritypolicy_enabled: true
 container_manager: containerd
 resolvconf_mode: none
 etcd_deployment_type: host
+kata_containers_enabled: false
 
 # A comma separated list of levels of node allocatable enforcement to be enforced by kubelet.
 # Acceptable options are 'pods', 'system-reserved', 'kube-reserved' and ''. Default is "".
