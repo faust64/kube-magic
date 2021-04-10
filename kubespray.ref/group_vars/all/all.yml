@@ -8,6 +8,7 @@ searchdomains:
 - intra.unetresgrossebite.com
 - unetresgrossebite.com
 #additional_no_proxy: "*.intra.unetresgrossebite.com,10.42.0.0/15"
+no_proxy_exclude_workers: false
 #http_proxy: "http://netserv.vms.intra.unetresgrossebite.com:3128/"
 #https_proxy: "{{ http_proxy }}"
 download_validate_certs: False

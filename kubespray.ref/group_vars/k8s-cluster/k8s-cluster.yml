@@ -4,24 +4,14 @@ kube_script_dir: "{{ bin_dir }}/kubernetes-scripts"
 kube_manifest_dir: "{{ kube_config_dir }}/manifests"
 kube_cert_dir: "{{ kube_config_dir }}/ssl"
 kube_token_dir: "{{ kube_config_dir }}/tokens"
-kube_users_dir: "{{ kube_config_dir }}/users"
 kube_api_anonymous_auth: true
-kube_image_repo: "k8s.gcr.io"
-kube_version: v1.18.10
+kube_version: v1.19.7
 local_release_dir: "/tmp/releases"
 retry_stagger: 5
 kube_cert_group: kube-cert
 kube_log_level: 2
 credentials_dir: "{{ inventory_dir }}/credentials"
-kube_api_pwd: "{{ lookup('password', credentials_dir + '/kube_user.creds length=15 chars=ascii_letters,digits') }}"
-kube_users:
-  kube:
-    pass: "{{ kube_api_pwd }}"
-    role: admin
-    groups:
-    - system:masters
 kube_oidc_auth: false
-kube_basic_auth: true
 kube_token_auth: true
 kube_network_plugin: calico
 kube_network_plugin_multus: false
@@ -62,9 +52,6 @@ deploy_netchecker: false
 skydns_server: "{{ kube_service_addresses|ipaddr('net')|ipaddr(3)|ipaddr('address') }}"
 skydns_server_secondary: "{{ kube_service_addresses|ipaddr('net')|ipaddr(4)|ipaddr('address') }}"
 dns_domain: "{{ cluster_name }}"
-kubelet_deployment_type: host
-helm_deployment_type: host
-kubeadm_control_plane: false
 kubeadm_certificate_key: "{{ lookup('password', credentials_dir + '/kubeadm_certificate_key.creds length=64 chars=hexdigits') | lower }}"
 k8s_image_pull_policy: IfNotPresent
 kubernetes_audit: false
