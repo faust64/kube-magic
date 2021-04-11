@@ -5,7 +5,7 @@ kube_manifest_dir: "{{ kube_config_dir }}/manifests"
 kube_cert_dir: "{{ kube_config_dir }}/ssl"
 kube_token_dir: "{{ kube_config_dir }}/tokens"
 kube_api_anonymous_auth: true
-kube_version: v1.19.5
+kube_version: v1.19.9
 local_release_dir: "/tmp/releases"
 retry_stagger: 5
 kube_cert_group: kube-cert
@@ -52,6 +52,7 @@ kube_apiserver_port: 6443
 kube_apiserver_insecure_port: 0  # (disabled)
 kube_apiserver_enable_admission_plugins:
 - PodNodeSelector
+
 kube_proxy_mode: ipvs
 authorization_modes: ['Node', 'RBAC']
 kube_proxy_strict_arp: false
@@ -76,9 +77,8 @@ enable_coredns_k8s_external: false
 enable_coredns_k8s_endpoint_pod_names: false
 
 # Can be docker_dns, host_resolvconf or none
-#resolvconf_mode: docker_dns
-resolvconf_mode: none
-# for host_resolvconf: resolvconf should be installed / not by default on RPI, nor checked by playbooks
+# resolvconf_mode: docker_dns
+resolvconf_mode: host_resolvconf
 deploy_netchecker: false
 skydns_server: "{{ kube_service_addresses|ipaddr('net')|ipaddr(3)|ipaddr('address') }}"
 skydns_server_secondary: "{{ kube_service_addresses|ipaddr('net')|ipaddr(4)|ipaddr('address') }}"
@@ -107,7 +107,7 @@ system_master_cpu_reserved: 250m
 volume_cross_zone_attachment: false
 persistent_volumes_enabled: false
 event_ttl_duration: "1h0m0s"
-force_certificate_regeneration: false
+auto_renew_certificates: false
 
 minimal_node_memory_mb: 896
 #^ required runnig with RPI3 / 924MB seen / default would require at least 1024MB
