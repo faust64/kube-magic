@@ -302,3 +302,71 @@ $ ansible-playbook -i inventory/my/hosts.yml scale.yml
 
 Outage dit not affect API services and cluster in general, the rest of the nodes
 kept running perfectly fine.
+
+### Upgrading Cluster
+
+There's two kind of upgrades we could apply to a cluster deployed with
+Kubespray:
+
+- upgrading Kubernetes
+- upgrading Kubepsray
+
+Either way, there is an upgrade path to follow. For Kubernetes, starting with
+1.x going to the last 1.z, we would have to go through some 1.y. In my case,
+starting from 1.18.3, going to 1.20, I would have to apply a 1.19 in the way.
+Re-apply the Kubespray cluster upgrade playbook going from one `kube_version`
+to the next.
+
+And upgrading Kubernetes would usually imply updating the Kubepsray playbooks
+managing your cluster - at the very least, getting the right default image
+versions, checksums or deployment configurations for calico, containerd, ...
+depending on the Kubernetes version we're upgrading to.
+As for Kubernetes, Kubespray has an upgrade path we should follow: each tag
+should be applied one after the other (v2.14.0, v2.14.1, v2.14.2, ...). And if,
+as me, you started deploying from the master branch: first, we have to guess
+which tag to start with ...
+
+Keeping it simple, stick to the default `kube_version` shipping with Kubespray,
+and apply the upgrade playbook for each tag until you reach the right Kubernetes
+version. Otherwise, make sure your `kube_version` is listed in the download
+defaults: `roles/download/defaults/main.yml`.
+
+Upgrading Kubespray, we also have to check the diffs between current and target
+version copies of `inventory/sample`, look into the new variables that were
+introduced, some that could have changed or others that may have gone away.
+Having updated your inventory, make sure your nodes are all healthy. Make sure
+no PodDisruptionBudget could prevent a node from being drained. Then apply
+the upgrade playbook:
+
+```
+$ git checkout v2.14.0
+$ git diff <oldtag>..v2.14.0 inventory/sample
+$ vi inventory/<mine>/xxx [ update your inventory ]
+$ ansible-playbook -i inventory/my/hosts.yml upgrade-cluster.yml
+$ git checkout v2.14.1
+$ git diff v2.14.0..v2.14.1 inventory/sample
+$ vi inventory/<mine>/yyy
+$ ansible-playbook -i inventory/my/hosts.yml upgrade-cluster.yml
+$ git checkout v2.14.2
+[ repeat ]
+```
+
+The upgrade process would run some checks, pre-download images and some
+assets, then eventually start upgrading etcd, then drain and upgrade your
+masters one after the other. After the first master was upgraded, parts of
+Kubernetes Apps also are (CSI & RBAC, ...). After all masters were upgraded,
+the SDN would be upgraded on all nodes (two by two), some Pods are created
+upgrading the API. Then, the remaining nodes would be upgraded as well. Goes
+through the apps again, updating CoreDS, the metrics server, ...
+
+In the end, I could not see any API failure. Which is kind of amazing, knowing
+how painful OpenShift 4 upgrades can be, in terms of SDN components restarting,
+API being unavailable, unless that's the OAuth operator that's being redeployed
+or the nodes rebooting, ... The process took a little under two hours applying
+a new version on 10 nodes. Draining and restarting Pods being quite slow,
+don't hesitate to shut down useless deployments or lower the amount of replicas
+whenever possible, before going through an upgrade. Pro-tip: marking a node
+unschedulable before its being processed by Ansible would skip the draining
+steps. One may also want to disable a few apps deployment in Kubespray, in
+order to skip those tasks as well. Eg: only re-deploy the registry and ingress
+controllers during your last upgrade (or manually, later on).
