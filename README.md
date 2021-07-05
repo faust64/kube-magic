@@ -175,8 +175,9 @@ objects it wants to use. If I fix RBAC, the the api server refuses the
 objects created by the operator. The operator image is most definitely wrong,
 in relation to the RBAC/CRD configuration loaded by kube-spray.
 
-Fixing this is still in my todo, I've been manually generating self-signed
-(see `custom/roles/logging`, setting up Kibana Ingress certificate).
+More recently, I did apply an officiel release of cert-manager: I have
+each CRD twice (in `cert-manager.io` & `certmanager.k8s.io`). Though it
+works perfectly.
 
 ### ETCd Quotas
 
@@ -355,9 +356,9 @@ The upgrade process would run some checks, pre-download images and some
 assets, then eventually start upgrading etcd, then drain and upgrade your
 masters one after the other. After the first master was upgraded, parts of
 Kubernetes Apps also are (CSI & RBAC, ...). After all masters were upgraded,
-the SDN would be upgraded on all nodes (two by two), some Pods are created
-upgrading the API. Then, the remaining nodes would be upgraded as well. Goes
-through the apps again, updating CoreDS, the metrics server, ...
+the SDN would be upgraded on all nodes (two by two). Then, the remaining
+nodes would be upgraded as well. Goes through the apps again, updating
+CoreDS, the metrics server, ...
 
 In the end, I could not see any API failure. Which is kind of amazing, knowing
 how painful OpenShift 4 upgrades can be, in terms of SDN components restarting,
