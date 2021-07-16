@@ -54,7 +54,11 @@ skydns_server_secondary: "{{ kube_service_addresses|ipaddr('net')|ipaddr(4)|ipad
 dns_domain: "{{ cluster_name }}"
 kubeadm_certificate_key: "{{ lookup('password', credentials_dir + '/kubeadm_certificate_key.creds length=64 chars=hexdigits') | lower }}"
 k8s_image_pull_policy: IfNotPresent
-kubernetes_audit: false
+kubernetes_audit: true
+audit_log_path: /var/log/kubernetes/audit/kube-apiserver-audit.log
+audit_log_maxage: 30
+audit_log_maxbackups: 1
+audit_log_maxsize: 100
 dynamic_kubelet_configuration: false
 default_kubelet_config_dir: "{{ kube_config_dir }}/dynamic_kubelet_dir"
 dynamic_kubelet_configuration_dir: "{{ kubelet_config_dir | default(default_kubelet_config_dir) }}"
@@ -70,7 +74,6 @@ podsecuritypolicy_enabled: true
 #etcd_deployment_type: docker
 container_manager: containerd
 resolvconf_mode: none
-etcd_deployment_type: host
 kata_containers_enabled: false
 
 # A comma separated list of levels of node allocatable enforcement to be enforced by kubelet.
