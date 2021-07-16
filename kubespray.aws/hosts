@@ -1,0 +1,31 @@
+[all]
+ip-10-250-204-183.us-east-2.compute.internal ansible_host=10.250.204.183 ansible_user=admin
+ip-10-250-222-145.us-east-2.compute.internal ansible_host=10.250.222.145 ansible_user=admin
+ip-10-250-203-162.us-east-2.compute.internal ansible_host=10.250.203.162 ansible_user=admin
+ip-10-250-197-6.us-east-2.compute.internal ansible_host=10.250.197.6 ansible_user=admin
+ip-10-250-211-168.us-east-2.compute.internal ansible_host=10.250.211.168 ansible_user=admin
+ip-10-250-204-183.us-east-2.compute.internal ansible_host=10.250.204.183 ansible_user=admin
+ip-10-250-222-145.us-east-2.compute.internal ansible_host=10.250.222.145 ansible_user=admin
+ip-10-250-203-162.us-east-2.compute.internal ansible_host=10.250.203.162 ansible_user=admin
+
+[kube_control_plane]
+ip-10-250-204-183.us-east-2.compute.internal
+ip-10-250-222-145.us-east-2.compute.internal
+ip-10-250-203-162.us-east-2.compute.internal
+
+[kube_node]
+ip-10-250-197-6.us-east-2.compute.internal
+ip-10-250-211-168.us-east-2.compute.internal
+
+[calico_rr]
+
+[etcd]
+ip-10-250-204-183.us-east-2.compute.internal
+ip-10-250-222-145.us-east-2.compute.internal
+ip-10-250-203-162.us-east-2.compute.internal
+
+
+[k8s_cluster:children]
+kube_node
+kube_control_plane
+calico_rr

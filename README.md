@@ -45,6 +45,7 @@ authentication.
 Note: the `kubespray.rpi` folder includes inventories deploying
 Kubernetes on Raspberry 3 & 4 (armv7). Requires 64b on masters, raspbian
 works perfectly.
+`kubespray.aws` comes from another deployment (1.20), testing/lab on AWS.
 
 ## Usage
 
