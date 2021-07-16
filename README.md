@@ -12,6 +12,10 @@ as well as adding third party components such as the EFK stack,
 integrating with Nagios based monitoring, ... or some
 HAProxy / Keepalived external Load Balancer serving Kubernetes API.
 
+As an FYI, `./terraform-aws` would allow you to easily bootstrap
+EC2 instances / VPC / SG / IAM / ELB / ... Based on Kubepsray
+terraform samples.
+
 ## Inventories Setup
 
 We would start by pulling upstream repositories:
