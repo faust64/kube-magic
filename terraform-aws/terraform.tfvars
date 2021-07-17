@@ -31,4 +31,4 @@ default_tags = {
   TerraformedBy = "sammar"
 }
 
-inventory_file = "../../../inventory/hosts"
+inventory_file = "../hosts"
