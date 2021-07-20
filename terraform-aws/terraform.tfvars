@@ -6,10 +6,14 @@ aws_vpc_cidr_block       = "10.250.192.0/18"
 aws_cidr_subnets_private = ["10.250.192.0/20", "10.250.208.0/20"]
 aws_cidr_subnets_public  = ["10.250.224.0/20", "10.250.240.0/20"]
 
-#aws_cidr_subnets_private = ["10.250.192.0/20"]
-#aws_cidr_subnets_public  = ["10.250.224.0/20"]
 # one public subnet => single AZ & gateway => only one EIP required
 # which is better running labs/trainings, sharing a single account/quota
+#aws_cidr_subnets_private = ["10.250.192.0/20"]
+#aws_cidr_subnets_public  = ["10.250.224.0/20"]
+
+# going wild/testing patch:
+#aws_cidr_subnets_private = ["10.250.192.0/24","10.250.193.0/24","10.250.194.0/24","10.250.195.0/24"]
+#aws_cidr_subnets_public  = ["10.250.224.0/24","10.250.225.0/24","10.250.226.0/24","10.250.227.0/24"]
 
 #Bastion Host
 aws_bastion_num = 1
@@ -25,6 +29,8 @@ aws_etcd_size = "t3.medium"
 aws_etcd_disk_size = 50
 
 aws_kube_worker_num  = 3
+# going wild/testing patch:
+#aws_kube_worker_num  = 6
 aws_kube_worker_size = "t3.medium"
 aws_kube_worker_disk_size = 50
 
