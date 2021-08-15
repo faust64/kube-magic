@@ -3,10 +3,10 @@ dashboard_enabled: true
 helm_enabled: false
 
 # Registry deployment
-registry_enabled: true
-registry_namespace: registry
-registry_storage_class: rwx-storage
-registry_disk_size: 500Gi
+registry_enabled: false
+#registry_namespace: registry
+#registry_storage_class: rwx-storage
+#registry_disk_size: 500Gi
 
 metrics_server_enabled: true
 metrics_server_kubelet_insecure_tls: true
