@@ -1,28 +1,35 @@
 ---
-# up-to-date:
-# containerd_registries:
-#   "docker.io": "https://registry-1.docker.io"
-#   katello: "https://katello.vms.intra.unetresgrossebite.com:5000"
-#   "registry-kube.default.svc.cluster.local:5000": "http://registry-kube.default.svc.cluster.local:5000"
+# containerd_storage_dir: "/var/lib/containerd"
+# containerd_state_dir: "/run/containerd"
+# containerd_oom_score: 0
+
+# containerd_default_runtime: "runc"
+# containerd_snapshotter: "native"
+
+# containerd_runtimes:
+#   - name: runc
+#     type: "io.containerd.runc.v2"
+#     engine: ""
+#     root: ""
+# Example for Kata Containers as additional runtime:
+#   - name: kata
+#     type: "io.containerd.kata.v2"
+#     engine: ""
+#     root: ""
+
 # containerd_grpc_max_recv_message_size: 16777216
 # containerd_grpc_max_send_message_size: 16777216
-# containerd_debug_level: "info"
-# containerd_metrics_address: ""
-# containerd_metrics_grpc_histogram: false
-# containerd_max_container_log_line_size: -1
 
-# legacy:
-containerd_config:
-  grpc:
-    max_recv_message_size: 16777216
-    max_send_message_size: 16777216
-  debug:
-    level: "info"
-  registries:
-    docker.io: "https://registry-1.docker.io"
-    katello: "https://katello.vms.intra.unetresgrossebite.com:5000"
-    "registry-kube.default.svc.cluster.local:5000": "http://registry-kube.default.svc.cluster.local:5000"
-  max_container_log_line_size: -1
-  metrics:
-    address: ""
-    grpc_histogram: false
+# containerd_debug_level: "info"
+
+# containerd_metrics_address: ""
+
+# containerd_metrics_grpc_histogram: false
+
+containerd_registries:
+  "docker.io": "https://registry-1.docker.io"
+  katello: "https://katello.vms.intra.unetresgrossebite.com:5000"
+  "registry.registry.svc.cluster.local:5000": "http://registry.registry.svc.cluster.local:5000"
+  "registry-kube.default.svc.cluster.local:5000": "http://registry-kube.default.svc.cluster.local:5000"
+
+# containerd_max_container_log_line_size: -1

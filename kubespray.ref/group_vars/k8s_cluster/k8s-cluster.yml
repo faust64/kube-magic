@@ -5,7 +5,7 @@ kube_manifest_dir: "{{ kube_config_dir }}/manifests"
 kube_cert_dir: "{{ kube_config_dir }}/ssl"
 kube_token_dir: "{{ kube_config_dir }}/tokens"
 kube_api_anonymous_auth: true
-kube_version: v1.19.7
+kube_version: v1.21.6
 local_release_dir: "/tmp/releases"
 retry_stagger: 5
 kube_cert_group: kube-cert
@@ -18,6 +18,10 @@ kube_network_plugin_multus: false
 kube_service_addresses: 10.233.0.0/18
 kube_pods_subnet: 10.233.64.0/18
 kube_network_node_prefix: 24
+enable_dual_stack_networks: false
+kube_service_addresses_ipv6: fd85:ee78:d8a6:8607::1000/116
+kube_pods_subnet_ipv6: fd85:ee78:d8a6:8607::1:0000/112
+kube_network_node_prefix_ipv6: 120
 kube_apiserver_ip: "{{ kube_service_addresses|ipaddr('net')|ipaddr(1)|ipaddr('address') }}"
 kube_apiserver_port: 6443
 kube_apiserver_insecure_port: 0
@@ -36,6 +40,7 @@ dns_mode: coredns
 enable_nodelocaldns: true
 nodelocaldns_ip: 169.254.25.10
 nodelocaldns_health_port: 9254
+nodelocaldns_bind_metrics_host_ip: false
 enable_coredns_k8s_external: false
 coredns_k8s_external_zone: k8s_external.local
 enable_coredns_k8s_endpoint_pod_names: false
@@ -47,18 +52,15 @@ system_master_cpu_reserved: 250m
 volume_cross_zone_attachment: false
 persistent_volumes_enabled: false
 event_ttl_duration: "1h0m0s"
-force_certificate_regeneration: false
+auto_renew_certificates: false
+auto_renew_certificates_systemd_calendar: "Mon *-*-1,2,3,4,5,6,7 03:{{ groups['kube_control_plane'].index(inventory_hostname) }}0:00"
 deploy_netchecker: false
 skydns_server: "{{ kube_service_addresses|ipaddr('net')|ipaddr(3)|ipaddr('address') }}"
 skydns_server_secondary: "{{ kube_service_addresses|ipaddr('net')|ipaddr(4)|ipaddr('address') }}"
 dns_domain: "{{ cluster_name }}"
 kubeadm_certificate_key: "{{ lookup('password', credentials_dir + '/kubeadm_certificate_key.creds length=64 chars=hexdigits') | lower }}"
 k8s_image_pull_policy: IfNotPresent
-kubernetes_audit: true
-audit_log_path: /var/log/kubernetes/audit/kube-apiserver-audit.log
-audit_log_maxage: 30
-audit_log_maxbackups: 1
-audit_log_maxsize: 100
+kubernetes_audit: false
 dynamic_kubelet_configuration: false
 default_kubelet_config_dir: "{{ kube_config_dir }}/dynamic_kubelet_dir"
 dynamic_kubelet_configuration_dir: "{{ kubelet_config_dir | default(default_kubelet_config_dir) }}"
@@ -74,6 +76,7 @@ podsecuritypolicy_enabled: true
 #etcd_deployment_type: docker
 container_manager: containerd
 resolvconf_mode: none
+etcd_deployment_type: host
 kata_containers_enabled: false
 
 # A comma separated list of levels of node allocatable enforcement to be enforced by kubelet.

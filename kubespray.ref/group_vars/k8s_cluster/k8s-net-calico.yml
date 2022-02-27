@@ -20,6 +20,9 @@ calico_pool_blocksize: 24
 # add default ippool CIDR (must be inside kube_pods_subnet, defaults to kube_pods_subnet otherwise)
 # calico_pool_cidr: 1.2.3.4/5
 
+# Add default IPV6 IPPool CIDR. Must be inside kube_pods_subnet_ipv6. Defaults to kube_pods_subnet_ipv6 if not set.
+# calico_pool_cidr_ipv6: fd85:ee78:d8a6:8607::1:0000/112
+
 global_as_num: "64542"
 
 # If doing peering with node-assigned asn where the globas does not match your nodes, you want this
@@ -32,10 +35,10 @@ global_as_num: "64542"
 # calico_mtu: 1500
 
 # Configure the MTU to use for workload interfaces and tunnels.
-# - If Wireguard is enabled, set to your network MTU - 60
-# - Otherwise, if VXLAN or BPF mode is enabled, set to your network MTU - 50
-# - Otherwise, if IPIP is enabled, set to your network MTU - 20
-# - Otherwise, if not using any encapsulation, set to your network MTU.
+# - If Wireguard is enabled, subtract 60 from your network MTU (i.e 1500-60=1440)
+# - Otherwise, if VXLAN or BPF mode is enabled, subtract 50 from your network MTU (i.e. 1500-50=1450)
+# - Otherwise, if IPIP is enabled, subtract 20 from your network MTU (i.e. 1500-20=1480)
+# - Otherwise, if not using any encapsulation, set to your network MTU (i.e. 1500)
 # calico_veth_mtu: 1440
 
 # Advertise Cluster IPs
@@ -46,8 +49,13 @@ global_as_num: "64542"
 # - x.x.x.x/24
 # - y.y.y.y/32
 
+# Adveritse Service LoadBalancer IPs
+# calico_advertise_service_loadbalancer_ips:
+# - x.x.x.x/24
+# - y.y.y.y/16
+
 # Choose data store type for calico: "etcd" or "kdd" (kubernetes datastore)
-# calico_datastore: "etcd"
+# calico_datastore: "kdd"
 
 # Choose Calico iptables backend: "Legacy", "Auto" or "NFT"
 # calico_iptables_backend: "Legacy"
@@ -87,3 +95,10 @@ calico_network_backend: bird
 # If you want use the default route interface when you use multiple interface with dynamique route (iproute2)
 # see https://docs.projectcalico.org/reference/node/configuration : FELIX_DEVICEROUTESOURCEADDRESS
 # calico_use_default_route_src_ipaddr: false
+
+# Enable calico traffic encryption with wireguard
+# calico_wireguard_enabled: false
+
+# Under certain situations liveness and readiness probes may need tunning
+# calico_node_livenessprobe_timeout: 10
+# calico_node_readinessprobe_timeout: 10
