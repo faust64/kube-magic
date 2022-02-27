@@ -1,0 +1,20 @@
+apiVersion: v1
+data:
+  config.json: |-
+    [
+      {
+        "clusterID": "eb53775c-ec88-484f-b5f5-b421b55079d7",
+        "monitors": [
+          "10.42.253.110",
+          "10.42.253.111",
+          "10.42.253.112"
+        ],
+        "cephFS": {
+          "subvolumeGroup": "k8scsi"
+        }
+      }
+    ]
+kind: ConfigMap
+metadata:
+  name: ceph-csi-config
+  namespace: rbd-provisioner

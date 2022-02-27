@@ -1,0 +1,23 @@
+allowVolumeExpansion: true
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+  name: rwo-storage
+parameters:
+  clusterID: eb53775c-ec88-484f-b5f5-b421b55079d7
+  csi.storage.k8s.io/controller-expand-secret-name: ceph-secret-admin
+  csi.storage.k8s.io/controller-expand-secret-namespace: rbd-provisioner
+  csi.storage.k8s.io/fstype: ext4
+  csi.storage.k8s.io/node-stage-secret-name: ceph-secret-user
+  csi.storage.k8s.io/node-stage-secret-namespace: rbd-provisioner
+  csi.storage.k8s.io/provisioner-secret-name: ceph-secret-admin
+  csi.storage.k8s.io/provisioner-secret-namespace: rbd-provisioner
+  imageFeatures: layering
+  imageFormat: "2"
+  pool: kube
+  volumeNamePrefix: k8s-
+provisioner: rbd.csi.ceph.com
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
