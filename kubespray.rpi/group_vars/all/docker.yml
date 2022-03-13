@@ -1,18 +1,18 @@
 ---
-#docker_storage_options: -s overlay2
-#^ reported segfaults on armv6 / sticking with overlay
+# docker_storage_options: -s overlay2
+# ^ reported segfaults on armv6 / sticking with overlay
 
 docker_container_storage_setup: false
-#docker_cgroup_driver: systemd
+# docker_cgroup_driver: systemd
 docker_cgroup_driver: cgroupfs
 docker_dns_servers_strict: false
 docker_daemon_graph: "/var/lib/docker"
 docker_iptables_enabled: "false"
 docker_log_opts: "--log-opt max-size=50m --log-opt max-file=3"
 docker_bin_dir: "/usr/bin"
-docker_rpm_keepcache: 0
+docker_rpm_keepcache: 1
 docker_insecure_registries:
 - registry.ci.apps.intra.unetresgrossebite.com
 
-#docker_registry_mirrors:
-#- https://mirror.aliyuncs.com
+# docker_registry_mirrors:
+# - https://mirror.aliyuncs.com

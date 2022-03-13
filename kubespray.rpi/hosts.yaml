@@ -1,3 +1,4 @@
+---
 all:
   hosts:
     pandore.friends.intra.unetresgrossebite.com:
@@ -72,14 +73,14 @@ all:
         infra.utgb/rack: rpi-rack3
         infra.utgb/row: rpi-row4
         node-role.kubernetes.io/worker: "true"
-    #polyhymnia.friends.intra.unetresgrossebite.com:
-    #  access_ip: 10.42.253.49
-    #  ansible_host: 10.42.253.49
-    #  ip: 10.42.253.49
-    #  node_labels:
-    #    infra.utgb/rack: rpi-rack3
-    #    infra.utgb/row: rpi-row1
-    #    node-role.kubernetes.io/worker: "true"
+    # polyhymnia.friends.intra.unetresgrossebite.com:
+    #   access_ip: 10.42.253.49
+    #   ansible_host: 10.42.253.49
+    #   ip: 10.42.253.49
+    #   node_labels:
+    #     infra.utgb/rack: rpi-rack3
+    #     infra.utgb/row: rpi-row1
+    #     node-role.kubernetes.io/worker: "true"
     terpsichore.friends.intra.unetresgrossebite.com:
       access_ip: 10.42.253.50
       ansible_host: 10.42.253.50
@@ -97,37 +98,37 @@ all:
         infra.utgb/row: rpi-row1
         node-role.kubernetes.io/worker: "true"
   children:
-    calico-rr:
+    calico_rr:
       hosts: {}
     etcd:
       hosts:
         pandore.friends.intra.unetresgrossebite.com:
         hellenes.friends.intra.unetresgrossebite.com:
         epimethee.friends.intra.unetresgrossebite.com:
-    kube-infra:
+    kube_infra:
       hosts:
         pyrrha.friends.intra.unetresgrossebite.com:
         calliope.friends.intra.unetresgrossebite.com:
         clio.friends.intra.unetresgrossebite.com:
-    kube-master:
+    kube_control_plane:
       hosts:
         pandore.friends.intra.unetresgrossebite.com:
         hellenes.friends.intra.unetresgrossebite.com:
         epimethee.friends.intra.unetresgrossebite.com:
-    kube-workers:
+    kube_workers:
       hosts:
         erato.friends.intra.unetresgrossebite.com:
         euterpe.friends.intra.unetresgrossebite.com:
         melpomene.friends.intra.unetresgrossebite.com:
-        #polyhymnia.friends.intra.unetresgrossebite.com:
+        # polyhymnia.friends.intra.unetresgrossebite.com:
         terpsichore.friends.intra.unetresgrossebite.com:
         thalia.friends.intra.unetresgrossebite.com:
-    kube-node:
+    kube_node:
       children:
-        kube-master:
-        kube-infra:
-        kube-workers:
-    k8s-cluster:
+        kube_control_plane:
+        kube_infra:
+        kube_workers:
+    k8s_cluster:
       children:
-        calico-rr:
-        kube-node:
+        calico_rr:
+        kube_node:

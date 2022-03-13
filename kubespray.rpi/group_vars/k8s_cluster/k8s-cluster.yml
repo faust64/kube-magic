@@ -5,7 +5,7 @@ kube_manifest_dir: "{{ kube_config_dir }}/manifests"
 kube_cert_dir: "{{ kube_config_dir }}/ssl"
 kube_token_dir: "{{ kube_config_dir }}/tokens"
 kube_api_anonymous_auth: true
-kube_version: v1.19.9
+kube_version: v1.21.6
 local_release_dir: "/tmp/releases"
 retry_stagger: 5
 kube_cert_group: kube-cert
@@ -45,6 +45,10 @@ kube_network_plugin_multus: false
 kube_service_addresses: 10.233.128.0/18
 kube_pods_subnet: 10.233.192.0/18
 kube_network_node_prefix: 24
+enable_dual_stack_networks: false
+kube_service_addresses_ipv6: fd85:ee78:d8a6:8607::1000/116
+kube_pods_subnet_ipv6: fd85:ee78:d8a6:8607::1:0000/112
+kube_network_node_prefix_ipv6: 120
 
 kube_apiserver_ip: "{{ kube_service_addresses|ipaddr('net')|ipaddr(1)|ipaddr('address') }}"
 kube_apiserver_port: 6443
@@ -78,7 +82,8 @@ enable_coredns_k8s_endpoint_pod_names: false
 
 # Can be docker_dns, host_resolvconf or none
 # resolvconf_mode: docker_dns
-resolvconf_mode: host_resolvconf
+#resolvconf_mode: host_resolvconf
+resolvconf_mode: none
 deploy_netchecker: false
 skydns_server: "{{ kube_service_addresses|ipaddr('net')|ipaddr(3)|ipaddr('address') }}"
 skydns_server_secondary: "{{ kube_service_addresses|ipaddr('net')|ipaddr(4)|ipaddr('address') }}"
@@ -110,4 +115,4 @@ event_ttl_duration: "1h0m0s"
 auto_renew_certificates: false
 
 minimal_node_memory_mb: 896
-#^ required runnig with RPI3 / 924MB seen / default would require at least 1024MB
+# ^ required runnig with RPI3 / 924MB seen / default would require at least 1024MB

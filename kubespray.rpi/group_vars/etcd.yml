@@ -1,10 +1,11 @@
+---
 etcd_compaction_retention: 8
 etcd_metrics: basic
 etcd_memory_limit: 2GB
 etcd_quota_backend_bytes: "2147483648"
 etcd_peer_client_auth: true
-#etcd_deployment_type: docker
-#when container-runtime != docker
-#already had that issue on x86, apparently still a thing today:
-#https://github.com/kubernetes-sigs/kubespray/issues/5713
+# etcd_deployment_type: docker
+# when container-runtime != docker
+# already had that issue on x86, apparently still a thing today:
+# https://github.com/kubernetes-sigs/kubespray/issues/5713
 etcd_deployment_type: host
