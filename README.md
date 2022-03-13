@@ -160,7 +160,11 @@ buildah (not required on OpenShift, unclear wtf)
 https://github.com/containers/image/issues/733#issuecomment-625867772
 
 Overall: quite disappointed by Buildah on Kubernetes - while, to be frank,
-it was not that great on OpenShift either.
+it was not that great on OpenShift either. Doc's accurate. Does what's
+advertised. Builder ships with arm64 images: same confs work on RPI, and x86.
+
+UPDATE: ... While those comments are quite old: as a follow-up, today using
+Kaniko, which is great, despite requiring root.
 
 ### CephFS Provisioner
 
@@ -263,6 +267,8 @@ with 1.2.13-2 on Debian buster.
 In the meantime, when self-signing certificates without a CA, or no way to
 easily trust new CAs into Kubernetes hosts (eg: operator), then http registries
 could still be used.
+
+UPDATE: fixed in package, and can be configured in kubespray inventory
 
 ### Containerd Snapshots
 
@@ -376,3 +382,6 @@ unschedulable before its being processed by Ansible would skip the draining
 steps. One may also want to disable a few apps deployment in Kubespray, in
 order to skip those tasks as well. Eg: only re-deploy the registry and ingress
 controllers during your last upgrade (or manually, later on).
+
+UPDATE: we don't actually need to apply each kubespray tag. Instead, we should
+make sure to go through each minor: we can skip patches.
