@@ -3,7 +3,7 @@ data:
   config.json: |-
     [
       {
-        "clusterID": "eb53775c-ec88-484f-b5f5-b421b55079d7",
+        "clusterID": "7f3dc6eb-a523-4339-b119-401363946932",
         "monitors": [
           "10.42.253.110",
           "10.42.253.111",
