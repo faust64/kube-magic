@@ -1,5 +1,5 @@
-#devices:
-#- /dev/vdb
-#- /dev/vdc
-#- /dev/vdd
-osd_auto_discovery: true
+---
+osd_auto_discovery: True
+dmcrypt: False
+nb_retry_wait_osd_up: 360
+delay_wait_osd_up: 10

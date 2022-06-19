@@ -1,29 +1,24 @@
-# cluster names
-cluster: ceph
-cephfs: cephfs
+---
+ansible_user: root
+# bullseye
+ansible_python_interpreter: /usr/bin/python3
 
-configure_firewall: True
-dashboard_enabled: False
-ntp_daemon_type: chronyd
-ntp_service_enabled: True
-
-################### Katello ###################
-# Don't install epel-release or custom repos ##
-centos_package_dependencies:
-- "{{ 'python3-libselinux' if ansible_distribution_major_version | int >= 8 else 'libselinux-python' }}"
-ceph_origin: distro
-################## otherwise ##################
-#ceph_origin: repository
-#ceph_repository: community
-#ceph_stable_release: octopus
-###############################################
+ceph_origin: repository
+ceph_repository: community
+#ceph_repository_type: cdn
+ceph_stable_release: quincy
 
 monitor_interface: ens3
-ip_version: ipv4
-public_network: 10.42.253.0/24
-cluster_network: "{{ public_network }}"
+public_network: "10.42.253.0/24"
+cluster_network: "10.42.253.0/24"
 
-osd_mkfs_type: xfs
-osd_mkfs_options_xfs: -f -i size=2048
-osd_mount_options_xfs: noatime,largeio,inode64,swalloc
+dashboard_enabled: false
+configure_firewall: false
+containerized_deployment: False
+
+
 osd_objectstore: bluestore
+# 2Gi (defaults: 4)
+osd_memory_target: 2147483648
+# 128Mi (defaults: ? / did not check)
+ceph_tcmalloc_max_total_thread_cache: 134217728

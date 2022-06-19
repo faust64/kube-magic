@@ -1,3 +1,0 @@
-secure_cluster: false
-#monitor_secret: "{{ monitor_keyring.stdout }}"
-#admin_secret: 'admin_secret'

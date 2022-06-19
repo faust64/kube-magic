@@ -3,11 +3,9 @@ mon1.friends.intra.unetresgrossebite.com
 mon2.friends.intra.unetresgrossebite.com
 mon3.friends.intra.unetresgrossebite.com
 
-[osds:children]
-mons
-
 [mgrs:children]
 mons
-
 [mdss:children]
+mons
+[osds:children]
 mons
