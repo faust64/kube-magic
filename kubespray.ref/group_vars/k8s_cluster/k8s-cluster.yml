@@ -5,7 +5,7 @@ kube_manifest_dir: "{{ kube_config_dir }}/manifests"
 kube_cert_dir: "{{ kube_config_dir }}/ssl"
 kube_token_dir: "{{ kube_config_dir }}/tokens"
 kube_api_anonymous_auth: true
-kube_version: v1.22.8
+kube_version: v1.23.7
 local_release_dir: "/tmp/releases"
 retry_stagger: 5
 kube_cert_group: kube-cert
