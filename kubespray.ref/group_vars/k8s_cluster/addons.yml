@@ -4,9 +4,9 @@ helm_enabled: false
 
 # Registry deployment
 registry_enabled: false
-#registry_namespace: registry
-#registry_storage_class: rwx-storage
-#registry_disk_size: 500Gi
+registry_namespace: registry
+registry_storage_class: rwx-storage
+registry_disk_size: 500Gi
 
 metrics_server_enabled: true
 metrics_server_resizer: false
@@ -18,7 +18,9 @@ cephfs_provisioner_enabled: false
 #cephfs_provisioner_enabled: true
 cephfs_provisioner_namespace: cephfs-provisioner
 cephfs_provisioner_cluster: ceph
+#cephfs_provisioner_monitors: "10.42.253.110:6789,10.42.253.111:6789,10.42.253.112:6789"
 cephfs_provisioner_admin_id: admin
+#cephfs_provisioner_secret: xx
 cephfs_provisioner_storage_class: rwx-storage
 cephfs_provisioner_reclaim_policy: Delete
 cephfs_provisioner_claim_root: /volumes
@@ -28,11 +30,14 @@ rbd_provisioner_enabled: false
 #rbd_provisioner_enabled: true
 rbd_provisioner_namespace: rbd-provisioner
 rbd_provisioner_replicas: 2
+#rbd_provisioner_monitors: "10.42.253.110:6789,10.42.253.111:6789,10.42.253.112:6789"
 rbd_provisioner_pool: kube
 rbd_provisioner_admin_id: admin
 rbd_provisioner_secret_name: ceph-secret-admin
+#rbd_provisioner_secret: xx
 rbd_provisioner_user_id: kube
 rbd_provisioner_user_secret_name: ceph-secret-user
+#rbd_provisioner_user_secret: xx
 rbd_provisioner_user_secret_namespace: "{{ rbd_provisioner_namespace }}"
 rbd_provisioner_fs_type: ext4
 rbd_provisioner_image_format: "2"
@@ -63,3 +68,5 @@ metallb_enabled: false
 
 krew_enabled: false
 krew_root_dir: "/usr/local/krew"
+
+argocd_enabled: false

@@ -29,6 +29,7 @@
 containerd_registries:
   "docker.io": "https://registry-1.docker.io"
   katello: "https://katello.vms.intra.unetresgrossebite.com:5000"
+  "registry.ci.apps.intra.unetresgrossebite.com": "http://registry.ci.apps.intra.unetresgrossebite.com:80"
   "registry.registry.svc.cluster.local:5000": "http://registry.registry.svc.cluster.local:5000"
   "registry-kube.default.svc.cluster.local:5000": "http://registry-kube.default.svc.cluster.local:5000"
 
