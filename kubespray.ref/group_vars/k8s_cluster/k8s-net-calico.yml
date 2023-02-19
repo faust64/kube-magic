@@ -59,6 +59,7 @@ global_as_num: "64542"
 
 # Choose data store type for calico: "etcd" or "kdd" (kubernetes datastore)
 # calico_datastore: "kdd"
+calico_datastore: etcd
 
 # Choose Calico iptables backend: "Legacy", "Auto" or "NFT"
 # calico_iptables_backend: "Legacy"
