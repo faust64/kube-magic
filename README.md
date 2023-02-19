@@ -385,3 +385,42 @@ controllers during your last upgrade (or manually, later on).
 
 UPDATE: we don't actually need to apply each kubespray tag. Instead, we should
 make sure to go through each minor: we can skip patches.
+
+UPDATE: kubespray 2.18.2 misses some arm64 assets (fixed in 2.19.0). While
+2.18.2 also introduces a broken apparmor detection, which is still an issue
+in last masters (post 2.21), PR submitted. 2.20.0 upgrade with calico
+required defining a new default/not documented. nobody's prefect. kubespray
+remains quite reliable.
+
+### Recovering from Expired API Certificates
+
+Kubespray playbooks were unable to rotate certificates on a cluster whose
+current certificates were expired. In such case, we may regenerate some of
+those certs manually, to recover API. Connecting to one of your master nodes:
+
+```
+$ ssh root@master1
+# cd /etc/kubernetes/ssl
+# kubeadm certs renew apiserver
+# kubeadm crets renew apiserver-kubelet-client
+# kubeadm certs renew front-proxy-client
+# scp -p apiserver.* apiserver-kubelet-client.* front-proxy-client.* master2:`pwd`/
+# scp -p apiserver.* apiserver-kubelet-client.* front-proxy-client.* master3:`pwd`/
+```
+
+You may also have to generate a new admin kubeconfig:
+
+```
+# kubeadm kubeconfig user --client-name kubernetes-admin \
+    --config=/etc/kubernetes/kubeadm-config.yaml \
+    --org system:masters >/etc/kubernetes/admin.conf
+# scp -p /etc/kubernetes/admin.conf master2:/etc/kubernetes/
+# scp -p /etc/kubernetes/admin.conf master3:/etc/kubernetes/
+
+Then, on all master nodes, we'll restat kubernetes apiserver:
+
+```
+# crictl ps | grep apiserver
+# crictl stop <apiserver-container-id>
+# crictl rm <apiserver-container-id>
+```
