@@ -28,3 +28,5 @@ cert_management: script
 # ignore_assert_errors: false
 download_container: true
 deploy_container_engine: true
+kube_webhook_token_auth: false
+kube_webhook_token_auth_url_skip_tls_verify: false
